@@ -14,7 +14,8 @@ import javax.swing.*;
  * @author Natalia Carvalho
  *
  */
-public class InputView extends JFrame {
+
+public class InputView extends JFrame implements IView {
     
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
     private static final int FIELD_SIZE = 30;
@@ -135,8 +136,15 @@ public class InputView extends JFrame {
      * 
      * @param args command-line arguments
      */
+    
     public static void main (String[] args) {
         new InputView("Command Inputs", "English");
+    }
+
+    @Override
+    public void paint () {
+        // TODO Auto-generated method stub
+        
     }
 
 }

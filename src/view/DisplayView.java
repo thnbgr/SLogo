@@ -1,15 +1,18 @@
 package view;
 
 import java.util.List;
+import util.Drawable;
 
-public class DisplayView {
+
+public class DisplayView implements IView {
+
     private List<Drawable> myDrawables;
-    
-    private void paint() {
-        
+
+    public void paint () {
+
     }
-    
-    public void updateDrawables(Processable p) {
-        
+
+    public void updateDrawables (Processable p) {
+
     }
 }
