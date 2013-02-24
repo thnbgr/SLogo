@@ -11,7 +11,7 @@ import javax.swing.*;
  * @author Natalia Carvalho and Eric Wu
  *
  */
-public class InputView extends JFrame {
+public class InputView extends JFrame implements IView {
 
     private KeyListener myKeyListener;
     private MouseListener myMouseListener;
@@ -64,6 +64,12 @@ public class InputView extends JFrame {
                     myLastMousePosition = NO_MOUSE_PRESSED;
                 }
             });
+        
+    }
+
+    @Override
+    public void paint () {
+        // TODO Auto-generated method stub
         
     }
 
