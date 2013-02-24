@@ -17,6 +17,11 @@ import javax.swing.*;
 public class InputView extends JFrame {
     
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
+    private static final int FIELD_SIZE = 30;
+    private static final int NO_KEY_PRESSED = -1;
+    private static final Point NO_MOUSE_PRESSED = null;
+    private static final String USER_DIR = "user.dir";
+    //Listeners
     private ActionListener myActionListener;
     private MouseListener myMouseListener;
     // most GUI components will be temporary variables,
@@ -24,15 +29,11 @@ public class InputView extends JFrame {
     private JTextArea myTextArea;
     private JFileChooser myChooser;
     private FocusListener myFocusListener;
-    private int myLastKeyPressed;
-    private static final int FIELD_SIZE = 30;
     // this constant should be defined by Java, not me :( 
-    private static final String USER_DIR = "user.dir";
     // get strings from resource file
     private ResourceBundle myResources;
     
-    public static final int NO_KEY_PRESSED = -1;
-    public static final Point NO_MOUSE_PRESSED = null;
+
     
     private Point myLastMousePosition;
 
@@ -73,15 +74,6 @@ public class InputView extends JFrame {
                 echo("action", e);
             }
         };
-    }
-    
-    /**
-     * Echo key presses by showing important attributes
-     */
-    private void echo (String s, KeyEvent e) {
-        showMessage(s + " char:" + e.getKeyChar() + " mod: " +
-                    KeyEvent.getKeyModifiersText(e.getModifiers()) + " mod: " +
-                    KeyEvent.getKeyText(e.getKeyCode()));
     }
     
     /**
