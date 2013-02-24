@@ -5,7 +5,7 @@ package view;
  * @author Natalia Carvalho
  */
 public class Drawable {
-    private boolean isVisible;
+    private boolean myIsVisible;
     
     
     private void paint() {
@@ -13,13 +13,19 @@ public class Drawable {
     }
 
     
-    
+    /**
+     * Returns myIsVisible
+     */  
     public boolean isVisible () {
-        return isVisible;
+        return myIsVisible;
     }
 
+    /**
+     * Sets myIsVisible
+     * @param isVisible is parameter myIsVisible needs to be set to
+     */  
     public void setVisible (boolean isVisible) {
-        this.isVisible = isVisible;
+        this.myIsVisible = isVisible;
     }
     
 }
