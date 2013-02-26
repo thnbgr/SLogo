@@ -1,4 +1,4 @@
-package EncodeParser;
+package encode.parser;
 
 class Node{
 	String myStringValue;

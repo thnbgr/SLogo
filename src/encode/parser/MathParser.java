@@ -1,4 +1,4 @@
-package EncodeParser;
+package encode.parser;
 
 public abstract class MathParser {
 

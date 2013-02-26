@@ -1,4 +1,4 @@
-package EncodeParser;
+package encode.parser;
 
 import command.CommandBundle;
 
