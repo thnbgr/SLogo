@@ -7,8 +7,6 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import command.CommandParser;
 
-
-
 /**
  * 
  * @author Eric Wu
@@ -97,10 +95,6 @@ public class InputView extends JFrame implements IView {
     public void showMessage (String message) {
         myTextArea.append(message + "\n");
         myTextArea.setCaretPosition(myTextArea.getText().length());
-    }
-    
-    public void clearMessage() {
-        myTextArea.append("");
     }
     
     /**
