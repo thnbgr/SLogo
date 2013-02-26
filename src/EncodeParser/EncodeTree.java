@@ -21,6 +21,10 @@ public class EncodeTree {
 	public EncodeTree(){
 		myHead = null;
 	}
+	public Node getHead()
+	{
+		return myHead;
+	}
 	
 	public EncodeTree(String headValue){
 		myHead.myStringValue = headValue;
