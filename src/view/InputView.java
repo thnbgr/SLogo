@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.event.*;
 import java.util.ResourceBundle;
 import javax.swing.*;
+import command.CommandParser;
 
 
 
@@ -33,6 +34,7 @@ public class InputView extends JFrame implements IView {
     // this constant should be defined by Java, not me :( 
     // get strings from resource file
     private ResourceBundle myResources;
+    private CommandParser myCommandParser;
     
 
     
@@ -41,6 +43,8 @@ public class InputView extends JFrame implements IView {
 
 
     public InputView (String title, String language) {
+        //create new command parser
+        myCommandParser = new CommandParser();
         // set properties of frame
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,6 +77,7 @@ public class InputView extends JFrame implements IView {
             @Override
             public void actionPerformed (ActionEvent e) {
                 echo("action", e);
+                myCommandParser.setInput(e.getActionCommand());
             }
         };
     }
@@ -123,7 +128,7 @@ public class InputView extends JFrame implements IView {
     
     /**
      * Create a display area for showing out to the user, since it may display
-     * lots of text, make it automatically scroll when needed
+     * lots of text, make it automatically scroll when needed...this is just temporary
      */
     protected JComponent makeDisplay () {
         // create with size in rows and columns

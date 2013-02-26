@@ -1,5 +1,6 @@
 package command;
 
+import java.awt.event.ActionEvent;
 import java.util.Observable;
 import java.util.Observer;
 import view.Processable;
@@ -12,8 +13,8 @@ public class CommandParser extends Observable {
     public CommandParser () {
     }
     
-    public void setInput () {
-        
+    public void setInput (String input) {
+        myStringCommand = input;
     }
     
     public CommandBundle bundleCommand () {
