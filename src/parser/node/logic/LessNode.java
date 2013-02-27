@@ -1,4 +1,4 @@
-package parser.node.math;
+package parser.node.logic;
 
 import parser.node.BinaryNode;
 import parser.node.Node;
@@ -6,9 +6,9 @@ import parser.node.Node;
  * 
  * @author Junho Oh
  */
-public class RemainderNode extends BinaryNode {
-	//should be extension of quotient? 
-	public RemainderNode(Node head) {
+public class LessNode extends BinaryNode {
+
+	public LessNode(Node head) {
 		super(head);
 		// TODO Auto-generated constructor stub
 	}

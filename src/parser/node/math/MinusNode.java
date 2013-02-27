@@ -2,7 +2,10 @@ package parser.node.math;
 
 import parser.node.Node;
 import parser.node.UnaryNode;
-
+/**
+ * 
+ * @author Junho Oh
+ */
 public class MinusNode extends UnaryNode {
 
 	public MinusNode(Node head) {

@@ -1,5 +1,8 @@
 package parser.node;
-
+/**
+ * 
+ * @author Junho Oh
+ */
 public class Container<T>
 {
 	private T myValue;

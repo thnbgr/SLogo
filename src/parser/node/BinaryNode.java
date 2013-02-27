@@ -10,7 +10,6 @@ public class BinaryNode extends Node{
 		super(head);
 	}
 	public void setChildren(Node left, Node right){
-		System.out.println("setting children");
 		myLeft = left;
 		myRight = right;
 	}

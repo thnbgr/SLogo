@@ -1,7 +1,10 @@
 package parser.node.math;
 
 import parser.node.*;
-
+/**
+ * 
+ * @author Junho Oh
+ */
 public class SumNode extends BinaryNode{
 	public SumNode(Node head) {
 		super(head);

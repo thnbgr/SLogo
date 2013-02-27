@@ -1,20 +1,22 @@
 package parser.node.math;
 
 import parser.node.BinaryNode;
-import parser.node.IDoubleNode;
 import parser.node.Node;
-
-public class QuotientNode extends BinaryNode implements IDoubleNode{
+/**
+ * 
+ * @author Junho Oh
+ */
+public class QuotientNode extends BinaryNode{
 
 	public QuotientNode(Node head) {
 		super(head);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
-	public double evaluate() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void evaluate() {
+
+	
 	}
 	
 }

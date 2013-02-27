@@ -3,7 +3,10 @@ package parser;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * 
+ * @author Junho Oh
+ */
 class CSVRow{
 	private String myCommand;
 	private String mySymbol;

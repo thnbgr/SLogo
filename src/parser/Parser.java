@@ -1,30 +1,24 @@
 package parser;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Stack;
+
 import java.util.StringTokenizer;
-
 import parser.node.*;
-import parser.node.math.*;
-
 import command.CommandBundle;
 
+/**
+ * 
+ * @author Junho Oh
+ */
 public class Parser {
-	
+	//probably shouldn't be static?
 	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
 	private static CSVTable myCSVTable;
-	private static Stack<String> myValues;
+
 	static{
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
-		myValues = new Stack<String>();
 	}
 	public static EncodeTree encode(CommandBundle myPackage) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
 		//syntax check
@@ -38,7 +32,7 @@ public class Parser {
 				temp = new ValueNode(null,Double.parseDouble(curValue));
 			}
 			else{
-				Class headClass = Class.forName(myCSVTable.returnCSVRow(curValue).getCommandFilePath());
+				Class<?> headClass = Class.forName(myCSVTable.returnCSVRow(curValue).getCommandFilePath());
 				//Class nodeClass = Class.forName(myNodeInit.get(myCSVTable.returnCSVRow(nodeType).getCommandNumArgs()));
 				temp = (Node) headClass.getConstructors()[0].newInstance(new Node());
 			}
@@ -50,7 +44,7 @@ public class Parser {
 	}
 	
 	private static Node makeTree(Node token, Queue<Node> tokens){
-		//polymorphism can remove 
+		//polymorphism can remove this later
 		if(token instanceof ValueNode){ return token; }
 		else if(token instanceof BinaryNode){
 			Node left = tokens.remove();
