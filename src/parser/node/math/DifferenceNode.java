@@ -1,6 +1,6 @@
-package node.math;
+package parser.node.math;
 
-import node.*;
+import parser.node.*;
 
 public class DifferenceNode extends BinaryNode implements IDoubleNode{
 

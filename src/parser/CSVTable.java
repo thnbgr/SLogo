@@ -1,4 +1,4 @@
-package encode.parser;
+package parser;
 
 import java.io.*;
 import java.util.ArrayList;

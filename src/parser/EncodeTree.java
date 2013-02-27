@@ -1,6 +1,6 @@
-package encode.parser;
+package parser;
 
-import node.*;
+import parser.node.*;
 public class EncodeTree {
 	Node myHead;
 

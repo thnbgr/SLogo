@@ -1,4 +1,4 @@
-package node;
+package parser.node;
 
 public class ValueNode extends Node implements IDoubleNode{
 	private double myValue;

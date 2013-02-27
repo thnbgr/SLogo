@@ -1,6 +1,6 @@
-package node.math;
+package parser.node.math;
 
-import node.*;
+import parser.node.*;
 
 public class SumNode extends BinaryNode implements IDoubleNode{
 	public SumNode(Node head) {

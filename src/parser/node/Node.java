@@ -1,4 +1,4 @@
-package node;
+package parser.node;
 
 public class Node {
 	Node myHead;

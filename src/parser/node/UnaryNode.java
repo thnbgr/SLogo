@@ -1,4 +1,4 @@
-package node;
+package parser.node;
 
 public class UnaryNode extends Node {
 	Node myChild;
