@@ -15,6 +15,7 @@ public class CommandParser extends Observable {
     
     public void setInput (String input) {
         myStringCommand = input;
+        System.out.println(myStringCommand);
     }
     
     public CommandBundle bundleCommand () {
