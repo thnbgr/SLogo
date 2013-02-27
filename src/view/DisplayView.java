@@ -61,12 +61,11 @@ public class DisplayView extends JComponent implements IView {
     /**
      * Probably move this over to a DisplayModel later
      */
-    public void createTurtle () {
-        Drawable t = new Turtle();
-        setDrawableID(t);
-        myDrawables.add(t);
-        System.out.println("turtle id: "+t.getID());
+    public void addSprite (Sprite s) {
+        setDrawableID(s);
+        myDrawables.add(s);
     }
+
 
     public void updateMovable (Processable p) {
         Movable m = (Movable) getDrawableByID(p.getID());
@@ -78,11 +77,20 @@ public class DisplayView extends JComponent implements IView {
         return m.extractProcessable();
     }
 
-    private Drawable getDrawableByID (int i) {
+    public Drawable getDrawableByID (int i) {
         for (Drawable d : myDrawables) {
             if (d.getID() == i) return d;
         }
         return null;
+    }
+
+    public List<Drawable> getDrawables () {
+        return myDrawables;
+    }
+
+    public void clear () {
+        myDrawables = new ArrayList<Drawable>();
+        assignID = 0;
     }
 
 

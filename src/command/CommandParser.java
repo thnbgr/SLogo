@@ -2,13 +2,18 @@ package command;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 import util.Drawable;
 import util.Processable;
+import view.CommandViewBuilder;
 import view.DisplayView;
 import view.IView;
+import viewCommands.*;
 
 
 public class CommandParser extends Observable {
@@ -17,27 +22,32 @@ public class CommandParser extends Observable {
     private Processable myProcessable;
     private DisplayView myDisplayView;
     private CommandBundle myCommandBundle;
-    private List<String> myViewCommands;
+    private List<ViewCommand> myViewCommands;
 
     public CommandParser (IView d) {
         myDisplayView = (DisplayView) d;
-        myViewCommands = new ArrayList<String>();
+        myViewCommands = new ArrayList<ViewCommand>();
         addViewCommands();
     }
 
     public void addViewCommands () {
-        myViewCommands.add("create");
-        // add the rest of the view commands (commands that don't concern model)
+        CommandViewBuilder builder = new CommandViewBuilder(myDisplayView);
+        myViewCommands = builder.populateCommandsList();
     }
 
+    // add the rest of the view commands (commands that don't concern model)
+
     public void sendAction (String input) {
-        if (myViewCommands.contains(extractCommandAction(input))) {
-            // execute command
-            myDisplayView.createTurtle();
+        String commandAction = extractCommandAction(input);
+        for (ViewCommand v : myViewCommands) {
+            if (v.hasCommand(commandAction)) {
+                v.executeCommand();
+                return;
+            }
         }
-        else {
-            sendToModel(input);
-        }
+
+        sendToModel(input);
+
     }
 
     private String extractCommandAction (String input) {
