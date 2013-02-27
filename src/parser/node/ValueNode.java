@@ -1,17 +1,10 @@
 package parser.node;
 
-public class ValueNode extends Node implements IDoubleNode{
-	private double myValue;
-	
+public class ValueNode extends Node{
 	public ValueNode(Node head, double value) {
 		super(head);
-		myValue = value;
-		// TODO Auto-generated constructor stub
+		Container<Double> myContainer = new Container<Double>();
+		myContainer.setValue(value);
+		setContainer(myContainer);
 	}
-	
-	@Override
-	public double evaluate(){
-		return myValue;
-	}
-
 }

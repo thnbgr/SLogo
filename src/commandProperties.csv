@@ -1,5 +1,5 @@
-string,symbol,args,class
-sum,+,2,SumNode
-difference,-,2,DifferenceNode
-product,*,2,ProductNode
-quotient,/,2,QuotientNode
+string		,	symbol	,	args	,	class
+sum			,	+		,	2		,	parser.node.math.SumNode
+difference	,	-		,	2		,	parser.node.math.DifferenceNode
+product		,	*		,	2		,	parser.node.math.ProductNode
+quotient	,	/		,	2		,	parser.node.math.QuotientNode

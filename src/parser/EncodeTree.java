@@ -11,8 +11,7 @@ public class EncodeTree {
 	{
 		return myHead;
 	}
-
-	public EncodeTree(String headValue){
-		
+	public EncodeTree(Node head){
+		myHead = head;
 	}
 }

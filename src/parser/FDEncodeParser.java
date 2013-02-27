@@ -2,7 +2,7 @@ package parser;
 
 import command.CommandBundle;
 
-public class FDEncodeParser extends EncodeParser {
+public class FDEncodeParser extends Parser {
 
 	//math operation map. key 
 	@Override

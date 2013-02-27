@@ -3,22 +3,21 @@ package parser.node;
  * @author Junho Oh
  */
 public class BinaryNode extends Node{
-	private IDoubleNode myLeft;
-	private IDoubleNode myRight;
+	private Node myLeft;
+	private Node myRight;
 	
 	public BinaryNode(Node head) {
 		super(head);
 	}
-	public void setLeft(IDoubleNode left){
+	public void setChildren(Node left, Node right){
+		System.out.println("setting children");
 		myLeft = left;
-	}
-	public void setRight(IDoubleNode right){
 		myRight = right;
 	}
-	public IDoubleNode getLeft(){
+	public Node getLeft(){
 		return myLeft;
 	}
-	public IDoubleNode getRight(){
+	public Node getRight(){
 		return myRight;
 	}
 	public void test()

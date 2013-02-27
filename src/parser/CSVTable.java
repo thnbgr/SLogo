@@ -4,29 +4,55 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CSVTable{
-	private ArrayList<ArrayList<String>> toReturn; 
-	public CSVTable(String fileName){
-		toReturn =  new ArrayList<ArrayList<String>>();
-		readFile(fileName);
-		
+class CSVRow{
+	private String myCommand;
+	private String mySymbol;
+	private String myCommandNumArgs;
+	private String myCommandFilePath;
+	public CSVRow(String row){
+		String[] dataArray = row.split(",");
+		init(dataArray);
 	}
-	public String getString(int rowIndex, int colIndex){
-		return toReturn.get(rowIndex).get(colIndex);
+	private void init(String[] dataArray){
+		if(dataArray.length != 4){
+			return;
+		}
+		myCommand = dataArray[0].trim();
+		mySymbol = dataArray[1].trim();
+		myCommandNumArgs = dataArray[2].trim();
+		myCommandFilePath = dataArray[3].trim();
 	}
 	public boolean isValidCommand(String command){
-		return toReturn.contains(command); //TODO: change this. 
+		return myCommand.equals(command) || mySymbol.equals(command);
 	}
-	public String returnNodeClassName(String command)
-	{
-		int commandIndex;
-		for(int i = 0; i < toReturn.size();i++){
-			if(toReturn.get(i).contains(command)){
-				commandIndex = toReturn.get(i).indexOf(command);
-				if(commandIndex == 0 || commandIndex == 1){
-					//System.out.println("class name " + toReturn.get(i).get(3));
-					return toReturn.get(i).get(3);
-				}
+	public String getCommandNumArgs(){
+		return myCommandNumArgs;
+	}
+	public String getCommandFilePath(){
+		return myCommandFilePath;
+	}
+}
+public class CSVTable{
+	private ArrayList<CSVRow> myRows;
+
+	public CSVTable(String fileName){
+		myRows =  new ArrayList<CSVRow>();
+		readFile(fileName);
+	}
+
+	public boolean isValidCommand(String command){
+		boolean isValidCommand = false;
+		for(CSVRow row : myRows){
+			if(row.isValidCommand(command)){
+				isValidCommand = true;
+			}
+		}
+		return isValidCommand;
+	}
+	public CSVRow returnCSVRow(String command){
+		for(int i = 0; i < myRows.size();i++){
+			if(myRows.get(i).isValidCommand(command)){
+				return myRows.get(i);
 			}
 		}
 		return null;
@@ -36,13 +62,8 @@ public class CSVTable{
 			BufferedReader CSVFile = new BufferedReader(new FileReader(fileName));
 			String dataRow = CSVFile.readLine();
 			while (dataRow != null){
-				String[] dataArray = dataRow.split(",");
-				ArrayList<String> temp = new ArrayList<String>();
-				for (String item:dataArray) { 
-					temp.add(item);
-				}
-				toReturn.add(temp);
-				
+				CSVRow temp = new CSVRow(dataRow);
+				myRows.add(temp);
 				dataRow = CSVFile.readLine();
 			}
 			CSVFile.close();
