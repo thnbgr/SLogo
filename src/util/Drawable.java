@@ -8,7 +8,7 @@ public class Drawable {
     private boolean myIsVisible;
     
     
-    private void paint() {
+    public void paint() {
         
     }
 
