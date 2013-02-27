@@ -29,6 +29,7 @@ public class CommandParser extends Observable {
 
     public void setStringCommand (String input) {
         myStringCommand = input;
+        System.out.println(myStringCommand);
     }
 
     public void setProcessable (String input) {

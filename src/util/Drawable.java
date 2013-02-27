@@ -10,6 +10,7 @@ public abstract class Drawable {
     protected int myID;
 
     public abstract void paint ();
+    
 
     /**
      * Returns myIsVisible

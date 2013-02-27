@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,15 +23,21 @@ public class Controller implements Observer {
     private IView myInputView;
     private List<IView> myViewList;
     private Model myModel;
-    private Map<String, EncodeParser> myEncodeMap = new HashMap<String, EncodeParser>();
+    private Map<String, EncodeParser> myEncodeMap;
     private CommandParser myCommandParser;
+    private static final Dimension myDisplaySize = new Dimension(500, 500);
+
 
     public Controller () {
         myModel = new Model();
-        myDisplayView = new DisplayView();
+        myDisplayView = new DisplayView(myDisplaySize);
+        
         myCommandParser = new CommandParser(myDisplayView);
         myCommandParser.addObserver(this);
+        
         myInputView = new InputView("Command Inputs", "English", myCommandParser);
+        
+        myEncodeMap = new HashMap<String, EncodeParser>();
         myEncodeMap.put("fd", new FDEncodeParser());
     }
 

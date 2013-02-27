@@ -1,11 +1,33 @@
 package view;
 
+import command.CommandParser;
+import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Point;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ResourceBundle;
-import javax.swing.*;
-import command.CommandParser;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 /**
@@ -14,17 +36,14 @@ import command.CommandParser;
  * @author Natalia Carvalho
  * 
  */
-
 public class InputView extends JFrame implements IView {
 
+    private static final long serialVersionUID = 1L;
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
     private static final int FIELD_SIZE = 30;
-    private static final int NO_KEY_PRESSED = -1;
-    private static final Point NO_MOUSE_PRESSED = null;
     private static final String USER_DIR = "user.dir";
     // Listeners
     private ActionListener myActionListener;
-    private MouseListener myMouseListener;
     // most GUI components will be temporary variables,
     // only store components you need to refer to later
     private JTextArea myTextArea;
@@ -37,8 +56,12 @@ public class InputView extends JFrame implements IView {
 
     private Point myLastMousePosition;
 
+    /**
+     * InputView Constructor
+     *@param title is the title of window
+     *@param language is the default language
+     */
     public InputView (String title, String language, CommandParser parser) {
-        // create new command parser
         // set properties of frame
         myCommandParser = parser;
         setTitle(title);
@@ -51,6 +74,8 @@ public class InputView extends JFrame implements IView {
         makeListeners();
         getContentPane().add(makeInput(), BorderLayout.NORTH);
 
+        // create app menus
+        setJMenuBar(makeMenus());
         // size and display the GUI
         pack();
         setVisible(true);
@@ -75,6 +100,18 @@ public class InputView extends JFrame implements IView {
                 myCommandParser.sendAction(e.getActionCommand());
             }
         };
+        // listener for low-level focus events, i.e., the mouse
+        // entering/leaving a component so you can type in it
+        myFocusListener = new FocusListener() {
+            @Override
+            public void focusGained (FocusEvent e) {
+                echo("gained", e);
+            }
+            @Override
+            public void focusLost (FocusEvent e) {
+                echo("lost", e);
+            }
+        };
     }
 
     /**
@@ -84,6 +121,53 @@ public class InputView extends JFrame implements IView {
         showMessage(s + " = " + e.getActionCommand() + " " + e.getWhen());
     }
 
+    /**
+     * Echo data read from reader to display
+     */
+    private void echo (Reader r) {
+        try {
+            String s = "";
+            BufferedReader input = new BufferedReader(r);
+            String line = input.readLine();
+            while (line != null) {
+                s += line + "\n";
+                line = input.readLine();
+            }
+            showMessage(s);
+        }
+        catch (IOException e) {
+            showError(e.toString());
+        }
+    }
+
+    /**
+     * Echo display to writer
+     */
+    private void echo (Writer w) {
+        PrintWriter output = new PrintWriter(w);
+        output.println(myTextArea.getText());
+        output.flush();
+        output.close();
+    }
+    
+    /**
+     * Echo other events (e.g., Focus)
+     */
+    private void echo (String s, AWTEvent e) {
+        showMessage(s + " " + e);
+    }
+    
+    /**
+     * Display any string message in a popup error dialog.
+     * 
+     * @param message message to display
+     */
+    public void showError (String message) {
+        JOptionPane.showMessageDialog(this, message, 
+                                      myResources.getString("ErrorTitle"),
+                                      JOptionPane.ERROR_MESSAGE);
+    }
+    
     /**
      * Display any string message in the main text area.
      * 
@@ -128,14 +212,77 @@ public class InputView extends JFrame implements IView {
     }
 
     /**
-     * Java starts the program here and does not end until GUI goes away
-     * 
-     * @param args command-line arguments
+     * Create a menu to appear at the top of the frame, 
+     *   usually File, Edit, App Specific Actions, Help
      */
+    protected JMenuBar makeMenus () {
+        JMenuBar result = new JMenuBar();
+        result.add(makeFileMenu());
+        return result;
+    }
+    
+    /**
+     * Create a menu that will pop up when the menu button is pressed in the
+     * frame. File menu usually contains Open, Save, and Exit
+     * 
+     * Note, since these classes will not ever be used by any other class, make
+     * them inline (i.e., as anonymous inner classes) --- saves making a
+     * separate file for one line of actual code.
+     */
+    protected JMenu makeFileMenu () {
+        JMenu result = new JMenu(myResources.getString("FileMenu"));
+        result.add(new AbstractAction(myResources.getString("OpenCommand")) {
+            private static final long serialVersionUID = 1L;
 
-   /* public static void main (String[] args) {
-        new InputView("Command Inputs", "English", new CommandParser(null));
-    } */
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                try {
+                    
+                    int response = myChooser.showOpenDialog(null);
+                    if (response == JFileChooser.APPROVE_OPTION) {
+                        FileReader reader = new FileReader(myChooser.getSelectedFile());
+                        BufferedReader br = new BufferedReader(reader);
+                        String s;
+                        while ((s = br.readLine()) != null) {
+                            myCommandParser.sendAction(s);
+                        }
+                        reader.close();
+                    }
+                }
+                catch (IOException io) {
+                    // let user know an error occurred, but keep going
+                    showError(io.toString());
+                }
+            }
+        });
+        result.add(new AbstractAction(myResources.getString("SaveCommand")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                try {
+                    echo(new FileWriter("demo.out"));
+                }
+                catch (IOException io) {
+                    // let user know an error occurred, but keep going
+                    showError(io.toString());
+                }
+            }
+        });
+        result.add(new JSeparator());
+        result.add(new AbstractAction(myResources.getString("QuitCommand")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                // clean up any open resources, then
+                // end program
+                System.exit(0);
+            }
+        });
+        return result;
+    }
+    
 
     @Override
     public void paint () {
