@@ -10,6 +10,7 @@ public class SumNode extends BinaryNode{
 	@Override
 	public void evaluate(){
 		//System.out.println("evaluating");
+		//need to remove redundant code??? abstractMathNode?
 		Container<Double> myContainer = new Container<Double>();
 		getLeft().evaluate();
 		getRight().evaluate();
