@@ -1,5 +1,6 @@
 package parser.node.math;
 import parser.node.BinaryNode;
+import parser.node.Container;
 import parser.node.Node;
 /**
  * 
@@ -10,12 +11,13 @@ public abstract class MathNode extends BinaryNode {
 	public MathNode(Node head) {
 		super(head);
 	}
-	
-	//this class will be used to remove redundant code in evaluate
-	
+
 	@Override
 	public void evaluate(){
-		
+		Container<Double> myContainer = new Container<Double>();
+		evaluateChildren();
+		setContainerValue(myContainer);
+		setContainer(myContainer);
 	}
-
+	public abstract void setContainerValue(Container<Double> container);
 }

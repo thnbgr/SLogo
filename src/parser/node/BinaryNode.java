@@ -19,4 +19,8 @@ public class BinaryNode extends Node{
 	public Node getRight(){
 		return myRight;
 	}
+	public void evaluateChildren(){
+		myLeft.evaluate();
+		myRight.evaluate();
+	}
 }

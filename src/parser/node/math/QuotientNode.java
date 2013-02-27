@@ -7,20 +7,15 @@ import parser.node.Node;
  * 
  * @author Junho Oh
  */
-public class QuotientNode extends BinaryNode{
+public class QuotientNode extends MathNode{
 
 	public QuotientNode(Node head) {
 		super(head);
 
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
-	public void evaluate() {
-		Container<Double> myContainer = new Container<Double>();
-		getLeft().evaluate();
-		getRight().evaluate();
-		myContainer.setValue((((Container<Double>)getLeft().getContainer()).getValue() / ((Container<Double>)getRight().getContainer()).getValue()));
-		setContainer(myContainer);
+	public void setContainerValue(Container<Double> container){
+		container.setValue(((Container<Double>)getLeft().getContainer()).getValue() / ((Container<Double>)getRight().getContainer()).getValue());
 	}
-	
 }

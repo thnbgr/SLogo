@@ -5,7 +5,7 @@ import parser.node.*;
  * 
  * @author Junho Oh
  */
-public class DifferenceNode extends BinaryNode{
+public class DifferenceNode extends MathNode{
 
 	public DifferenceNode(Node head) {
 		super(head);
@@ -13,14 +13,7 @@ public class DifferenceNode extends BinaryNode{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void evaluate(){
-		//System.out.println("evaluating");
-		Container<Double> myContainer = new Container<Double>();
-		getLeft().evaluate();
-		getRight().evaluate();
-		myContainer.setValue((((Container<Double>)getLeft().getContainer()).getValue() - ((Container<Double>)getRight().getContainer()).getValue()));
-		setContainer(myContainer);
-		//System.out.println(getContainer().getValue());
+	public void setContainerValue(Container<Double> container){
+		container.setValue(((Container<Double>)getLeft().getContainer()).getValue() - ((Container<Double>)getRight().getContainer()).getValue());
 	}
-
 }

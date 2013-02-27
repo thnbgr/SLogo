@@ -3,6 +3,7 @@ sum			,	+		,	2		,	parser.node.math.SumNode
 difference	,	-		,	2		,	parser.node.math.DifferenceNode
 product		,	*		,	2		,	parser.node.math.ProductNode
 quotient	,	/		,	2		,	parser.node.math.QuotientNode
+remainder	,	%		,	2		,	parser.node.math.RemainderNode
 minus		,	~		,	1		,	parser.node.math.MinusNode
 random		,			,	1		,	parser.node.math.RandomNode
 less?		,	lessp	,	2		,	parser.node.logic.LessNode

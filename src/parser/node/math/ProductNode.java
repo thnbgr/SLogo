@@ -8,20 +8,17 @@ import parser.node.Node;
  * 
  * @author Junho Oh
  */
-public class ProductNode extends BinaryNode{
+public class ProductNode extends MathNode{
 
 	public ProductNode(Node head) {
 		super(head);
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void evaluate() {
-		Container<Double> myContainer = new Container<Double>();
-		getLeft().evaluate();
-		getRight().evaluate();
-		myContainer.setValue((((Container<Double>)getLeft().getContainer()).getValue() * ((Container<Double>)getRight().getContainer()).getValue()));
-		setContainer(myContainer);
+	public void setContainerValue(Container<Double> container){
+		container.setValue(((Container<Double>)getLeft().getContainer()).getValue() * ((Container<Double>)getRight().getContainer()).getValue());
 	}
 
 }
