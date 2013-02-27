@@ -25,17 +25,19 @@ public class Controller implements Observer {
     private Model myModel;
     private Map<String, EncodeParser> myEncodeMap;
     private CommandParser myCommandParser;
-    private static final Dimension myDisplaySize = new Dimension(500, 500);
+    private static final Dimension myDisplayViewSize = new Dimension(500, 500);
+    private static final Dimension myInputViewSize = new Dimension(500, 500);
+
 
 
     public Controller () {
         myModel = new Model();
-        myDisplayView = new DisplayView(myDisplaySize);
+        myDisplayView = new DisplayView(myDisplayViewSize);
         
         myCommandParser = new CommandParser(myDisplayView);
         myCommandParser.addObserver(this);
         
-        myInputView = new InputView("Command Inputs", "English", myCommandParser);
+        myInputView = new InputView("Command Inputs", "English", myCommandParser, myInputViewSize);
         
         myEncodeMap = new HashMap<String, EncodeParser>();
         myEncodeMap.put("fd", new FDEncodeParser());
