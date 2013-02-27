@@ -3,6 +3,7 @@ package view;
 import command.CommandParser;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -56,12 +57,15 @@ public class InputView extends JFrame implements IView {
      * InputView Constructor
      *@param title is the title of window
      *@param language is the default language
+     *@param size is the size of the screen
      */
-    public InputView (String title, String language) {
+    public InputView (String title, String language, Dimension size) {
         //create new command parser
         myCommandParser = new CommandParser();
         // set properties of frame
         setTitle(title);
+        setPreferredSize(size);
+        setSize(size);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // create a single file chooser for the entire example
         myChooser = new JFileChooser(System.getProperties().getProperty(USER_DIR));
@@ -277,16 +281,6 @@ public class InputView extends JFrame implements IView {
             }
         });
         return result;
-    }
-    
-    /**
-     * Java starts the program here and does not end until GUI goes away
-     * 
-     * @param args command-line arguments
-     */
-    
-    public static void main (String[] args) {
-        new InputView("SLogo", "English");
     }
 
     @Override
