@@ -16,7 +16,7 @@ public class LessNode extends LogicNode {
 
 	@Override
 	public void setContainerValue(Container<Boolean> container) {
-		container.setValue(((Container<Double>)getLeft().getContainer()).getValue() - ((Container<Double>)getRight().getContainer()).getValue());
+		container.setValue(((Container<Double>)getLeft().getContainer()).getValue() < ((Container<Double>)getRight().getContainer()).getValue());
 	}
 	
 }
