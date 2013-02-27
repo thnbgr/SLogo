@@ -1,5 +1,8 @@
 package parser;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,7 +25,8 @@ public class Parser {
 	}
 	public static EncodeTree encode(CommandBundle myPackage) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
 		//syntax check
-		StringTokenizer st = new StringTokenizer(myPackage.getStringCommand());
+		String command = myPackage.getStringCommand().toLowerCase();
+		StringTokenizer st = new StringTokenizer(command);
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		while(st.hasMoreTokens()){
 			String curValue = st.nextToken();
@@ -66,13 +70,29 @@ public class Parser {
 		head.evaluate();
 		System.out.println(head.getContainer().getValue());
 	}
-	
+	private static String readUserInput(String printMessage) throws IOException{
+        System.out.print(printMessage);
+        InputStreamReader isr = new InputStreamReader ( System.in );
+        BufferedReader br = new BufferedReader (isr);
+        String returnString;
+        try {
+            returnString=br.readLine();
+        } catch (IOException e) {
+           throw new IOException(e);
+        }
+        return returnString;
+    }
 	public static void main(String args[]) throws IllegalArgumentException, SecurityException, InvocationTargetException{
 		EncodeTree et = new EncodeTree();
-		CommandBundle cb = new CommandBundle("sum difference 100 30 50", null);
+		CommandBundle cb;
+		int commandCount = 10;
 		try {
-			et = Parser.encode(cb);
-			Parser.decode(et);
+			while(commandCount > 0){
+				cb = new CommandBundle(readUserInput("enter command: "), null);
+				et = Parser.encode(cb);
+				Parser.decode(et);
+				commandCount--;
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

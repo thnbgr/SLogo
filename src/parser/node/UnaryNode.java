@@ -12,5 +12,7 @@ public class UnaryNode extends Node {
 	public void setchild(Node child){
 		myChild = child;
 	}
-	
+	public Node getChild(){
+		return myChild;
+	}
 }

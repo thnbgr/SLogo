@@ -1,7 +1,8 @@
 package parser.node.math;
 
-import parser.node.Node;
+import parser.node.Container;
 import parser.node.UnaryNode;
+import parser.node.Node;
 /**
  * 
  * @author Junho Oh
@@ -10,7 +11,11 @@ public class MinusNode extends UnaryNode {
 
 	public MinusNode(Node head) {
 		super(head);
-		// TODO Auto-generated constructor stub
 	}
-
+	@Override
+	public void evaluate(){
+		Container<Double> myContainer = new Container<Double>();
+		myContainer.setValue(-((Container<Double>)getChild().getContainer()).getValue());
+		setContainer(myContainer);
+	}
 }
