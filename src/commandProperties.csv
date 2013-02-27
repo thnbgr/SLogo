@@ -1,4 +1,5 @@
 string,symbol,args,class
 sum,+,2,SumNode
 difference,-,2,DifferenceNode
-
+product,*,2,ProductNode
+quotient,/,2,QuotientNode
