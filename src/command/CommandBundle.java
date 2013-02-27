@@ -1,6 +1,6 @@
 package command;
 
-import view.Processable;
+import util.Processable;
 
 public class CommandBundle {
 

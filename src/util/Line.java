@@ -1,6 +1,6 @@
 package util;
 
-public class Line {
+public class Line extends Drawable {
 
     private Location startLocation;
     private Location endLocation;
@@ -9,4 +9,11 @@ public class Line {
         startLocation = s;
         endLocation = e;
     }
+
+    @Override
+    public void paint () {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

@@ -7,21 +7,22 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import command.CommandParser;
 
+
 /**
  * 
  * @author Eric Wu
  * @author Natalia Carvalho
- *
+ * 
  */
 
 public class InputView extends JFrame implements IView {
-    
+
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
     private static final int FIELD_SIZE = 30;
     private static final int NO_KEY_PRESSED = -1;
     private static final Point NO_MOUSE_PRESSED = null;
     private static final String USER_DIR = "user.dir";
-    //Listeners
+    // Listeners
     private ActionListener myActionListener;
     private MouseListener myMouseListener;
     // most GUI components will be temporary variables,
@@ -29,21 +30,17 @@ public class InputView extends JFrame implements IView {
     private JTextArea myTextArea;
     private JFileChooser myChooser;
     private FocusListener myFocusListener;
-    // this constant should be defined by Java, not me :( 
+    // this constant should be defined by Java, not me :(
     // get strings from resource file
     private ResourceBundle myResources;
     private CommandParser myCommandParser;
-    
 
-    
     private Point myLastMousePosition;
 
-
-
-    public InputView (String title, String language) {
-        //create new command parser
-        myCommandParser = new CommandParser();
+    public InputView (String title, String language, CommandParser parser) {
+        // create new command parser
         // set properties of frame
+        myCommandParser = parser;
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // create a single file chooser for the entire example
@@ -53,12 +50,12 @@ public class InputView extends JFrame implements IView {
         // create listeners that will respond to events
         makeListeners();
         getContentPane().add(makeInput(), BorderLayout.NORTH);
-        
+
         // size and display the GUI
         pack();
         setVisible(true);
     }
-    
+
     /**
      * Create all the listeners so they can be later assigned to specific
      * components.
@@ -75,18 +72,18 @@ public class InputView extends JFrame implements IView {
             @Override
             public void actionPerformed (ActionEvent e) {
                 echo("action", e);
-                myCommandParser.setInput(e.getActionCommand());
+                myCommandParser.sendAction(e.getActionCommand());
             }
         };
     }
-    
+
     /**
      * Echo action events including time event occurs
      */
     private void echo (String s, ActionEvent e) {
         showMessage(s + " = " + e.getActionCommand() + " " + e.getWhen());
     }
-    
+
     /**
      * Display any string message in the main text area.
      * 
@@ -96,10 +93,10 @@ public class InputView extends JFrame implements IView {
         myTextArea.append(message + "\n");
         myTextArea.setCaretPosition(myTextArea.getText().length());
     }
-    
+
     /**
-     * Create an input area for the user --- 
-     *   text field for text
+     * Create an input area for the user ---
+     * text field for text
      */
     protected JComponent makeInput () {
         JPanel result = new JPanel();
@@ -107,7 +104,7 @@ public class InputView extends JFrame implements IView {
         result.add(makeDisplay());
         return result;
     }
-    
+
     /**
      * Create a standard text field (a single line that responds to enter being
      * pressed as an ActionEvent) that listens for a variety of kinds of events
@@ -119,7 +116,7 @@ public class InputView extends JFrame implements IView {
         result.addActionListener(myActionListener);
         return result;
     }
-    
+
     /**
      * Create a display area for showing out to the user, since it may display
      * lots of text, make it automatically scroll when needed...this is just temporary
@@ -129,21 +126,21 @@ public class InputView extends JFrame implements IView {
         myTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
         return new JScrollPane(myTextArea);
     }
-    
+
     /**
      * Java starts the program here and does not end until GUI goes away
      * 
      * @param args command-line arguments
      */
-    
-    public static void main (String[] args) {
-        new InputView("Command Inputs", "English");
-    }
+
+   /* public static void main (String[] args) {
+        new InputView("Command Inputs", "English", new CommandParser(null));
+    } */
 
     @Override
     public void paint () {
         // TODO Auto-generated method stub
-        
+
     }
 
 }
