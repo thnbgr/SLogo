@@ -26,7 +26,7 @@ public class Controller implements Observer {
     private Map<String, EncodeParser> myEncodeMap;
     private CommandParser myCommandParser;
     private static final Dimension myDisplayViewSize = new Dimension(500, 500);
-    private static final Dimension myInputViewSize = new Dimension(500, 500);
+    private static final Dimension myInputViewSize = new Dimension(500, 600);
 
 
 

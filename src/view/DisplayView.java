@@ -40,6 +40,7 @@ public class DisplayView extends JComponent implements IView {
         assignID++;
     }
 
+    
     /**
      * Sets the size of the display view
     * @param pen used to paint shape on the screen
@@ -55,6 +56,16 @@ public class DisplayView extends JComponent implements IView {
     @Override
     public void paint () {
         
+    }
+    
+    /**
+     * Probably move this over to a DisplayModel later
+     */
+    public void createTurtle () {
+        Drawable t = new Turtle();
+        setDrawableID(t);
+        myDrawables.add(t);
+        System.out.println("turtle id: "+t.getID());
     }
 
     public void updateMovable (Processable p) {

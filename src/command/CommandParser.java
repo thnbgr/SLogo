@@ -1,6 +1,8 @@
 package command;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import util.Drawable;
@@ -15,12 +17,34 @@ public class CommandParser extends Observable {
     private Processable myProcessable;
     private DisplayView myDisplayView;
     private CommandBundle myCommandBundle;
+    private List<String> myViewCommands;
 
     public CommandParser (IView d) {
         myDisplayView = (DisplayView) d;
+        myViewCommands = new ArrayList<String>();
+        addViewCommands();
+    }
+
+    public void addViewCommands () {
+        myViewCommands.add("create");
+        // add the rest of the view commands (commands that don't concern model)
     }
 
     public void sendAction (String input) {
+        if (myViewCommands.contains(extractCommandAction(input))) {
+            // execute command
+            myDisplayView.createTurtle();
+        }
+        else {
+            sendToModel(input);
+        }
+    }
+
+    private String extractCommandAction (String input) {
+        return input.split(" ")[0];
+    }
+
+    public void sendToModel (String input) {
         setStringCommand(input); // prepares the string command for the bundle
         setProcessable(input); // prepares the Processable for the bundle
         createBundle();
@@ -29,7 +53,6 @@ public class CommandParser extends Observable {
 
     public void setStringCommand (String input) {
         myStringCommand = input;
-        System.out.println(myStringCommand);
     }
 
     public void setProcessable (String input) {
@@ -39,7 +62,7 @@ public class CommandParser extends Observable {
 
     private int extractIDFromString (String input) {
         String[] array = input.split(", ");
-        if (array[1] == null) return 0;
+        if (array.length < 2) return 0;
         return Integer.parseInt(array[1]);
     }
 
