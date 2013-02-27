@@ -4,7 +4,7 @@ import parser.node.BinaryNode;
 import parser.node.IDoubleNode;
 import parser.node.Node;
 
-public class ProductNode extends BinaryNode implements IDoubleNode{
+public class ProductNode extends BinaryNode{
 
 	public ProductNode(Node head) {
 		super(head);
