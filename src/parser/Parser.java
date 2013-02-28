@@ -18,12 +18,12 @@ import command.CommandBundle;
 public class Parser {
 	//probably shouldn't be static?
 	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
-	private static CSVTable myCSVTable;
+	private CSVTable myCSVTable;
 
-	static{
+	public Parser(){
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
 	}
-	public static EncodeTree encode(CommandBundle myPackage) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
+	public EncodeTree encode(CommandBundle myPackage) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
 		//syntax check
 		String command = myPackage.getStringCommand().toLowerCase();
 		StringTokenizer st = new StringTokenizer(command);
@@ -37,7 +37,6 @@ public class Parser {
 			}
 			else{
 				Class<?> headClass = Class.forName(myCSVTable.returnCSVRow(curValue).getCommandFilePath());
-				//Class nodeClass = Class.forName(myNodeInit.get(myCSVTable.returnCSVRow(nodeType).getCommandNumArgs()));
 				temp = (Node) headClass.getConstructors()[0].newInstance(new Node());
 			}
 			myCurNodes.add(temp);
@@ -47,7 +46,7 @@ public class Parser {
 		return returnTree;
 	}
 	
-	private static Node makeTree(Node token, Queue<Node> tokens){
+	private Node makeTree(Node token, Queue<Node> tokens){
 		//polymorphism can remove this later
 		if(token instanceof ValueNode){ return token; }
 		else if(token instanceof BinaryNode){
@@ -65,12 +64,12 @@ public class Parser {
 		return token;
 	}
 	
-	public static void decode(EncodeTree tree){
+	public void decode(EncodeTree tree){
 		Node head = tree.getHead();
 		head.evaluate();
 		System.out.println(head.getContainer().getValue());
 	}
-	private static String readUserInput(String printMessage) throws IOException{
+	private String readUserInput(String printMessage) throws IOException{
         System.out.print(printMessage);
         InputStreamReader isr = new InputStreamReader ( System.in );
         BufferedReader br = new BufferedReader (isr);
@@ -84,13 +83,14 @@ public class Parser {
     }
 	public static void main(String args[]) throws IllegalArgumentException, SecurityException, InvocationTargetException{
 		EncodeTree et = new EncodeTree();
+		Parser p = new Parser();
 		CommandBundle cb;
 		int commandCount = 10;
 		try {
 			while(commandCount > 0){
-				cb = new CommandBundle(readUserInput("enter command: "), null);
-				et = Parser.encode(cb);
-				Parser.decode(et);
+				cb = new CommandBundle(p.readUserInput("enter command: "), null);
+				et = p.encode(cb);
+				p.decode(et);
 				commandCount--;
 			}
 		} catch (Exception e) {
@@ -99,13 +99,4 @@ public class Parser {
 		}
 		
 	}
-	/*
-	 * should probably not have a parser hierarchy....
-	 * TODO: 
-	 * 1. tokenize the string into operators and values
-	 * 2. syntax check
-	 * 3. build tree
-	 * 
-	 */
-	
 }
