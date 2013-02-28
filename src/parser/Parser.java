@@ -16,16 +16,16 @@ import command.CommandBundle;
  * @author Junho Oh
  */
 public class Parser {
-	//probably shouldn't be static?
+
 	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
 	private CSVTable myCSVTable;
 
 	public Parser(){
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
 	}
-	public EncodeTree encode(CommandBundle myPackage) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
+	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
 		//syntax check
-		String command = myPackage.getStringCommand().toLowerCase();
+		command.toLowerCase();
 		StringTokenizer st = new StringTokenizer(command);
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		while(st.hasMoreTokens()){
@@ -84,12 +84,12 @@ public class Parser {
 	public static void main(String args[]) throws IllegalArgumentException, SecurityException, InvocationTargetException{
 		EncodeTree et = new EncodeTree();
 		Parser p = new Parser();
-		CommandBundle cb;
+		String s;
 		int commandCount = 10;
 		try {
 			while(commandCount > 0){
-				cb = new CommandBundle(p.readUserInput("enter command: "), null);
-				et = p.encode(cb);
+				s = p.readUserInput("enter command: ");
+				et = p.encode(s);
 				p.decode(et);
 				commandCount--;
 			}
