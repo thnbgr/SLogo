@@ -2,18 +2,13 @@ package parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import parser.node.Node;
-
-import command.CommandBundle;
 /*
  * @author Junho Oh
  */
@@ -31,12 +26,18 @@ public class PreParser {
 		return myEncodeTrees;
 	}
 	
-	public static void process(String command){
-		Stack<String> stack = new Stack<String>();
+	public static boolean process(String command){ //static for testing propose
+		if (command.equals("0")){
+			System.out.println("valid command!!!!");
+			return true;
+		}
+		
 		Map<String, String> validCommandRegex = new HashMap<String, String>();
 		validCommandRegex.put("FORWARD", "(^\\s\\d+)");
 		validCommandRegex.put("SUM", "(^\\s\\d+\\s\\d+)");
-		//TODO: reflection
+		validCommandRegex.put("IF", "(^\\s\\d+\\s\\[\\s0\\s\\]\\s\\[\\s0\\s\\])");
+		//TODO: reflection to store regex
+		//TODO: naming/organizing code
 		
 		String commandPattern = "(\\w+)";
 		
@@ -62,14 +63,18 @@ public class PreParser {
 			Matcher m2 = r2.matcher(command).region(endIndex, command.length());
 			if (m2.find()){
 				System.out.println(m2.group(1));
-				StringBuffer simplifiedCommand = new StringBuffer();
-				//TODO: replace command, recursion
+				int endIndex2 = m2.end();
+				String simplifiedCommand = command.substring(0, startIndex) + "0" + command.substring(endIndex2);
+				System.out.println(simplifiedCommand);
+				process(simplifiedCommand);
 			}else{
 				System.out.println("NO MATCHES!!!");
 			}
 		}
+		return false;
 		
 	}
+	
 	private void makeTrees(String command, int repeatCounter){
 		try {
 			myEncodeTrees.add(myParser.encode(command));
