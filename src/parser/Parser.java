@@ -94,7 +94,6 @@ public class Parser {
 				commandCount--;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
