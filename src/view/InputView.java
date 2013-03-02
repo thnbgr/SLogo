@@ -55,12 +55,11 @@ public class InputView extends JFrame implements IView {
     private ResourceBundle myResources;
     private CommandParser myCommandParser;
 
-    private Point myLastMousePosition;
-
     /**
      * InputView Constructor
      *@param title is the title of window
      *@param language is the default language
+     *@param parser is where the information is passed to
      *@param size is the size of the screen
      */
     public InputView (String title, String language, CommandParser parser, Dimension size) {

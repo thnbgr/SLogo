@@ -1,8 +1,14 @@
 package util;
 
+/**
+ * Create Turtle
+ * 
+ * @author Natalia Carvalho
+ * @author Eric Wu
+ */
 public class Turtle extends Sprite {
 
-    private boolean isPenUp;
+    private boolean myIsPenUp;
 
     public Turtle() {
         
@@ -10,10 +16,10 @@ public class Turtle extends Sprite {
     }
     
     public void penDown() {
-        isPenUp = false;
+        myIsPenUp = false;
     }
     
     public void penUp() {
-        isPenUp = true;
+        myIsPenUp = true;
     }
 }
