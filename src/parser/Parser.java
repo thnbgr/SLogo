@@ -59,10 +59,10 @@ public class Parser {
 	//put into model
 	public void decode(EncodeTree tree){
 		Node head = tree.getHead();
-	
+		for(int i = 0; i < 5;i++){
 			head.evaluate();
 			System.out.println(head.getContainer().getValue());
-		
+		}
 		
 	}
 	
