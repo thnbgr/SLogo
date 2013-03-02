@@ -13,3 +13,4 @@ notequal?	,	notequalp	,	2		,	parser.node.logic.NotEqualNode
 and			,				,	2		,	parser.node.logic.AndNode
 or			,				,	2		,	parser.node.logic.OrNode
 not			,				,	1		,	parser.node.logic.NotNode
+make		,				,	2		,	parser.node.control.MakeNode

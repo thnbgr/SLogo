@@ -10,9 +10,7 @@ import parser.node.Node;
  */
 public class ProductNode extends MathNode{
 
-	public ProductNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public ProductNode() {
 	}
 
 	@SuppressWarnings("unchecked")

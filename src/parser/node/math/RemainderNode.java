@@ -9,9 +9,7 @@ import parser.node.Node;
  */
 public class RemainderNode extends MathNode {
 	//should be extension of quotient? 
-	public RemainderNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public RemainderNode() {
 	}
 
 	@SuppressWarnings("unchecked")

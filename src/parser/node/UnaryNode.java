@@ -6,8 +6,7 @@ import java.util.Queue;
  */
 public class UnaryNode extends Node {
 	Node myChild;
-	public UnaryNode(Node head) {
-		super(head);
+	public UnaryNode() {
 		myChild = new Node();
 	}
 	public void setchild(Node child){

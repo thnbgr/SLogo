@@ -8,8 +8,7 @@ import parser.node.Node;
  */
 public abstract class MathNode extends BinaryNode {
 
-	public MathNode(Node head) {
-		super(head);
+	public MathNode() {
 	}
 
 	@Override

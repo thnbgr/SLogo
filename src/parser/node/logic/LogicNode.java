@@ -6,9 +6,7 @@ import parser.node.Node;
 
 public abstract class LogicNode extends BinaryNode {
 
-	public LogicNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public LogicNode() {
 	}
 
 	@Override

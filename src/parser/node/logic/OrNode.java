@@ -5,9 +5,7 @@ import parser.node.Node;
 
 public class OrNode extends LogicNode {
 
-	public OrNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public OrNode() {
 	}
 
 	@Override

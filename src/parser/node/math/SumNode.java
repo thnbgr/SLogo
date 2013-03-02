@@ -6,8 +6,7 @@ import parser.node.*;
  * @author Junho Oh
  */
 public class SumNode extends MathNode{
-	public SumNode(Node head) {
-		super(head);
+	public SumNode() {
 	}
 
 	@SuppressWarnings("unchecked")

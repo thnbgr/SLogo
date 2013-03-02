@@ -6,9 +6,7 @@ import parser.node.UnaryNode;
 
 public class NotNode extends UnaryNode {
 
-	public NotNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public NotNode() {
 	}
 	@Override
 	public void evaluate(){

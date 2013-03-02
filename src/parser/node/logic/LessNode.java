@@ -9,9 +9,7 @@ import parser.node.Node;
  */
 public class LessNode extends LogicNode {
 
-	public LessNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public LessNode() {
 	}
 
 	@Override

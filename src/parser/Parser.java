@@ -10,18 +10,20 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 import parser.node.*;
 import command.CommandBundle;
+import java.util.ArrayList;
 
 /**
  * 
  * @author Junho Oh
  */
 public class Parser {
-
 	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
 	private CSVTable myCSVTable;
+	private ArrayList<Node> myVariables;
 
 	public Parser(){
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
+		myVariables = new ArrayList<Node>();
 	}
 	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
 		//syntax check
@@ -33,15 +35,20 @@ public class Parser {
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		while(st.hasMoreTokens()){
 			String curValue = st.nextToken();
+			
+			//curValue = "make" 
+			//, st.nextToken(); 
 			Node temp = null;
 			if(myCSVTable.returnCSVRow(curValue) == null){
-				temp = new ValueNode(null,Double.parseDouble(curValue));
+				temp = new ValueNode(Double.parseDouble(curValue));
 			}
 			else{
 				Class<?> headClass = Class.forName(myCSVTable.returnCSVRow(curValue).getCommandFilePath());
-				temp = (Node) headClass.getConstructors()[0].newInstance(new Node());
+				temp = (Node) headClass.getConstructors()[0].newInstance();
 			}
 			myCurNodes.add(temp);
+			
+			//if(temp instanceof MakeNode) { myVariables.add(temp); }
 		}
 		Node curNode = myCurNodes.remove();
 		curNode.makeTree(myCurNodes);
@@ -52,9 +59,17 @@ public class Parser {
 	//put into model
 	public void decode(EncodeTree tree){
 		Node head = tree.getHead();
-		head.evaluate();
-		System.out.println(head.getContainer().getValue());
+		for(int i = 0; i < 5;i++){
+			head.evaluate();
+			System.out.println(head.getContainer().getValue());
+		}
+		
 	}
+	
+	public ArrayList<Node> getVariables(){
+		return myVariables;
+	}
+	
 	private String readUserInput(String printMessage) throws IOException{
         System.out.print(printMessage);
         InputStreamReader isr = new InputStreamReader ( System.in );

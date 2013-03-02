@@ -8,10 +8,6 @@ import java.util.Queue;
 public class Node {
 	private Node myHead;
 	private Container<?> myContainer;
-	
-	public Node(Node head) {
-		myHead = head;
-	}
 	public Node(){
 		myHead = null;
 	}

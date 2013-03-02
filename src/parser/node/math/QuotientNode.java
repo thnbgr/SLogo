@@ -9,9 +9,7 @@ import parser.node.Node;
  */
 public class QuotientNode extends MathNode{
 
-	public QuotientNode(Node head) {
-		super(head);
-
+	public QuotientNode() {
 	}
 	@SuppressWarnings("unchecked")
 	@Override

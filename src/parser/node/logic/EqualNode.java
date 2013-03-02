@@ -5,9 +5,7 @@ import parser.node.Node;
 
 public class EqualNode extends LogicNode {
 
-	public EqualNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public EqualNode() {
 	}
 
 	@Override

@@ -7,8 +7,7 @@ import parser.node.*;
  */
 public class DifferenceNode extends MathNode{
 
-	public DifferenceNode(Node head) {
-		super(head);
+	public DifferenceNode() {
 	}
 	
 	@SuppressWarnings("unchecked")

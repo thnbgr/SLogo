@@ -9,8 +9,7 @@ import parser.node.Node;
  */
 public class MinusNode extends UnaryNode {
 
-	public MinusNode(Node head) {
-		super(head);
+	public MinusNode() {
 	}
 	@Override
 	public void evaluate(){

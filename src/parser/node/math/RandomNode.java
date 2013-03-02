@@ -8,8 +8,7 @@ import parser.node.Node;
 
 public class RandomNode extends UnaryNode {
 
-	public RandomNode(Node head) {
-		super(head);
+	public RandomNode() {
 	}
 
 	@Override

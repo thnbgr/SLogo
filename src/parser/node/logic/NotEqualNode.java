@@ -5,8 +5,7 @@ import parser.node.Node;
 
 public class NotEqualNode extends LogicNode {
 
-	public NotEqualNode(Node head) {
-		super(head);
+	public NotEqualNode() {
 	}
 
 	@Override

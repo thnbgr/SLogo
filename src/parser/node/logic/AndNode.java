@@ -5,9 +5,7 @@ import parser.node.Node;
 
 public class AndNode extends LogicNode {
 
-	public AndNode(Node head) {
-		super(head);
-		// TODO Auto-generated constructor stub
+	public AndNode() {
 	}
 
 	@Override
