@@ -1,4 +1,5 @@
 package parser.node;
+import java.util.Queue;
 /**
  * 
  * @author Junho Oh
@@ -14,5 +15,11 @@ public class UnaryNode extends Node {
 	}
 	public Node getChild(){
 		return myChild;
+	}
+	@Override
+	public void makeTree(Queue<Node> tokens){
+		Node child = tokens.remove();
+		child.makeTree(tokens);
+		this.setchild(child);
 	}
 }

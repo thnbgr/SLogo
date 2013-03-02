@@ -1,4 +1,6 @@
 package parser.node;
+
+import java.util.Queue;
 /*
  * @author Junho Oh
  */
@@ -22,5 +24,13 @@ public class BinaryNode extends Node{
 	public void evaluateChildren(){
 		myLeft.evaluate();
 		myRight.evaluate();
+	}
+	@Override
+	public void makeTree(Queue<Node> tokens){
+		Node left = tokens.remove();
+		left.makeTree(tokens);
+		Node right = tokens.remove();
+		right.makeTree(tokens);
+		this.setChildren(left, right);
 	}
 }

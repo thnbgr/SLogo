@@ -42,16 +42,6 @@ public class CSVTable{
 		myRows =  new ArrayList<CSVRow>();
 		readFile(fileName);
 	}
-
-	public boolean isValidCommand(String command){ // not necessary anymore. Syntax checking checks that
-		boolean isValidCommand = false;
-		for(CSVRow row : myRows){
-			if(row.isValidCommand(command)){
-				isValidCommand = true;
-			}
-		}
-		return isValidCommand;
-	}
 	public CSVRow returnCSVRow(String command){
 		for(int i = 0; i < myRows.size();i++){
 			if(myRows.get(i).isValidCommand(command)){

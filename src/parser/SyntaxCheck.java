@@ -81,7 +81,7 @@ public class SyntaxCheck {
         BufferedReader br = new BufferedReader (isr);
         String returnString;
         try {
-            returnString=br.readLine();
+            returnString=br.readLine();		
         } catch (IOException e) {
            throw new IOException(e);
         }

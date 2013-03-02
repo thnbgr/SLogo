@@ -26,6 +26,9 @@ public class Parser {
 	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
 		//syntax check
 		command.toLowerCase();
+		command = command.replace("[", "");
+		command = command.replace("]", "");
+		
 		StringTokenizer st = new StringTokenizer(command);
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		while(st.hasMoreTokens()){
@@ -40,29 +43,13 @@ public class Parser {
 			}
 			myCurNodes.add(temp);
 		}
-		EncodeTree returnTree = new EncodeTree(makeTree(myCurNodes.remove(), myCurNodes));
+		Node curNode = myCurNodes.remove();
+		curNode.makeTree(myCurNodes);
+		EncodeTree returnTree = new EncodeTree(curNode);
 
 		return returnTree;
 	}
-	
-	private Node makeTree(Node token, Queue<Node> tokens){
-		//polymorphism can remove this later
-		if(token instanceof ValueNode){ return token; }
-		else if(token instanceof BinaryNode){
-			Node left = tokens.remove();
-			left = makeTree(left, tokens);
-			Node right = tokens.remove();
-			right = makeTree(right, tokens);
-			((BinaryNode)token).setChildren(left, right);
-		}
-		else if(token instanceof UnaryNode){
-			Node child = tokens.remove();
-			child = makeTree(child, tokens);
-			((UnaryNode)token).setchild(child);
-		}
-		return token;
-	}
-	
+	//put into model
 	public void decode(EncodeTree tree){
 		Node head = tree.getHead();
 		head.evaluate();
