@@ -31,7 +31,6 @@ public class Parser {
 		while(st.hasMoreTokens()){
 			String curValue = st.nextToken();
 			Node temp = null;
-			//TODO: how to check for whether it is a variable? or garbage?
 			if(myCSVTable.returnCSVRow(curValue) == null){
 				temp = new ValueNode(null,Double.parseDouble(curValue));
 			}

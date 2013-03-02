@@ -43,7 +43,7 @@ public class CSVTable{
 		readFile(fileName);
 	}
 
-	public boolean isValidCommand(String command){
+	public boolean isValidCommand(String command){ // not necessary anymore. Syntax checking checks that
 		boolean isValidCommand = false;
 		for(CSVRow row : myRows){
 			if(row.isValidCommand(command)){
