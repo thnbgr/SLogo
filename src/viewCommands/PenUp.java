@@ -12,7 +12,7 @@ public class PenUp extends ViewCommand {
 
     public void executeCommand () {
         Turtle t = (Turtle) (myDisplayView.getDrawableByID(0));
-        t.penUp();
+        t.setPenUp();
     }
 
 }

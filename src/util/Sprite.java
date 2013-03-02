@@ -1,6 +1,7 @@
 package util;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.util.Random;
 
 
@@ -17,7 +18,7 @@ public class Sprite extends Drawable implements Movable {
     }
 
     @Override
-    public void paint () {
+    public void paint (Graphics2D pen) {
         // TODO Auto-generated method stub
 
     }
