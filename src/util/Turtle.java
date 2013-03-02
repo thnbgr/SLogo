@@ -22,4 +22,8 @@ public class Turtle extends Sprite {
     public void penUp() {
         myIsPenUp = true;
     }
+    
+    public boolean isPenDown() {
+        return isPenUp;
+    }
 }
