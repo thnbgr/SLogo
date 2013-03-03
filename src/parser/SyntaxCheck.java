@@ -14,10 +14,10 @@ public class SyntaxCheck {
 	
 	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
 	//static for testing purpose
-	private static Map<String, String> validCommandRegex = new HashMap<String, String>();
-	private static String lastCommandCall = "";
-	private static int commandCallStartIndex = 0;
-	private static int commandCallEndIndex = 0;
+	private Map<String, String> validCommandRegex = new HashMap<String, String>();
+	private String lastCommandCall = "";
+	private int commandCallStartIndex = 0;
+	private int commandCallEndIndex = 0;
 	
 	public SyntaxCheck (){
 		readFile(COMMAND_REGEXS_FILE_NAME);
@@ -27,7 +27,7 @@ public class SyntaxCheck {
 	 * Reads file from disk.
 	 * @param fileName file to read
 	 */
-	private static void readFile(String fileName){
+	private void readFile(String fileName){
 		try {
 			BufferedReader CSVFile = new BufferedReader(new FileReader(fileName));
 			String individualLine = CSVFile.readLine();
@@ -43,46 +43,47 @@ public class SyntaxCheck {
 	
 	/**
 	 * Does syntax checking before parsing. 
-	 * Check doesn't include: invalid value and variable
+	 * Check doesn't include: invalid values and variables, and multiple commands.
 	 * @param command the entire user input string
 	 * @return boolean that represents whether the input string is valid
 	 */
-	public static boolean syntaxCheck(String command){ //static for testing propose
+	public boolean syntaxCheck(String command){ //static for testing propose
 		if (command.equals("0")){
 			System.out.println("valid command!!!!");
 			return true;
 		}
 		//TODO: rename/organize code
-		//TODO: missed commands e.g. ; commandS
-							//e.g. FD :distance (possible situation??)
-							//NOT DONE: TO (?); AND; OR; NOT (tests?)
+		//TODO: FD :distance (possible situation??)
+				//NOT DONE: TO (?); AND; OR; NOT (tests?)
 		
 		findLastCommand(command);
 		
 		if (lastCommandCall.equals("")){
 			System.out.println("NO MATCHES!!"); //TODO: throw error here
-		}else{
-			String commandPattern2 = validCommandRegex.get(lastCommandCall);
-			Pattern r2 = Pattern.compile(commandPattern2);
-			Matcher m2 = r2.matcher(command).region(commandCallEndIndex, command.length());
-			if (m2.find()){
-				System.out.println(m2.group(1));
-				int endIndex2 = m2.end();
-				String simplifiedCommand = command.substring(0, commandCallStartIndex) + "0" + command.substring(endIndex2);
-				System.out.println(simplifiedCommand);
-				syntaxCheck(simplifiedCommand);
-			}else{
-				System.out.println("NO MATCHES!!!"); //TODO: throw error here
-			}
+			return false;
 		}
-		return false;
+		
+		String commandPattern2 = validCommandRegex.get(lastCommandCall);
+		Pattern r2 = Pattern.compile(commandPattern2);
+		Matcher m2 = r2.matcher(command).region(commandCallEndIndex, command.length());
+		if (m2.find()){
+			//System.out.println(m2.group(1));
+			int endIndex2 = m2.end();
+			String simplifiedCommand = command.substring(0, commandCallStartIndex) + "0" + command.substring(endIndex2);
+			//System.out.println(simplifiedCommand);
+			syntaxCheck(simplifiedCommand);
+		}else{
+			System.out.println("NO MATCHES!!!"); //TODO: throw error here
+			return false;
+		}
+		return true;
 	}
 
 	/**
 	 * finds the last Command in the input string.
 	 * @param command entire user input string
 	 */
-	private static void findLastCommand (String command){
+	private void findLastCommand (String command){
 		String commandPattern = "(\\w+)";
 		
 		Pattern r = Pattern.compile(commandPattern);
@@ -93,7 +94,7 @@ public class SyntaxCheck {
 				lastCommandCall = m.group(1);
 				commandCallStartIndex = m.start();
 				commandCallEndIndex = m.end();
-				System.out.println("YAY! " + m.group(1));
+				//System.out.println("YAY! " + m.group(1));
 			}
 		}
 	}

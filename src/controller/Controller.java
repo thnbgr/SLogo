@@ -1,5 +1,8 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +55,17 @@ public class Controller{
      * @throws InvocationTargetException
      */
     public void checkInputValidAndProcess (String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        //BUG: actually not seperated by ;
+        //BUG: actually not separated by ;
     	//SAME BUG: SyntaxCheck need recursion to test different situations. Shittest thing.
     	String[] individualInputCommands = inputCommand.split(" ; ");
         for (String s: individualInputCommands){
+        	System.out.println(mySyntaxCheck.syntaxCheck(s));
         	if (mySyntaxCheck.syntaxCheck(s)) {
-            	processInputString(s);
+        		System.out.println("individual commands" + s);
+            	System.out.println("goes here");
+        		processInputString(s);
+        	}else{
+        		//TODO: error handling: incorrect user input.
         	}
         }
     }
@@ -76,6 +84,7 @@ public class Controller{
      * @throws InvocationTargetException
      */
     public void processInputString(String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    	System.out.println("called");
     	findLastStructure(inputCommand);
     	
     	if (lastStructureCall == null){
@@ -108,7 +117,7 @@ public class Controller{
      * @param inputCommand
      */
     public void findLastStructure (String inputCommand){ //duplicate code w SyntaxCheck??
-    	String controlStructurePattern = "(REPEAT.+\\]|IF.+\\]|IFELSE.+\\].+\\]|TO.+\\].+\\])";
+    	String controlStructurePattern = "(REPEAT|IF|IFELSE|TO)";
     	Pattern r = Pattern.compile(controlStructurePattern);
     	Matcher m = r.matcher(inputCommand);
     	
@@ -116,7 +125,24 @@ public class Controller{
     		lastStructureCall = m.group(1);
     		structureCallStartIndex = m.start();
 			structureCallEndIndex = m.end();
+			//System.out.println(lastStructureCall);
     	}
+    	if (lastStructureCall != null){
+    		//System.out.println("YAY");
+    		String singleCommandPattern = "";
+    		if (lastStructureCall.equals("REPEAT") || lastStructureCall.equals("IF")){
+    			singleCommandPattern = "(\\])";
+    		}else{
+    			singleCommandPattern = "(\\].+\\])";
+    		}
+    		Pattern r2 = Pattern.compile(singleCommandPattern);
+	    	Matcher m2 = r2.matcher(inputCommand);
+	    	if (m2.find()){
+    			structureCallEndIndex = m2.end();
+    		}
+    	}
+    	//IF IF SUM 50 50 [ FORWARD 50 ] [ FORWARD 50 ]
+    	System.out.println(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
     }
     
     /**
@@ -144,6 +170,40 @@ public class Controller{
     	EncodeTree et = myParser.encode(command);
     	return et;
     }
+    
+    /**
+	 * Testing purpose.
+	 */
+	private static String readUserInput(String printMessage) throws IOException{
+        System.out.print(printMessage);
+        InputStreamReader isr = new InputStreamReader ( System.in );
+        BufferedReader br = new BufferedReader (isr);
+        String returnString;
+        try {
+            returnString=br.readLine();		
+        } catch (IOException e) {
+           throw new IOException(e);
+        }
+        return returnString;
+    }
+	
+    /**
+	 * Testing purpose.
+	 */
+	public static void main(String args[]) {
+		int commandCount = 10;
+		Model model = new Model();
+		Controller controller = new Controller(model);
+		
+		try {
+			while(commandCount > 0){
+				String s = readUserInput("enter command: ");
+				controller.checkInputValidAndProcess(s);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
     
     /**public List<Node> processIndividualStructure(String structureCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException{
     	//String[] structureComponents = structureCommand.split(" [ ");

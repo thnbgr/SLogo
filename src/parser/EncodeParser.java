@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author Junho Oh
  */
 public class EncodeParser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
+	public static final String COMMAND_PROPERTIES_FILE_NAME = "src/commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<Node> myVariables;
 

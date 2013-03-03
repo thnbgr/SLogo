@@ -22,7 +22,7 @@ public class Model {
     		          new IfElseDecodeProcesser(this), new RepeatDecodeProcesser(this)};
     private String[] myKeywords = {"IF", "IFELSE", "REPEAT"};
 	
-	public Model(Controller controller){
+	public Model(){
 		myParser = new EncodeParser();
 	}
 	
