@@ -13,3 +13,8 @@ what I assumed for the Node class to have.
 I didn't test the code/(also couldn't cuz the errors). So I'm gonna be doing that
 and repush so currently just be prepared if there's BUG in it. 
 But the methods are good to go.
+Also there's sth we both didn't pay attention to. Multiple commands are actually
+reperated by " " not ";", see the coursepage example [ fd 50 rt 90 ].
+This is REALLY annoying regarding spliting commands. Now my assumption is that 
+multiple commands will only be seperated like this in [ ], and [ ] can only be 
+used AFTER Control structures, etc, and not independently.

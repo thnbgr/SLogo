@@ -40,6 +40,17 @@ public class Controller{
         myViewList.add(view);
     }
 
+    /**
+     * Takes the user input string and checks its validity.
+     * If valid calls processInputString to process.
+     * @param inputCommand the user input string
+     * @throws IllegalArgumentException
+     * @throws SecurityException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     public void checkInputValidAndProcess (String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //BUG: actually not seperated by ;
     	//SAME BUG: SyntaxCheck need recursion to test different situations. Shittest thing.
@@ -51,6 +62,19 @@ public class Controller{
         }
     }
     
+    /**
+     * Processes a valid user input string by calling Parser to encode and Model
+     * to decode. Starts by finding and replacing all the structure calls
+     * with their return values. Then processes the updated string that
+     * consists only of operation calls.
+     * @param inputCommand
+     * @throws IllegalArgumentException
+     * @throws SecurityException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     public void processInputString(String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
     	findLastStructure(inputCommand);
     	
@@ -59,28 +83,30 @@ public class Controller{
     		for (String s: splitedCommands){
     			EncodeTree et = myParser.encode(s);
     			Node commandResult = myModel.decode(et);
-    			//update View;
+    			//TODO: update View;
     		}
     		return;
     	}
-    	
     	EncodeTree et = myParser.encode(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
 		List<Node> structureResults = new ArrayList<Node>();
     	structureResults.add(myModel.decode(et)); // need test to see whether all added
-    	
     	if (structureCallStartIndex == 0){
     		for (Node n: structureResults){
-    			//update View
+    			//TODO: update View
     		}
     		return;
     	}
-    	
     	Node lastResult = structureResults.get(structureResults.size()-1);
     	double structureCallResultValue = lastResult.myValue;
     	inputCommand = inputCommand.substring(0, structureCallStartIndex) + Double.toString(structureCallResultValue) + inputCommand.substring(rightBracketIndex);
     	processInputString(inputCommand);
     }
     
+    /**
+     * Finds the last Structure call available in the list and stores its info.
+     * If not found the info keeps the default values.
+     * @param inputCommand
+     */
     public void findLastStructure (String inputCommand){ //duplicate code w SyntaxCheck??
     	String controlStructurePattern = "(REPEAT.+\\]|IF.+\\]|IFELSE.+\\].+\\]|TO.+\\].+\\])";
     	Pattern r = Pattern.compile(controlStructurePattern);
@@ -94,7 +120,7 @@ public class Controller{
     }
     
     /**
-     * Identifies multiple commands separated by space.
+     * Identifies multiple commands in a single input separated by space.
      * @return
      */
     public ArrayList<String> splitMultipleCommands(String command){
@@ -103,6 +129,17 @@ public class Controller{
     	return commands;
     }
     
+    /**
+     * Calls Parser to encode the given String.
+     * @param command
+     * @return
+     * @throws IllegalArgumentException
+     * @throws SecurityException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     public EncodeTree encode(String command) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException{
     	EncodeTree et = myParser.encode(command);
     	return et;
