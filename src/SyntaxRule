@@ -1,0 +1,9 @@
+1. multiple commands inside [] seperate by space
+2. multiple commands outside [] superate by semicolon
+3. [] is only used after Control Structures and User-Definedommands
+
+README:
+I did the model controller parts regarding processing the command. But as said
+I probably need the IFnodes etc to simply store the commands.
+So you probably need to create a StringNode??
+I implemented IF/IFELSE/REPEAT in Model. Gonna do TO and MAKE.

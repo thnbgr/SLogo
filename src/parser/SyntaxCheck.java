@@ -23,6 +23,10 @@ public class SyntaxCheck {
 		readFile(COMMAND_REGEXS_FILE_NAME);
 	}
 	
+    /**
+	 * Reads file from disk.
+	 * @param fileName file to read
+	 */
 	private static void readFile(String fileName){
 		try {
 			BufferedReader CSVFile = new BufferedReader(new FileReader(fileName));
@@ -74,20 +78,10 @@ public class SyntaxCheck {
 		return false;
 	}
 
-	
-	private static String readUserInput(String printMessage) throws IOException{
-        System.out.print(printMessage);
-        InputStreamReader isr = new InputStreamReader ( System.in );
-        BufferedReader br = new BufferedReader (isr);
-        String returnString;
-        try {
-            returnString=br.readLine();		
-        } catch (IOException e) {
-           throw new IOException(e);
-        }
-        return returnString;
-    }
-	
+	/**
+	 * finds the last Command in the input string.
+	 * @param command entire user input string
+	 */
 	private static void findLastCommand (String command){
 		String commandPattern = "(\\w+)";
 		
@@ -104,6 +98,25 @@ public class SyntaxCheck {
 		}
 	}
 	
+    /**
+	 * Testing purpose.
+	 */
+	private static String readUserInput(String printMessage) throws IOException{
+        System.out.print(printMessage);
+        InputStreamReader isr = new InputStreamReader ( System.in );
+        BufferedReader br = new BufferedReader (isr);
+        String returnString;
+        try {
+            returnString=br.readLine();		
+        } catch (IOException e) {
+           throw new IOException(e);
+        }
+        return returnString;
+    }
+	
+    /**
+	 * Testing purpose.
+	 */
 	public static void main(String args[]) {
 		int commandCount = 10;
 		SyntaxCheck sc = new SyntaxCheck();
