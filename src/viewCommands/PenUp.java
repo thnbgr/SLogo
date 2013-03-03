@@ -11,8 +11,7 @@ public class PenUp extends ViewCommand {
     }
 
     public int executeCommand () {
-        myDisplayView.getTurtle().penUp();
+        myDisplayView.getTurtle().setPenUp();
         return 0;
     }
-
 }

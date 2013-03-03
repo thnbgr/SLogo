@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.Graphics2D;
+
 public class Line extends Drawable {
 
     private Location startLocation;
@@ -11,7 +13,7 @@ public class Line extends Drawable {
     }
 
     @Override
-    public void paint () {
+    public void paint (Graphics2D pen) {
         // TODO Auto-generated method stub
         
     }

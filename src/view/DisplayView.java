@@ -50,7 +50,7 @@ public class DisplayView extends JComponent implements IView {
     public void paint (Graphics pen) {
         pen.setColor(Color.WHITE);
         for (Drawable d : myDrawables) {
-            d.paint();
+            d.paint((Graphics2D) pen);
         }
     }
     
