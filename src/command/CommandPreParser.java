@@ -10,7 +10,6 @@ import java.util.Observer;
 import java.util.Set;
 import util.Drawable;
 import util.Processable;
-import view.CommandViewBuilder;
 import view.DisplayView;
 import view.IView;
 import viewCommands.*;
@@ -41,7 +40,7 @@ public class CommandPreParser extends Observable {
     }
 
     public void addViewCommands () {
-        CommandViewBuilder builder = new CommandViewBuilder(myDisplayView);
+        ViewCommandBuilder builder = new ViewCommandBuilder(myDisplayView);
         myViewCommands = builder.populateCommandsList();
     }
 
