@@ -12,9 +12,8 @@ public class YCor extends ViewCommand {
         myDisplayView = m;
     }
     
-    public void executeCommand () {
-        Sprite t = (Sprite) myDisplayView.getDrawableByID(0);
-        t.getLocation().getY();
+    public int executeCommand () {
+        return (int) myDisplayView.getTurtle().getLocation().getY();
     }
 
 }

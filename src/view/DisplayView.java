@@ -22,6 +22,7 @@ public class DisplayView extends JComponent implements IView {
     
     private static final long serialVersionUID = 1L;
     private List<Drawable> myDrawables;
+    private Turtle myTurtle;
     private int assignID;
 
     /**
@@ -64,6 +65,14 @@ public class DisplayView extends JComponent implements IView {
     public void addSprite (Sprite s) {
         setDrawableID(s);
         myDrawables.add(s);
+    }
+    
+    public void addTurtle () {
+        myTurtle = new Turtle();
+    }
+    
+    public Turtle getTurtle() {
+        return myTurtle;
     }
 
 

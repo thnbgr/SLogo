@@ -12,9 +12,8 @@ public class XCor extends ViewCommand {
         myDisplayView = m;
     }
     
-    public void executeCommand () {
-        Sprite t = (Sprite) myDisplayView.getDrawableByID(0);
-        t.getLocation().getX();
+    public int executeCommand () {
+        return (int) myDisplayView.getTurtle().getLocation().getX();
     }
 
 }

@@ -9,8 +9,9 @@ public class HideTurtle extends ViewCommand {
         myDisplayView = m;
     }
 
-    public void executeCommand () {
-        myDisplayView.getDrawableByID(0).setVisible(false);
+    public int executeCommand () {
+        myDisplayView.getTurtle().setVisible(false);
+        return 0;
     }
 
 }
