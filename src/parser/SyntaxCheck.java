@@ -71,12 +71,11 @@ public class SyntaxCheck {
 			int endIndex2 = m2.end();
 			String simplifiedCommand = command.substring(0, commandCallStartIndex) + "0" + command.substring(endIndex2);
 			//System.out.println(simplifiedCommand);
-			syntaxCheck(simplifiedCommand);
+			return syntaxCheck(simplifiedCommand);
 		}else{
 			System.out.println("NO MATCHES!!!"); //TODO: throw error here
 			return false;
 		}
-		return true;
 	}
 
 	/**

@@ -29,8 +29,6 @@ public class Controller{
     private String lastStructureCall = "";
 	private int structureCallStartIndex = -1;
 	private int structureCallEndIndex = -1;
-	private int leftBracketIndex = -1;
-	private int rightBracketIndex = -1;
     
     public Controller (Model model) {
         myModel = model;
@@ -59,10 +57,8 @@ public class Controller{
     	//SAME BUG: SyntaxCheck need recursion to test different situations. Shittest thing.
     	String[] individualInputCommands = inputCommand.split(" ; ");
         for (String s: individualInputCommands){
-        	System.out.println(mySyntaxCheck.syntaxCheck(s));
         	if (mySyntaxCheck.syntaxCheck(s)) {
-        		System.out.println("individual commands" + s);
-            	System.out.println("goes here");
+        		//TODO: deal with variables?? (e.g. :distance)
         		processInputString(s);
         	}else{
         		//TODO: error handling: incorrect user input.
@@ -107,7 +103,7 @@ public class Controller{
     	}
     	Node lastResult = structureResults.get(structureResults.size()-1);
     	double structureCallResultValue = lastResult.myValue;
-    	inputCommand = inputCommand.substring(0, structureCallStartIndex) + Double.toString(structureCallResultValue) + inputCommand.substring(rightBracketIndex);
+    	inputCommand = inputCommand.substring(0, structureCallStartIndex) + Double.toString(structureCallResultValue) + inputCommand.substring(structureCallEndIndex);
     	processInputString(inputCommand);
     }
     
@@ -141,7 +137,6 @@ public class Controller{
     			structureCallEndIndex = m2.end();
     		}
     	}
-    	//IF IF SUM 50 50 [ FORWARD 50 ] [ FORWARD 50 ]
     	System.out.println(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
     }
     
