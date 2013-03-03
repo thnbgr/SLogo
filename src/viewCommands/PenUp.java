@@ -10,9 +10,8 @@ public class PenUp extends ViewCommand {
         myDisplayView = m;
     }
 
-    public void executeCommand () {
-        Turtle t = (Turtle) (myDisplayView.getDrawableByID(0));
-        t.setPenUp();
+    public int executeCommand () {
+        myDisplayView.getTurtle().setPenUp();
+        return 0;
     }
-
 }

@@ -49,7 +49,7 @@ public class Turtle extends Sprite {
     /**
      * Sets pen to be down
      */
-    public void penDown() {
+    public void setPenDown() {
         myIsPenUp = false;
     }
     

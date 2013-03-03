@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import EncodeParser.EncodeParser;
-import EncodeParser.FDEncodeParser;
-import command.CommandBundle;
-import command.CommandParser;
+import command.CommandPreParser;
 import model.Model;
 import util.Processable;
 import view.DisplayView;
@@ -25,23 +22,17 @@ public class Controller implements Observer {
     private IView myInputView;
     private List<IView> myViewList;
     private Model myModel;
-    private Map<String, EncodeParser> myEncodeMap;
-    private CommandParser myCommandParser;
-
-
+    private CommandPreParser myCommandParser;
 
 
     public Controller () {
         myModel = new Model();
         myDisplayView = new DisplayView(myDisplayViewSize);
         
-        myCommandParser = new CommandParser(myDisplayView);
+        myCommandParser = new CommandPreParser(myDisplayView);
         myCommandParser.addObserver(this);
         
         myInputView = new InputView("Command Inputs", "English", myCommandParser, myInputViewSize);
-        
-        myEncodeMap = new HashMap<String, EncodeParser>();
-        myEncodeMap.put("fd", new FDEncodeParser());
     }
 
     public void addView (IView view) {
@@ -54,9 +45,12 @@ public class Controller implements Observer {
                                                   // typecast
 
         // Code below this point is the View part preparing the CommandBundle
-        CommandParser myParser = (CommandParser) a;
-        CommandBundle myBundle = myParser.getBundle();
-
+        CommandPreParser myParser = (CommandPreParser) a;
+        String myCommand = myParser.getParsedString();
+        
+        // WE PASS MYCOMMAND TO THE MODEL TO PROCESS FURTHER, THEN UPDATE DISPLAYVIEW
+        
+        /*
         // Code below this point is for the Model to handle
         String commandID = myBundle.getStringCommand().split(" ")[0];
         myEncodeMap.get(commandID).encode(myBundle);
@@ -66,6 +60,7 @@ public class Controller implements Observer {
         // Get the modified processable back
         Processable modifiedProcessable = myModel.getProcessable();
         myDisplayView.updateMovable(modifiedProcessable);
+        */
         myDisplayView.paint();
     }
 

@@ -1,6 +1,6 @@
 package view;
 
-import command.CommandParser;
+import command.CommandPreParser;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Point;
@@ -53,7 +53,7 @@ public class InputView extends JFrame implements IView {
     // this constant should be defined by Java, not me :(
     // get strings from resource file
     private ResourceBundle myResources;
-    private CommandParser myCommandParser;
+    private CommandPreParser myCommandParser;
 
     /**
      * InputView Constructor
@@ -62,7 +62,7 @@ public class InputView extends JFrame implements IView {
      *@param parser is where the information is passed to
      *@param size is the size of the screen
      */
-    public InputView (String title, String language, CommandParser parser, Dimension size) {
+    public InputView (String title, String language, CommandPreParser parser, Dimension size) {
         //create new command parser
         myCommandParser = parser;
         // set properties of frame

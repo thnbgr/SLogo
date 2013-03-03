@@ -10,9 +10,9 @@ public class PenDown extends ViewCommand {
         myDisplayView = m;
     }
 
-    public void executeCommand () {
-        Turtle t = (Turtle) (myDisplayView.getDrawableByID(0));
-        t.penDown();
+    public int executeCommand () {
+        myDisplayView.getTurtle().setPenDown();
+        return 1;
     }
 
 }
