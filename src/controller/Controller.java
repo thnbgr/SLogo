@@ -15,6 +15,7 @@ import parser.EncodeTree;
 import parser.EncodeParser;
 import parser.SyntaxCheck;
 import parser.node.Node;
+import parser.node.turtleCommand.TurtleCommandNode;
 import command.CommandBundle;
 import model.Model;
 import view.IView;
@@ -52,7 +53,7 @@ public class Controller{
      * @throws IllegalAccessException
      * @throws InvocationTargetException
      */
-    public void checkInputValidAndProcess (String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void checkInputValidAndProcess (String inputCommand) throws IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //BUG: actually not separated by ;
     	//SAME BUG: SyntaxCheck need recursion to test different situations. Shittest thing.
     	String[] individualInputCommands = inputCommand.split(" ; ");
@@ -61,7 +62,7 @@ public class Controller{
         		//TODO: deal with variables?? (e.g. :distance)
         		processInputString(s);
         	}else{
-        		//TODO: error handling: incorrect user input.
+        		throw new IOException();
         	}
         }
     }
@@ -80,31 +81,44 @@ public class Controller{
      * @throws InvocationTargetException
      */
     public void processInputString(String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
-    	System.out.println("called");
-    	findLastStructure(inputCommand);
+    	String[] splitedCommands = inputCommand.split(" ; ");
+		for (String s: splitedCommands){
+			EncodeTree et = myParser.encode(s);
+			String commandResult = myModel.decode(et);
+			//UPDATE VIEW HERE!!!!!!!
+		}
+		return;
+    	
+    	
+    	/**findLastStructure(inputCommand);
     	
     	if (lastStructureCall == null){
     		String[] splitedCommands = inputCommand.split(" ; ");
     		for (String s: splitedCommands){
     			EncodeTree et = myParser.encode(s);
-    			Node commandResult = myModel.decode(et);
-    			//TODO: update View;
+    			String commandResult = myModel.decode(et);
+    			//UPDATE VIEW HERE!!!!!!!
     		}
     		return;
     	}
     	EncodeTree et = myParser.encode(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
 		List<Node> structureResults = new ArrayList<Node>();
-    	structureResults.add(myModel.decode(et)); // need test to see whether all added
+    	structureResults.add(myModel.structureDecode(et)); // need test to see whether all added
     	if (structureCallStartIndex == 0){
-    		for (Node n: structureResults){
-    			//TODO: update View
+    		for (Node s: structureResults){
+    			String result = ((TurtleCommandNode) s).toString();
+    			//UPDATE VIEW HERE!!!!!!!
     		}
     		return;
     	}
     	Node lastResult = structureResults.get(structureResults.size()-1);
-    	double structureCallResultValue = lastResult.myValue;
+    	int StructureCallResultValue = -1;
+    	if (lastResult instanceof TurtleCommandNode){
+    		structureCallResultValue = lastResult.getValue();
+    	}
+    	int structureCallResultValue = lastResult.getValue();
     	inputCommand = inputCommand.substring(0, structureCallStartIndex) + Double.toString(structureCallResultValue) + inputCommand.substring(structureCallEndIndex);
-    	processInputString(inputCommand);
+    	processInputString(inputCommand);*/
     }
     
     /**
@@ -144,10 +158,8 @@ public class Controller{
      * Identifies multiple commands in a single input separated by space.
      * @return
      */
-    public ArrayList<String> splitMultipleCommands(String command){
-    	//TODO
-    	ArrayList<String> commands = new ArrayList<String>();
-    	return commands;
+    public void splitMultipleCommands(String command, ArrayList<String> commandList){
+    	//TODO;
     }
     
     /**

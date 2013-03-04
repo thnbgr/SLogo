@@ -40,7 +40,7 @@ public class EncodeParser {
 			//, st.nextToken(); 
 			Node temp = null;
 			if(myCSVTable.returnCSVRow(curValue) == null){
-				temp = new ValueNode(Double.parseDouble(curValue));
+				temp = new ValueNode(Integer.parseInt(curValue));
 			}
 			else{
 				Class<?> headClass = Class.forName(myCSVTable.returnCSVRow(curValue).getCommandFilePath());
@@ -63,7 +63,7 @@ public class EncodeParser {
 		for(int i = 0; i < 5;i++){
 			head.evaluate();
 			
-			System.out.println(head.getContainer().getValue());
+			//System.out.println(head.getContainer().getValue());
 		}
 	}
 	
