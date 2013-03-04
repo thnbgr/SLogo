@@ -14,6 +14,7 @@ import parser.IfDecodeProcesser;
 import parser.IfElseDecodeProcesser;
 import parser.RepeatDecodeProcesser;
 import parser.node.Node;
+import parser.node.turtleCommand.*;
 
 public class Model {
 	private EncodeParser myParser;
@@ -21,7 +22,8 @@ public class Model {
     private DecodeProcesser[] myDecodeProcessors = {new IfDecodeProcesser(this),
     		          new IfElseDecodeProcesser(this), new RepeatDecodeProcesser(this)};
     private String[] myKeywords = {"IF", "IFELSE", "REPEAT"};
-	
+	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
+    
 	public Model(){
 		myParser = new EncodeParser();
 	}
@@ -35,21 +37,25 @@ public class Model {
 	}
     
     /**
-     * Implements MAKE, control structures and user-defined commands, and 
-     * decodes other operations.
+     * Implements control structures and user-defined commands.
      * @param et
      * @return
      */
-	public Node decode(EncodeTree et){
+	//public Node structureDecode(EncodeTree et){ //probably don't need this.
+		//Node head = et.getHead();
+		//List<String> myKeywordsArrayList = Arrays.asList(myKeywords);
+		//int keywordsIndex = myKeywordsArrayList.indexOf(head.getType());
+		//myDecodeProcessors[keywordsIndex].controlStructureProcess(head);
+		
+		//return head;
+	//}
+	
+	public String decode(EncodeTree et){
 		Node head = et.getHead();
-		List<String> myKeywordsArrayList = Arrays.asList(myKeywords);
-		if (myKeywordsArrayList.contains(head.getType())) {
-			int keywordsIndex = myKeywordsArrayList.indexOf(head.getType());
-			myDecodeProcessors[keywordsIndex].controlStructureProcess(head);
-		}
-		else{
-			head.evaluate();
-		}
-		return head;
+		head.evaluate();
+		//if (head instanceof TurtleCommandNode){
+		return ((TurtleCommandNode) head).toString();
+			
+		//}
 	}
 }

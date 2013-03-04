@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class SyntaxCheck {
 	
 	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
-	//static for testing purpose
+	
 	private Map<String, String> validCommandRegex = new HashMap<String, String>();
 	private String lastCommandCall = "";
 	private int commandCallStartIndex = 0;
@@ -47,7 +47,7 @@ public class SyntaxCheck {
 	 * @param command the entire user input string
 	 * @return boolean that represents whether the input string is valid
 	 */
-	public boolean syntaxCheck(String command){ //static for testing propose
+	public boolean syntaxCheck(String command){
 		if (command.equals("0")){
 			System.out.println("valid command!!!!");
 			return true;
@@ -63,13 +63,13 @@ public class SyntaxCheck {
 			return false;
 		}
 		
-		String commandPattern2 = validCommandRegex.get(lastCommandCall);
-		Pattern r2 = Pattern.compile(commandPattern2);
-		Matcher m2 = r2.matcher(command).region(commandCallEndIndex, command.length());
-		if (m2.find()){
+		String commandPattern = validCommandRegex.get(lastCommandCall);
+		Pattern r = Pattern.compile(commandPattern);
+		Matcher m = r.matcher(command).region(commandCallEndIndex, command.length());
+		if (m.find()){
 			//System.out.println(m2.group(1));
-			int endIndex2 = m2.end();
-			String simplifiedCommand = command.substring(0, commandCallStartIndex) + "0" + command.substring(endIndex2);
+			int endIndex = m.end();
+			String simplifiedCommand = command.substring(0, commandCallStartIndex) + "0" + command.substring(endIndex);
 			//System.out.println(simplifiedCommand);
 			return syntaxCheck(simplifiedCommand);
 		}else{
