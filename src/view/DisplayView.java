@@ -1,16 +1,14 @@
 package view;
 
-import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.Timer;
 import model.Model;
 import util.Drawable;
@@ -24,19 +22,22 @@ import util.Turtle;
  * @author Eric Wu
  */
 public class DisplayView extends JComponent implements IView {
-    
-    private static final long serialVersionUID = 1L;
-    private List<Drawable> myDrawables;
-    private Turtle myTurtle;
-    private int assignID;
-    public static final int FRAMES_PER_SECOND = 25;
     // better way to think about timed events (in milliseconds)
     /** */
-    public static final int ONE_SECOND = 1000;
+    public static final int ONE_SECOND = 1000;    
     /** */
-    public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;
-    private static Dimension DEFAULT_TURTLE_SIZE = new Dimension(50, 50);
-    private static Location DEFAULT_TURTLE_LOCATION;
+    public static final int FRAMES_PER_SECOND = 25;
+    /** */
+    public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;   
+    /** */
+    public static final int TURTLE_SIZE = 50;
+    private static final long serialVersionUID = 1L;
+    private static Dimension ourDefaultTurtleSize = new Dimension(TURTLE_SIZE, TURTLE_SIZE);
+    private static Location ourDefaultTurtleLocation;
+    private List<Drawable> myDrawables;
+    //private List<Line> myLines;
+    private Turtle myTurtle;
+    private int myAssignID;
     // drives the animation
     private Timer myTimer;
     // game to be animated
@@ -47,17 +48,17 @@ public class DisplayView extends JComponent implements IView {
      * @param size is the size of the display
      */
     public DisplayView(Dimension size) {
-        DEFAULT_TURTLE_LOCATION = new Location(size.getHeight() / 2, size.getWidth() / 2);
+        ourDefaultTurtleLocation = new Location(size.getHeight() / 2, size.getWidth() / 2);
         setPreferredSize(size);
         setSize(size);
-        assignID = 0;
+        myAssignID = 0;
         myDrawables = new ArrayList<Drawable>();
         setVisible(true);
     }
 
     private void setDrawableID (Drawable d) {
-        d.setID(assignID);
-        assignID++;
+        d.setID(myAssignID);
+        myAssignID++;
     }
 
     
@@ -112,40 +113,55 @@ public class DisplayView extends JComponent implements IView {
     }
     
     /**
-     * Probably move this over to a DisplayModel later
+     * Add sprite to myDrawables
+     * @param s sprite to be added to myDrawables
      */
     public void addSprite (Sprite s) {
         setDrawableID(s);
         myDrawables.add(s);
     }
     
+    /**
+     * Add turtle to myDrawables
+     */
     public void addTurtle () {
-        myTurtle = new Turtle(DEFAULT_TURTLE_LOCATION, DEFAULT_TURTLE_SIZE);
+        myTurtle = new Turtle(ourDefaultTurtleLocation, ourDefaultTurtleSize);
         addSprite(myTurtle);
     }
     
+    /**
+     * Add turtle to myDrawables
+     */
     public Turtle getTurtle() {
         return myTurtle;
     }
-    
-    public void receiveParsedCommand (String command) {
-        
-    }
 
+    /**
+     * get a drawable given it's ID
+     * @param i is ID of drawable
+     */
     public Drawable getDrawableByID (int i) {
         for (Drawable d : myDrawables) {
-            if (d.getID() == i) return d;
+            if (d.getID() == i) {
+                return d;
+            }
         }
         return null;
     }
 
+    /**
+     * return myDrawables
+     */
     public List<Drawable> getDrawables () {
         return myDrawables;
     }
 
+    /**
+     * cleaer myDrawables
+     */
     public void clear () {
         myDrawables = new ArrayList<Drawable>();
-        assignID = 0;
+        myAssignID = 0;
     }
 
 

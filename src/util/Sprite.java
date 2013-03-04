@@ -22,7 +22,6 @@ public class Sprite extends Drawable {
 
     }
 
-
     public Location getLocation () {
         return myCenter;
     }
@@ -30,12 +29,11 @@ public class Sprite extends Drawable {
     public Vector getVector () {
         return myVelocity;
     }
-    
+
     public void update (Location center, Dimension size, Vector velocity) {
         myCenter = center;
         mySize = size;
         myVelocity = velocity;
     }
-
 
 }

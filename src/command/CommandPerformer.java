@@ -3,7 +3,6 @@ package command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-
 import view.DisplayView;
 import view.IView;
 import viewCommands.*;

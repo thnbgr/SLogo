@@ -100,7 +100,6 @@ public class Turtle extends Sprite {
     
 
     public void moveToCenter () {
-        // TODO Auto-generated method stub
     }
 
 }
