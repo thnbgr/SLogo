@@ -39,13 +39,14 @@ public class Parser {
 		while(myCommandParts.size() > 0){
 			String curValue = myCommandParts.remove();
 			if(curValue.equals("make")){
-				while (!mySyntaxCheck.syntaxCheck(curValue)){
-					curValue = curValue + " " + myCommandParts.remove();
+				String makeCommand = curValue;
+				while (!mySyntaxCheck.syntaxCheck(makeCommand)){
+					makeCommand += " " + myCommandParts.remove();
 				}
-				System.out.println(curValue);
-				makeParser(curValue);
+				makeParser(makeCommand);
 			}
-			Node temp = null;
+			else{
+				Node temp = null;
 				if(myCSVTable.returnCSVRow(curValue) == null){
 					temp = new ValueNode(Integer.parseInt(curValue));
 				}
@@ -58,12 +59,15 @@ public class Parser {
 					temp.setNumArgs(myCSVTable.returnCSVRow(curValue).getCommandNumArgs());
 				}
 				myCurNodes.add(temp);
-			
-		}
-		Node curNode = myCurNodes.remove();
-		curNode.makeTree(myCurNodes);
-		EncodeTree returnTree = new EncodeTree(curNode);
+			}
 
+		}
+		EncodeTree returnTree = new EncodeTree();
+		if(!myCurNodes.isEmpty()){
+			Node curNode = myCurNodes.remove();
+			curNode.makeTree(myCurNodes);
+			returnTree = new EncodeTree(curNode);
+		}
 		return returnTree;
 	}
 	public void makeParser(String command){
@@ -72,12 +76,11 @@ public class Parser {
 			String varName = commandParts[1];
 			String varValue = "";
 			for(int i = 2; i < commandParts.length; i++){
-				varValue += " " + commandParts[i];
+				varValue += commandParts[i] + " ";
 			}
 			System.out.println(varValue);
 			EncodeTree variableTree = encode(varValue);
-			variableTree.evaluate();
-			System.out.println("child value" + variableTree.getHead().getValue());
+			variableTree.getHead().evaluate();
 			VariableNode aVariable = new VariableNode(variableTree.getHead().getValue(), varName);
 			myVariables.add(aVariable);
 		} catch (Exception e) {
@@ -87,27 +90,26 @@ public class Parser {
 	//put into model
 	public void decode(EncodeTree tree){
 		Node head = tree.getHead();
-			head.evaluate();
-			if(head instanceof TurtleCommandNode){
-				System.out.println(((TurtleCommandNode) head).toString());
-			}
-			else{
-				System.out.println(head.getValue());
-			}
-		
+		head.evaluate();
+		if(head instanceof TurtleCommandNode){
+			System.out.println(((TurtleCommandNode) head).toString());
+		}
+		else{
+			System.out.println(head.getValue());
+		}
 	}	
 	private String readUserInput(String printMessage) throws IOException{
-        System.out.print(printMessage);
-        InputStreamReader isr = new InputStreamReader ( System.in );
-        BufferedReader br = new BufferedReader (isr);
-        String returnString;
-        try {
-            returnString=br.readLine();
-        } catch (IOException e) {
-           throw new IOException(e);
-        }
-        return returnString;
-    }
+		System.out.print(printMessage);
+		InputStreamReader isr = new InputStreamReader ( System.in );
+		BufferedReader br = new BufferedReader (isr);
+		String returnString;
+		try {
+			returnString=br.readLine();
+		} catch (IOException e) {
+			throw new IOException(e);
+		}
+		return returnString;
+	}
 	public static void main(String args[]) throws IllegalArgumentException, SecurityException, InvocationTargetException{
 		EncodeTree et = new EncodeTree();
 		Parser p = new Parser();
@@ -123,6 +125,6 @@ public class Parser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }
