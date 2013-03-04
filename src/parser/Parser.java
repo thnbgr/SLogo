@@ -33,8 +33,6 @@ public class Parser {
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		while(st.hasMoreTokens()){
 			String curValue = st.nextToken();
-			//curValue = "make" 
-			//, st.nextToken();
 			if(curValue.equals("make")){
 				makeParser(command);
 			}
