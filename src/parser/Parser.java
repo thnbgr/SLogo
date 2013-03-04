@@ -7,12 +7,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import java.util.StringTokenizer;
 import parser.node.*;
-import command.CommandBundle;
+import parser.node.control.*;
 import parser.node.turtleCommand.*;
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.Arrays;
 
 /**
@@ -31,14 +29,17 @@ public class Parser {
 		myVariables = new ArrayList<VariableNode>();
 		mySyntaxCheck = new SyntaxCheck();
 	}
-	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
+	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException, IOException{
 		command.toLowerCase(); //remove later 
 		Queue<String> myCommandParts = new LinkedList<String>();
 		myCommandParts.addAll(Arrays.asList(command.split(" ")));
 		Queue<Node> myCurNodes = new LinkedList<Node>();
+		Node curNode = new Node();
+		
+		
 		while(myCommandParts.size() > 0){
 			String curValue = myCommandParts.remove();
-			//todo 
+			//todo use reflection to remove these. 
 			if(curValue.equals("make")){
 				String makeCommand = curValue;
 				while (!mySyntaxCheck.syntaxCheck(makeCommand)){
@@ -51,7 +52,7 @@ public class Parser {
 				while (!mySyntaxCheck.syntaxCheck(ifCommand)){
 					ifCommand += " " + myCommandParts.remove();
 				}
-				ifParser(ifCommand);
+				curNode = ifParser(ifCommand);
 			}
 			else{
 				Node temp = null;
@@ -72,10 +73,10 @@ public class Parser {
 		}
 		EncodeTree returnTree = new EncodeTree();
 		if(!myCurNodes.isEmpty()){
-			Node curNode = myCurNodes.remove();
+			curNode = myCurNodes.remove();
 			curNode.makeTree(myCurNodes);
-			returnTree = new EncodeTree(curNode);
 		}
+			returnTree = new EncodeTree(curNode);
 		return returnTree;
 	}
 	public ArrayList<VariableNode> getVariables(){
@@ -98,22 +99,43 @@ public class Parser {
 			e.printStackTrace();
 		}
 	}
-	public void ifParser(String command){
+	public Node ifParser(String command){
 		try{
+			StructureInfoPackage IfStructPackage = mySyntaxCheck.splitIfStructure(command);
+			Node ifValueNode = encode(IfStructPackage.getValue()).getHead();
+			Node ifCommands = new Node();
+			for(String ifCommand : IfStructPackage.getCommands().get(0)){
+				ifCommands.addChild(encode(ifCommand).getHead());
+			}
+			IfNode ifNode = new IfNode();
+			ifNode.addChild(ifValueNode);
+			ifNode.addChild(ifCommands);
 			
+			return ifNode;
 		}
 		catch(Exception e){
 			
 		}
-		
+		return null;
 	}
 	public void ifElseParser(String command){
 		
 	}
 	//put into model
+	public void ifDecode(Node ifNode){
+		((IfNode)ifNode).getChildren().get(0).evaluate();
+		if(ifNode.getChildren().get(0).getValue() != 0){
+			for(Node ifCommand : ifNode.getChildren().get(1).getChildren()){
+				decode(new EncodeTree(ifCommand));
+			}
+		}
+	}
 	public void decode(EncodeTree tree){
 		Node head = tree.getHead();
 		head.evaluate();
+		if(head instanceof IfNode){
+			ifDecode(head);
+		}
 		if(head instanceof TurtleCommandNode){
 			System.out.println(((TurtleCommandNode) head).toString());
 		}

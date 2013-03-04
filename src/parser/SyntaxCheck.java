@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class SyntaxCheck {
 	
-	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
+	public static final String COMMAND_REGEXS_FILE_NAME = "commandRegexs.csv";
 	
 	private Map<String, String> validCommandRegex = new HashMap<String, String>();
 	private String lastCommandCall = "";
@@ -61,7 +61,7 @@ public class SyntaxCheck {
 		findLastCommand(command);
 		
 		if (lastCommandCall.equals("")){
-			throw new IOException();
+			return false;
 		}
 		
 		String commandPattern = validCommandRegex.get(lastCommandCall);
@@ -74,7 +74,7 @@ public class SyntaxCheck {
 			//System.out.println(simplifiedCommand);
 			return syntaxCheck(simplifiedCommand);
 		}else{
-			throw new IOException();
+			return false;
 		}
 	}
 
@@ -130,11 +130,11 @@ public class SyntaxCheck {
 			leftBracketStartIndex = m.start();
 		}
 		String ifValue = command.substring(3, leftBracketStartIndex-1);
-		String ifTrueCommand = command.substring(leftBracketStartIndex+1, command.length()-2);
+		String ifTrueCommand = command.substring(leftBracketStartIndex+2, command.length()-2);
 		ArrayList<ArrayList<String>> ifCommands = new ArrayList<ArrayList<String>>();
 		ArrayList<String> splitedTrueCommands = splitMultipleCommands(ifTrueCommand);
 		ifCommands.add(splitedTrueCommands);
-		return new StructureInfoPackage(ifValue, ifTrueCommand, ifCommands);
+		return new StructureInfoPackage("if", ifValue, ifCommands);
     }
     
     public StructureInfoPackage splitIfElseStructure(String command) throws IOException{
