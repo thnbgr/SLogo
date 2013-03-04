@@ -5,7 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JComponent;
 
-
+/**
+ * Create drawable line
+ */
 public class Line extends JComponent {
 
     private Location myStartLocation;

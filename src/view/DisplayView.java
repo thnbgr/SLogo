@@ -12,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import model.Model;
 import util.Drawable;
-import util.Line;
 import util.Location;
 import util.Sprite;
 import util.Turtle;
@@ -22,7 +21,7 @@ import util.Turtle;
  * @author Natalia Carvalho
  * @author Eric Wu
  */
-public class DisplayView extends JComponent implements IView {
+public class DisplayView extends JComponent {
     // better way to think about timed events (in milliseconds)
     /** */
     public static final int ONE_SECOND = 1000;    
@@ -105,11 +104,6 @@ public class DisplayView extends JComponent implements IView {
      */
     public void stop () {
         myTimer.stop();
-    }
-    
-    @Override
-    public void paint () {
-        
     }
     
     /**

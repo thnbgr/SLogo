@@ -23,17 +23,20 @@ import parser.SyntaxCheck;
 import parser.node.Node;
 import model.Model;
 import view.DisplayView;
-import view.IView;
 import view.InputView;
 
-
+/**
+ * Controller handles the communication between model and view
+ * @author Eric Wu
+ * @author Natalia Carvalho
+ * 
+ */
 public class Controller implements Observer {
 
     private static final Dimension myDisplayViewSize = new Dimension(500, 500);
     private static final Dimension myInputViewSize = new Dimension(500, 600);
     private DisplayView myDisplayView;
     private InputView myInputView;
-    private List<IView> myViewList;
     private Model myModel;
     private CommandPreParser myCommandPreParser;
     private CommandPerformer myCommandPerformer;
@@ -62,10 +65,6 @@ public class Controller implements Observer {
         frame.setVisible(true);
         myDisplayView.addTurtle();
         myDisplayView.start();
-    }
-
-    public void addView (IView view) {
-        myViewList.add(view);
     }
 
     public void update (Observable o, Object a) {
