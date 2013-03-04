@@ -30,7 +30,7 @@ public class Controller{
     public Controller (Model model) {
         myModel = model;
         mySyntaxCheck = new SyntaxCheck();
-        myParser = new Parser();
+        myParser = new Parser(""); //add filename later 
         myModel.setController(this);
     }
 
@@ -84,6 +84,25 @@ public class Controller{
     			}
     		}
     	}
+    	/*
+    	 * TODO: 
+    	 * get the list of customCommands from the parser. check the command string to see if
+    	 * there is a custom command. if there is, get the number of arguments necessary from the string and replace the variables in the custom command's 
+    	 * custom cummand string. 
+    	 * 
+    	 * eg. 
+    	 * assume there is a custom command called aCommand defined:
+    	 * aCommand [ :var1 :var2 ] [ + :var1 :var2 ]
+    	 * 
+    	 * when a command inputted is in the form aCommand 10 10, the controller will check to see if aCommand exists in the arraylist of custom commands,
+    	 * if it does, take the necessary number of variables (so 2 in this case), assign them to the custom command's variables (:var1 = 10, :var2 = 10), 
+    	 * get the custom command's command (customCommand.getCommand()), replace the variables within the command to the now defined values
+    	 * so + :var1 :var2 becomes + 10 10
+    	 * after that is done, call encode on the custom command's command (that now has the variables changed.) 
+    	 * 
+    	 * as always, if the :var is after a make, dont replace it. 
+    	 */
+    	
     	return command;
     }
     
@@ -99,8 +118,9 @@ public class Controller{
      * @throws InstantiationException
      * @throws IllegalAccessException
      * @throws InvocationTargetException
+     * @throws IOException 
      */
-    public void processInputString(String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void processInputString(String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands){
 			EncodeTree et = myParser.encode(s);
@@ -184,8 +204,9 @@ public class Controller{
      * @throws InstantiationException
      * @throws IllegalAccessException
      * @throws InvocationTargetException
+     * @throws IOException 
      */
-    public EncodeTree encode(String command) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException{
+    public EncodeTree encode(String command) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException{
     	EncodeTree et = myParser.encode(command);
     	return et;
     }

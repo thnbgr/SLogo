@@ -158,7 +158,7 @@ public class SyntaxCheck {
 		ifCommands.add(splitedTrueCommands);
 		return new StructureInfoPackage(ifValue, ifTrueCommand, ifCommands);
     }
-    
+    //need repeat splitter and to command splitter
     /**
 	 * Testing purpose.
 	 */

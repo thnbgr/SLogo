@@ -25,7 +25,7 @@ public class Model {
 	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
     
 	public Model(){
-		myParser = new Parser();
+		myParser = new Parser("");
 	}
 	
 	public void setController(Controller controller){
