@@ -89,18 +89,6 @@ public class Turtle extends Sprite {
         if (!isVisible()) return;
         DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
     }
-    
-    @Override
-    public Location getLocation () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Vector getVector () {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     public void moveToCenter () {
         // TODO Auto-generated method stub
