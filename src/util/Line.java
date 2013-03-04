@@ -2,14 +2,15 @@ package util;
 
 import java.awt.Graphics2D;
 
+
 public class Line extends Drawable {
 
-    private Location startLocation;
-    private Location endLocation;
+    private Location myStartLocation;
+    private Location myEndLocation;
     
-    public Line (Location s, Location e) {
-        startLocation = s;
-        endLocation = e;
+    public Line (Location startLocation, Location endLocation) {
+        myStartLocation = startLocation;
+        myEndLocation = endLocation;
     }
 
     @Override
