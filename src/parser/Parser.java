@@ -42,7 +42,6 @@ public class Parser {
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		Node curNode = new Node();
 		
-		
 		while(myCommandParts.size() > 0){
 			String curValue = myCommandParts.remove();
 			//todo use reflection to remove these. 
