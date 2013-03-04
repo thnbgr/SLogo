@@ -26,9 +26,6 @@ public class Turtle extends Sprite {
     private Dimension myOriginalSize;
     private Pixmap myOriginalView;
 
-
-    public Turtle() {
-    }
     
     public Turtle(Location center, Dimension size) {
         this(center, size, new Vector());
@@ -80,7 +77,6 @@ public class Turtle extends Sprite {
      */
     public void paint (Graphics2D pen)
     {
-        System.out.println("painted");
         DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
     }
 }
