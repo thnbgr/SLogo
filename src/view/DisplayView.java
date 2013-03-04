@@ -41,8 +41,6 @@ public class DisplayView extends JComponent implements IView {
     private int myAssignID;
     // drives the animation
     private Timer myTimer;
-    // game to be animated
-    private Model mySimulation;
 
     /**
      * Sets the size of the display view
@@ -92,7 +90,6 @@ public class DisplayView extends JComponent implements IView {
                 }
             });
         // start animation
-        mySimulation = new Model();
         myTimer.start();
     }
     
@@ -100,8 +97,6 @@ public class DisplayView extends JComponent implements IView {
      * Take one step in the animation.
      */
     public void step () {
-        mySimulation.update((double)FRAMES_PER_SECOND / ONE_SECOND);
-        // indirectly causes paint to be called
         repaint();
     }
 

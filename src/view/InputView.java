@@ -103,7 +103,7 @@ public class InputView extends JFrame implements IView {
             public void actionPerformed (ActionEvent e) {
                 //echo("action", e);
                 showMessage(e.getActionCommand());
-                myCommandPreParser.sendAction(e.getActionCommand());
+                receiveReturnMessage(myCommandPreParser.sendAction(e.getActionCommand()));
             }
         };
         // listener for low-level focus events, i.e., the mouse

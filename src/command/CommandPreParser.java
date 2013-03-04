@@ -1,17 +1,10 @@
 package command;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
-import util.Drawable;
 import view.DisplayView;
 import view.IView;
-import viewCommands.*;
 
 
 /**
@@ -26,10 +19,7 @@ import viewCommands.*;
  */
 public class CommandPreParser extends Observable {
 
-    private String myStringCommand;
-    // private Processable myProcessable;
     private DisplayView myDisplayView;
-    // private CommandBundle myCommandBundle;
     private List<Command> myViewCommands;
 
     public CommandPreParser (IView d) {
@@ -45,19 +35,21 @@ public class CommandPreParser extends Observable {
 
     // add the rest of the view commands (commands that don't concern model)
 
-    public void sendAction (String input) {
+    public int sendAction (String input) {
 
         input = input.toLowerCase();
+        int r = 0;
         for (Command v : myViewCommands) {
             for (String s : v.getCommands()) {
                 if (input.contains(s)) {
-                    int r = v.executeCommand();
+                    r = v.executeCommand();
                     input = input.replace(s, r + "");
                 }
             }
         }
         setChanged();
         notifyObservers(input);
+        return r;
 
     }
 
