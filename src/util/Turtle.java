@@ -2,6 +2,7 @@ package util;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.util.List;
 
 /**
  * Create Turtle
@@ -70,6 +71,12 @@ public class Turtle extends Sprite {
         myCenter = new Location(myOriginalCenter);
         mySize = new Dimension(myOriginalSize);
         myVelocity = new Vector(myOriginalVelocity);
+    }
+    
+    public void update (Location center, Dimension size, Vector velocity) {
+        myCenter = center;
+        mySize = size;
+        myVelocity = velocity;
     }
     
     /**
