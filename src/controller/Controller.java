@@ -1,26 +1,12 @@
 package controller;
 
+import command.CommandPerformer;
+import command.CommandPreParser;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
-import command.CommandPerformer;
-import command.CommandPreParser;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import parser.EncodeTree;
-import parser.EncodeParser;
-import parser.SyntaxCheck;
-import parser.node.Node;
 import model.Model;
 import view.DisplayView;
 import view.InputView;
@@ -32,26 +18,30 @@ import view.InputView;
  * 
  */
 public class Controller implements Observer {
-
-    private static final Dimension myDisplayViewSize = new Dimension(500, 500);
-    private static final Dimension myInputViewSize = new Dimension(500, 600);
+    /**
+     */
+    public static final String TITLE = "Output Display";
+    private static final Dimension DISPLAY_VIEW_SIZE = new Dimension(500, 500);
+    private static final Dimension INPUT_VIEW_SIZE = new Dimension(500, 600);
     private DisplayView myDisplayView;
     private InputView myInputView;
     private Model myModel;
     private CommandPreParser myCommandPreParser;
     private CommandPerformer myCommandPerformer;
 
-    public static final String TITLE = "Output Display";
-
+    /**
+     * Constructor for controller
+     * @param model is the model that we communicate with
+     */
     public Controller (Model model) {
         myModel = model;
-        myDisplayView = new DisplayView(myDisplayViewSize);
+        myDisplayView = new DisplayView(DISPLAY_VIEW_SIZE);
         myCommandPreParser = new CommandPreParser(myDisplayView);
         myCommandPreParser.addObserver(this);
         myCommandPerformer = new CommandPerformer(myDisplayView);
         createOutputJFrame();
         myInputView =
-                new InputView("Command Inputs", "English", myCommandPreParser, myInputViewSize);
+                new InputView("Command Inputs", "English", myCommandPreParser, INPUT_VIEW_SIZE);
 
     }
 
@@ -67,6 +57,11 @@ public class Controller implements Observer {
         myDisplayView.start();
     }
 
+    /**
+     * This is the observer
+     * @param o is the observable
+     * @param a is the string that is passed from observed
+     */
     public void update (Observable o, Object a) {
         String myCommand = (String) a;
 

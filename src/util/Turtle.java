@@ -17,10 +17,13 @@ import java.util.List;
 public class Turtle extends Sprite {
 
     /**
-     * Create turtle Pixmap
      */
     public static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
+    /**
+     */
     public static final Location DEFAULT_LOCATION = new Location(100, 100);
+    /**
+     */
     public static final Dimension DEFAULT_SIZE = new Dimension(50, 50);
     private List<Line> myLines;
     private boolean myIsPenUp;
@@ -30,18 +33,27 @@ public class Turtle extends Sprite {
     private Location myOriginalCenter;
     private Vector myOriginalVelocity;
     private Dimension myOriginalSize;
-    private Pixmap myOriginalView;
 
+    /**
+     */
     public Turtle () {
         this(DEFAULT_LOCATION, DEFAULT_SIZE);
     }
-
+    
+    /**
+     * Constructor with center and size
+     * @param center of turtle
+     * @param size of turtle
+     */
     public Turtle (Location center, Dimension size) {
         this(center, size, new Vector());
     }
 
     /**
      * Create a shape at the given position, with the given size, velocity, and color.
+     * @param center of turtle
+     * @param size of turtle
+     * @param velocity of vector
      */
     public Turtle (Location center, Dimension size, Vector velocity) {
         // make copies just to be sure no one else has access
@@ -49,7 +61,6 @@ public class Turtle extends Sprite {
         myOriginalCenter = new Location(center);
         myOriginalSize = new Dimension(size);
         myOriginalVelocity = new Vector(velocity);
-        myOriginalView = new Pixmap(DEFAULT_IMAGE);
         setVisible(true);
         setPenUp();
         reset();
@@ -107,6 +118,11 @@ public class Turtle extends Sprite {
         }
     }
     
+    /**
+     * Updates the turtle's location based on command
+     * Adds turtle tracks based on turtle's movements
+     * @param distance is amount for turtle to move
+     */
     public void move (int distance) {
         myVelocity.setMagnitude(distance);
         Location newCenter = myCenter;
@@ -115,6 +131,10 @@ public class Turtle extends Sprite {
         myCenter.translate(myVelocity);
     }
     
+    /**
+     * Amount for turtle to move
+     * @param angle for turtle to move
+     */
     public void turn (int angle) {
         myVelocity.setDirection(myVelocity.getDirection() + angle);
     }
