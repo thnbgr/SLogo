@@ -9,7 +9,7 @@ public class SumNode extends Node{
 	public SumNode() {
 	}
 	@Override
-	public void setOperation(){
+	public void setValue(){
 		super.setValue(getChildren().get(0).getValue() + getChildren().get(1).getValue());
 	}
 }

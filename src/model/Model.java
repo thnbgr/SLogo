@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -9,15 +8,15 @@ import java.util.Map;
 import controller.Controller;
 import parser.DecodeProcesser;
 import parser.EncodeTree;
-import parser.EncodeParser;
 import parser.IfDecodeProcesser;
 import parser.IfElseDecodeProcesser;
+import parser.Parser;
 import parser.RepeatDecodeProcesser;
 import parser.node.Node;
 import parser.node.turtleCommand.*;
 
 public class Model {
-	private EncodeParser myParser;
+	private Parser myParser;
 	private Controller myController;
     private DecodeProcesser[] myDecodeProcessors = {new IfDecodeProcesser(this),
     		          new IfElseDecodeProcesser(this), new RepeatDecodeProcesser(this)};
@@ -25,7 +24,7 @@ public class Model {
 	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
     
 	public Model(){
-		myParser = new EncodeParser();
+		myParser = new Parser();
 	}
 	
 	public void setController(Controller controller){
@@ -41,14 +40,14 @@ public class Model {
      * @param et
      * @return
      */
-	//public Node structureDecode(EncodeTree et){ //probably don't need this.
-		//Node head = et.getHead();
-		//List<String> myKeywordsArrayList = Arrays.asList(myKeywords);
-		//int keywordsIndex = myKeywordsArrayList.indexOf(head.getType());
-		//myDecodeProcessors[keywordsIndex].controlStructureProcess(head);
+	public Node structureDecode(EncodeTree et){ //probably don't need this.
+		Node head = et.getHead();
+		List<String> myKeywordsArrayList = Arrays.asList(myKeywords);
+		int keywordsIndex = myKeywordsArrayList.indexOf(head.getType());
+		myDecodeProcessors[keywordsIndex].controlStructureProcess(head);
 		
-		//return head;
-	//}
+		return head;
+	}
 	
 	public String decode(EncodeTree et){
 		Node head = et.getHead();

@@ -14,5 +14,3 @@ and			,				,	2		,	parser.node.logic.AndNode
 or			,				,	2		,	parser.node.logic.OrNode
 not			,				,	1		,	parser.node.logic.NotNode
 make		,				,	2		,	parser.node.control.MakeNode
-forward		,	fd			,	1		,	parser.node.turtleCommand.TurtleCommandNode
-backward	,	bk			,	1		,	parser.node.turtleCommand.TurtleCommandNode

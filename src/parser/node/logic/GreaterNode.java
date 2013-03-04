@@ -9,7 +9,7 @@ public class GreaterNode extends Node {
 	}
 
 	@Override
-	public void setOperation(){
+	public void setValue(){
 		if (getChildren().get(0).getValue() > getChildren().get(1).getValue()){
 			super.setValue(1);
 		}else{

@@ -6,17 +6,13 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import parser.EncodeTree;
-import parser.EncodeParser;
+import parser.Parser;
 import parser.SyntaxCheck;
-import parser.node.Node;
-import parser.node.turtleCommand.TurtleCommandNode;
-import command.CommandBundle;
+import parser.node.VariableNode;
 import model.Model;
 import view.IView;
 
@@ -26,7 +22,7 @@ public class Controller{
     private List<IView> myViewList;
     private Model myModel;
     private SyntaxCheck mySyntaxCheck;
-    private EncodeParser myParser;
+    private Parser myParser;
     private String lastStructureCall = "";
 	private int structureCallStartIndex = -1;
 	private int structureCallEndIndex = -1;
@@ -34,7 +30,7 @@ public class Controller{
     public Controller (Model model) {
         myModel = model;
         mySyntaxCheck = new SyntaxCheck();
-        myParser = new EncodeParser();
+        myParser = new Parser();
         myModel.setController(this);
     }
 
@@ -59,12 +55,36 @@ public class Controller{
     	String[] individualInputCommands = inputCommand.split(" ; ");
         for (String s: individualInputCommands){
         	if (mySyntaxCheck.syntaxCheck(s)) {
-        		//TODO: deal with variables?? (e.g. :distance)
-        		processInputString(s);
+        		inputCommand.toLowerCase();
+        		String preParsedCommand = preParsing(s);
+        		processInputString(preParsedCommand);
         	}else{
         		throw new IOException();
         	}
         }
+    }
+    
+    public String preParsing(String command){
+    	String[] commandComponents = command.split(" ");
+    	for (int i = 1; i<commandComponents.length; ++i){
+    		String current = commandComponents[i];
+    		String previous = commandComponents[i-1];
+    		if (current.startsWith(":") && !previous.equals("make")){
+    			ArrayList<VariableNode> variableList = myParser.getVariables();
+    			for (int j = 0; j<variableList.size(); ++j){
+    				String variableName = variableList.get(j).getName();
+    				if (current.equals(variableName)){
+    					String variableValue = Integer.toString(variableList.get(j).getValue());
+    					command = command.substring(0, command.indexOf(current)) + variableValue + command.substring(command.indexOf(current) + current.length());
+    				}
+    				else if (j == variableList.size()-1){
+    					String variableValue = "0";
+    					command = command.substring(0, command.indexOf(current)) + variableValue + command.substring(command.indexOf(current) + current.length());
+    				}
+    			}
+    		}
+    	}
+    	return command;
     }
     
     /**
@@ -152,14 +172,6 @@ public class Controller{
     		}
     	}
     	System.out.println(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
-    }
-    
-    /**
-     * Identifies multiple commands in a single input separated by space.
-     * @return
-     */
-    public void splitMultipleCommands(String command, ArrayList<String> commandList){
-    	//TODO;
     }
     
     /**

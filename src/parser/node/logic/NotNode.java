@@ -10,7 +10,7 @@ public class NotNode extends Node {
 
 	
 	@Override
-	public void setOperation(){
+	public void setValue(){
 		if (getChildren().get(0).getValue() == 0){
 			super.setValue(1);
 		}else{
