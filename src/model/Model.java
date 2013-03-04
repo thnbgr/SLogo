@@ -1,5 +1,6 @@
 package model;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,6 +15,10 @@ import parser.IfDecodeProcesser;
 import parser.IfElseDecodeProcesser;
 import parser.RepeatDecodeProcesser;
 import parser.node.Node;
+=======
+import util.Processable;
+import view.DisplayView;
+>>>>>>> 6bdfeb111b58ee23d0ebe30dd40e4a65111ad296
 
 public class Model {
 	private EncodeParser myParser;
@@ -36,6 +41,7 @@ public class Model {
 	
 	
     
+<<<<<<< HEAD
     /**
      * Implements MAKE, control structures and user-defined commands, and 
      * decodes other operations.
@@ -55,4 +61,23 @@ public class Model {
 		}
 		return head;
 	}
+=======
+    private Processable myProcessable;
+
+    public Model () {
+    }
+
+    public void encode (String c) {
+      //  myProcessable = c.getProcessable();
+    }
+
+    public Processable getProcessable () {
+        return myProcessable;
+    }
+
+    public void update (double d) {
+        // TODO Auto-generated method stub
+        
+    }
+>>>>>>> 6bdfeb111b58ee23d0ebe30dd40e4a65111ad296
 }

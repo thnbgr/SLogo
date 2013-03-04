@@ -1,9 +1,11 @@
+import model.Model;
 import controller.Controller;
 
 
 public class Main {
 
     public static void main(String[] args) {
-        Controller myController = new Controller();
+        Model model = new Model();
+        Controller myController = new Controller(model);
     }
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JFrame;
 import command.CommandPreParser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +35,7 @@ public class Controller implements Observer {
     private List<IView> myViewList;
     private Model myModel;
     private CommandPreParser myCommandParser;
+<<<<<<< HEAD
     private SyntaxCheck mySyntaxCheck;
     private EncodeParser myParser;
     private String lastStructureCall = "";
@@ -49,9 +52,37 @@ public class Controller implements Observer {
         myCommandParser = new CommandPreParser(myDisplayView);
         myCommandParser.addObserver(this);
 
+=======
+    public static final String TITLE = "Output Display";
+
+
+
+    public Controller (Model model) {
+        myModel = model;
+        myDisplayView = new DisplayView(myDisplayViewSize);
+        myCommandParser = new CommandPreParser(myDisplayView);
+        myCommandParser.addObserver(this);
+        createOutputJFrame();
+>>>>>>> 6bdfeb111b58ee23d0ebe30dd40e4a65111ad296
         myInputView = new InputView("Command Inputs", "English", myCommandParser, myInputViewSize);
 
     }
+
+
+
+    private void createOutputJFrame () {
+        JFrame frame = new JFrame(TITLE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // add our user interface components
+        frame.getContentPane().add(myDisplayView, BorderLayout.CENTER);
+        // display them
+        frame.pack();
+        frame.setVisible(true);
+        myDisplayView.addTurtle();
+        myDisplayView.start();
+    }
+    
+    
 
     public void addView (IView view) {
         myViewList.add(view);
