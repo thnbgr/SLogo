@@ -45,11 +45,8 @@ public class Controller implements Observer {
         myDisplayView = new DisplayView(myDisplayViewSize);
         myCommandPreParser = new CommandPreParser(myDisplayView);
         myCommandPreParser.addObserver(this);
-
         myCommandPerformer = new CommandPerformer(myDisplayView);
-
         createOutputJFrame();
-
         myInputView =
                 new InputView("Command Inputs", "English", myCommandPreParser, myInputViewSize);
 
