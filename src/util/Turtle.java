@@ -20,7 +20,6 @@ public class Turtle extends Sprite {
     public static final Location DEFAULT_LOCATION = new Location(100, 100);
     public static final Dimension DEFAULT_SIZE = new Dimension(50, 50);
 
-    
     private boolean myIsPenUp;
     // state
     private Dimension mySize;
@@ -30,11 +29,11 @@ public class Turtle extends Sprite {
     private Dimension myOriginalSize;
     private Pixmap myOriginalView;
 
-
     public Turtle () {
         this(DEFAULT_LOCATION, DEFAULT_SIZE);
     }
-    public Turtle(Location center, Dimension size) {
+
+    public Turtle (Location center, Dimension size) {
         this(center, size, new Vector());
     }
 
@@ -80,7 +79,7 @@ public class Turtle extends Sprite {
         mySize = new Dimension(myOriginalSize);
         myVelocity = new Vector(myOriginalVelocity);
     }
-    
+
     /**
      * Display this shape on the screen.
      */
@@ -92,6 +91,5 @@ public class Turtle extends Sprite {
 
     public void moveToCenter () {
     }
-    
 
 }
