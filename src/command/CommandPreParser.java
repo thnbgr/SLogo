@@ -10,7 +10,6 @@ import java.util.Observer;
 import java.util.Set;
 import util.Drawable;
 import util.Processable;
-import view.CommandViewBuilder;
 import view.DisplayView;
 import view.IView;
 import viewCommands.*;
@@ -32,23 +31,24 @@ public class CommandPreParser extends Observable {
     // private Processable myProcessable;
     private DisplayView myDisplayView;
     // private CommandBundle myCommandBundle;
-    private List<ViewCommand> myViewCommands;
+    private List<Command> myViewCommands;
 
     public CommandPreParser (IView d) {
         myDisplayView = (DisplayView) d;
-        myViewCommands = new ArrayList<ViewCommand>();
+        myViewCommands = new ArrayList<Command>();
         addViewCommands();
     }
 
     public void addViewCommands () {
-        CommandViewBuilder builder = new CommandViewBuilder(myDisplayView);
-        myViewCommands = builder.populateCommandsList();
+        CommandBuilder builder = new CommandBuilder(myDisplayView);
+        myViewCommands = builder.populateViewCommandsList();
     }
 
     // add the rest of the view commands (commands that don't concern model)
 
     public void sendAction (String input) { // fd sum xcor 50
-        for (ViewCommand v : myViewCommands) {
+        input = input.toLowerCase();
+        for (Command v : myViewCommands) {
             for (String s : v.getCommands()) {
                 if (input.contains(s)) {
                     int r = v.executeCommand();

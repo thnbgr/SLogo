@@ -69,13 +69,18 @@ public class DisplayView extends JComponent implements IView {
     
     public void addTurtle () {
         myTurtle = new Turtle();
+        addSprite(myTurtle);
     }
     
     public Turtle getTurtle() {
         return myTurtle;
     }
+    
+    public void receiveParsedCommand (String command) {
+        
+    }
 
-
+/*
     public void updateMovable (Processable p) {
         Movable m = (Movable) getDrawableByID(p.getID());
         m.updateWithProcessable(p);
@@ -85,7 +90,8 @@ public class DisplayView extends JComponent implements IView {
         Movable m = (Movable) getDrawableByID(id);
         return m.extractProcessable();
     }
-
+*/
+    
     public Drawable getDrawableByID (int i) {
         for (Drawable d : myDrawables) {
             if (d.getID() == i) return d;

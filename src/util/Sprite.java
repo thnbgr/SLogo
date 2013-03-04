@@ -23,6 +23,14 @@ public class Sprite extends Drawable implements Movable {
 
     }
 
+    public void move (int distance) {
+        myLocation.setLocation(distance+myLocation.getX(), myLocation.getY());
+    }
+    
+    public void turn (int angle) {
+        
+    }
+    
     public Location getLocation () {
         return myLocation;
     }

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+
 /**
  * Create Turtle
  * 
@@ -16,7 +17,7 @@ public class Turtle extends Sprite {
      * Create turtle Pixmap
      */
     public static final Pixmap DEFUALT_IMAGE = new Pixmap("turtle.png");
-    private boolean myIsPenUp;    
+    private boolean myIsPenUp;
     // state
     private Location myCenter;
     private Vector myVelocity;
@@ -27,15 +28,14 @@ public class Turtle extends Sprite {
     private Dimension myOriginalSize;
     private Pixmap myOriginalView;
 
+    public Turtle () {
 
-    public Turtle() {
-        
     }
-    
-    public Turtle(Pixmap image, Location center, Dimension size) {
+
+    public Turtle (Pixmap image, Location center, Dimension size) {
         this(image, center, size, new Vector());
     }
-    
+
     /**
      * Create a shape at the given position, with the given size, velocity, and color.
      */
@@ -47,27 +47,28 @@ public class Turtle extends Sprite {
         myOriginalView = new Pixmap(image);
         reset();
     }
+
     /**
      * Sets pen to be down
      */
-    public void setPenDown() {
+    public void setPenDown () {
         myIsPenUp = false;
     }
-    
+
     /**
      * Sets pen to be up
      */
-    public void setPenUp() {
+    public void setPenUp () {
         myIsPenUp = true;
     }
-    
+
     /**
      * Returns myIsPenUp
      */
-    public boolean isPenDown() {
+    public boolean isPenDown () {
         return !myIsPenUp;
     }
-    
+
     /**
      * Reset shape back to its original values.
      */
@@ -76,7 +77,7 @@ public class Turtle extends Sprite {
         mySize = new Dimension(myOriginalSize);
         myVelocity = new Vector(myOriginalVelocity);
     }
-    
+
     /**
      * Display this shape on the screen.
      */
@@ -84,4 +85,22 @@ public class Turtle extends Sprite {
     {
         DEFUALT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
     }
+    
+    @Override
+    public Location getLocation () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Vector getVector () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void moveToCenter () {
+        // TODO Auto-generated method stub
+    }
+    
+
 }

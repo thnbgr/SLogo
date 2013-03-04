@@ -15,12 +15,12 @@ import java.util.ArrayList;
  * 
  * @author Junho Oh
  */
-public class EncodeParser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME = "src/commandProperties.csv";
+public class Parser {
+	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<Node> myVariables;
 
-	public EncodeParser() {
+	public Parser(){
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
 		myVariables = new ArrayList<Node>();
 	}
@@ -39,11 +39,12 @@ public class EncodeParser {
 			//, st.nextToken(); 
 			Node temp = null;
 			if(myCSVTable.returnCSVRow(curValue) == null){
-				temp = new ValueNode(Double.parseDouble(curValue));
+				temp = new ValueNode(Integer.parseInt(curValue));
 			}
 			else{
 				Class<?> headClass = Class.forName(myCSVTable.returnCSVRow(curValue).getCommandFilePath());
 				temp = (Node) headClass.getConstructors()[0].newInstance();
+				temp.setNumArgs(myCSVTable.returnCSVRow(curValue).getCommandNumArgs());
 			}
 			myCurNodes.add(temp);
 			
@@ -55,15 +56,12 @@ public class EncodeParser {
 
 		return returnTree;
 	}
-	
-	//put in model already. Didn't delete for testing purpose.
-	public void decode(EncodeTree et){
-		Node head = et.getHead();
-		for(int i = 0; i < 5;i++){
+	//put into model
+	public void decode(EncodeTree tree){
+		Node head = tree.getHead();
 			head.evaluate();
-			
-			System.out.println(head.getContainer().getValue());
-		}
+			System.out.println(head.getValue());
+		
 	}
 	
 	public ArrayList<Node> getVariables(){
@@ -84,7 +82,7 @@ public class EncodeParser {
     }
 	public static void main(String args[]) throws IllegalArgumentException, SecurityException, InvocationTargetException{
 		EncodeTree et = new EncodeTree();
-		EncodeParser p = new EncodeParser();
+		Parser p = new Parser();
 		String s;
 		int commandCount = 10;
 		try {
