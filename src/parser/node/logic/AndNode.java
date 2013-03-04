@@ -9,7 +9,7 @@ public class AndNode extends Node {
 	}
 	
 	@Override
-	public void setValue(){
+	public void setOperation(){
 		if (getChildren().get(0).getValue() == 1 && getChildren().get(1).getValue() == 1){
 			super.setValue(1);
 		}else{

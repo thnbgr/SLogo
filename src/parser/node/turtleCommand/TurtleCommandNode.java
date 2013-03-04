@@ -4,18 +4,17 @@ import parser.node.Node;
 
 public class TurtleCommandNode extends Node {
 	private String myName;
-	
-	public TurtleCommandNode(String commandName){
-		myName = commandName;
+	public TurtleCommandNode(){
+		myName = new String();
 	}
-	
+	public String toString(){
+		return myName + " " + getChildren().get(0).getValue();
+	}
+	public void setName(String name){
+		myName = name;
+	}
 	@Override
-	public void setValue(){
-		getChildren().get(0).setValue();
+	public void setOperation(){
+		setValue(getChildren().get(0).getValue());
 	}
-	
-	public String getName(){
-		return myName;
-	}
-
 }

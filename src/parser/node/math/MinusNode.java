@@ -12,7 +12,7 @@ public class MinusNode extends Node {
 	}
 	
 	@Override
-	public void setValue(){
+	public void setOperation(){
 		super.setValue(getChildren().get(0).getValue() * (-1));
 	}
 }

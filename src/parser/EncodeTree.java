@@ -6,7 +6,7 @@ import parser.node.*;
  * @author Junho Oh
  */
 public class EncodeTree {
-	Node myHead;
+	private Node myHead;
 
 	public EncodeTree(){
 		myHead = null;
@@ -14,9 +14,11 @@ public class EncodeTree {
 	public EncodeTree(Node head){
 		myHead = head;
 	}
-	public Node getHead()
-	{
+	public Node getHead(){
 		return myHead;
+	}
+	public void evaluate(){
+		myHead.evaluate();
 	}
 
 }
