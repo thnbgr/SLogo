@@ -40,11 +40,12 @@ public class Parser {
 			//, st.nextToken(); 
 			Node temp = null;
 			if(myCSVTable.returnCSVRow(curValue) == null){
-				temp = new ValueNode(Double.parseDouble(curValue));
+				temp = new ValueNode(Integer.parseInt(curValue));
 			}
 			else{
 				Class<?> headClass = Class.forName(myCSVTable.returnCSVRow(curValue).getCommandFilePath());
 				temp = (Node) headClass.getConstructors()[0].newInstance();
+				temp.setNumArgs(myCSVTable.returnCSVRow(curValue).getCommandNumArgs());
 			}
 			myCurNodes.add(temp);
 			
@@ -59,10 +60,8 @@ public class Parser {
 	//put into model
 	public void decode(EncodeTree tree){
 		Node head = tree.getHead();
-		for(int i = 0; i < 5;i++){
 			head.evaluate();
-			System.out.println(head.getContainer().getValue());
-		}
+			System.out.println(head.getValue());
 		
 	}
 	

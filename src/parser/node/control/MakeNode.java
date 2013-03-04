@@ -1,7 +1,8 @@
 package parser.node.control;
-import parser.node.UnaryNode;
 
-public class MakeNode extends UnaryNode{
+import parser.node.Node;
+
+public class MakeNode extends Node{
 	private String myName;
 	public MakeNode(String name) {
 		super();

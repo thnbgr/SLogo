@@ -5,14 +5,11 @@ import parser.node.*;
  * 
  * @author Junho Oh
  */
-public class SumNode extends MathNode{
+public class SumNode extends Node{
 	public SumNode() {
 	}
-
-	@SuppressWarnings("unchecked")
 	@Override
-	public void setContainerValue(Container<Double> container){
-		container.setValue(((Container<Double>)getLeft().getContainer()).getValue() + ((Container<Double>)getRight().getContainer()).getValue());
+	public void setValue(){
+		super.setValue(getChildren().get(0).getValue() + getChildren().get(1).getValue());
 	}
-
 }

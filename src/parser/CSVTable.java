@@ -28,8 +28,8 @@ class CSVRow{
 	public boolean isValidCommand(String command){
 		return myCommand.equals(command) || mySymbol.equals(command);
 	}
-	public String getCommandNumArgs(){
-		return myCommandNumArgs;
+	public int getCommandNumArgs(){
+		return Integer.parseInt(myCommandNumArgs);
 	}
 	public String getCommandFilePath(){
 		return myCommandFilePath;
