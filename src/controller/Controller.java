@@ -73,10 +73,7 @@ public class Controller implements Observer {
 
     public void update (Observable o, Object a) {
         String myCommand = (String) a;
-<<<<<<< HEAD
-        System.out.println("update is called: " + myCommand);
-=======
->>>>>>> ca8113a5ff1a19ed00ec1f9516ec5eb1100954db
+
 
         // This is where we send it to the model parser
         // We assume for now that is has been parsed

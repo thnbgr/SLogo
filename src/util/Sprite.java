@@ -5,13 +5,12 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 
-public class Sprite extends Drawable implements Movable {
+public class Sprite extends Drawable {
 
     protected Location myCenter;
     protected Vector myVelocity;
     protected Pixmap myPixmap;
     protected Dimension mySize;
-    protected Processable myProcessable;
 
     public Sprite () {
 
@@ -44,21 +43,4 @@ public class Sprite extends Drawable implements Movable {
         mySize = size;
         myVelocity = velocity;
     }
-
-    @Override
-    public void createProcessable () {
-        myProcessable = new Processable(myCenter, myVelocity, myID);
-    }
-
-    @Override
-    public void updateWithProcessable (Processable p) {
-        myCenter = p.getLocation();
-        myVelocity = p.getVector();
-    }
-
-    @Override
-    public Processable extractProcessable () {
-        return myProcessable;
-    }
-
 }
