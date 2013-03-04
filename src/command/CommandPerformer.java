@@ -40,8 +40,9 @@ public class CommandPerformer extends Observable {
     }
     
 
-    public void sendAction (String input) { // fd sum xcor 50
-        
+    public void sendAction (String input) { // fd 50
+        System.out.println("yes!");
+
         for (Command v : myDisplayCommands) {
             for (String s : v.getCommands()) {
                 if (input.contains(s)) {

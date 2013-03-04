@@ -2,6 +2,7 @@ package util;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.util.List;
 
 
 /**
@@ -22,8 +23,6 @@ public class Turtle extends Sprite {
     
     private boolean myIsPenUp;
     // state
-    private Location myCenter;
-    private Vector myVelocity;
     private Dimension mySize;
     // keep copies of the original state so shape can be reset as needed
     private Location myOriginalCenter;
@@ -48,6 +47,7 @@ public class Turtle extends Sprite {
         myOriginalSize = new Dimension(size);
         myOriginalVelocity = new Vector(velocity);
         myOriginalView = new Pixmap(DEFAULT_IMAGE);
+        setVisible(true);
         reset();
     }
 
@@ -80,12 +80,13 @@ public class Turtle extends Sprite {
         mySize = new Dimension(myOriginalSize);
         myVelocity = new Vector(myOriginalVelocity);
     }
-
+    
     /**
      * Display this shape on the screen.
      */
     public void paint (Graphics2D pen)
     {
+        if (!isVisible()) return;
         DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
     }
     

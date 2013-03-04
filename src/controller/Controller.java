@@ -72,8 +72,8 @@ public class Controller implements Observer {
     }
 
     public void update (Observable o, Object a) {
-        CommandPreParser myPreParser = (CommandPreParser) a;
-        String myCommand = myPreParser.getParsedString();
+        String myCommand = (String) a;
+        System.out.println("update is called: "+myCommand);
 
         // This is where we send it to the model parser
         // We assume for now that is has been parsed

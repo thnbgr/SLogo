@@ -54,7 +54,7 @@ public class InputView extends JFrame implements IView {
     // this constant should be defined by Java, not me :(
     // get strings from resource file
     private ResourceBundle myResources;
-    private CommandPreParser myCommandParser;
+    private CommandPreParser myCommandPreParser;
 
     /**
      * InputView Constructor
@@ -65,7 +65,7 @@ public class InputView extends JFrame implements IView {
      */
     public InputView (String title, String language, CommandPreParser parser, Dimension size) {
         //create new command parser
-        myCommandParser = parser;
+        myCommandPreParser = parser;
         // set properties of frame
         setTitle(title);
         setPreferredSize(size);
@@ -102,7 +102,7 @@ public class InputView extends JFrame implements IView {
             @Override
             public void actionPerformed (ActionEvent e) {
                 echo("action", e);
-                myCommandParser.sendAction(e.getActionCommand());
+                myCommandPreParser.sendAction(e.getActionCommand());
             }
         };
         // listener for low-level focus events, i.e., the mouse
@@ -249,7 +249,7 @@ public class InputView extends JFrame implements IView {
                         BufferedReader br = new BufferedReader(reader);
                         String s;
                         while ((s = br.readLine()) != null) {
-                            myCommandParser.sendAction(s);
+                            myCommandPreParser.sendAction(s);
                         }
                         reader.close();
                     }

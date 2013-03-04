@@ -7,11 +7,11 @@ import java.util.Random;
 
 public class Sprite extends Drawable implements Movable {
 
-    private Location myLocation;
-    private Vector myVector;
-    private Pixmap myPixmap;
-    private Dimension mySize;
-    private Processable myProcessable;
+    protected Location myCenter;
+    protected Vector myVelocity;
+    protected Pixmap myPixmap;
+    protected Dimension mySize;
+    protected Processable myProcessable;
 
     public Sprite () {
 
@@ -24,7 +24,7 @@ public class Sprite extends Drawable implements Movable {
     }
 
     public void move (int distance) {
-        myLocation.setLocation(distance+myLocation.getX(), myLocation.getY());
+        myCenter.setLocation(distance+myCenter.getX(), myCenter.getY());
     }
     
     public void turn (int angle) {
@@ -32,22 +32,28 @@ public class Sprite extends Drawable implements Movable {
     }
     
     public Location getLocation () {
-        return myLocation;
+        return myCenter;
     }
 
     public Vector getVector () {
-        return myVector;
+        return myVelocity;
+    }
+    
+    public void update (Location center, Dimension size, Vector velocity) {
+        myCenter = center;
+        mySize = size;
+        myVelocity = velocity;
     }
 
     @Override
     public void createProcessable () {
-        myProcessable = new Processable(myLocation, myVector, myID);
+        myProcessable = new Processable(myCenter, myVelocity, myID);
     }
 
     @Override
     public void updateWithProcessable (Processable p) {
-        myLocation = p.getLocation();
-        myVector = p.getVector();
+        myCenter = p.getLocation();
+        myVelocity = p.getVector();
     }
 
     @Override

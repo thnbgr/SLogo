@@ -46,7 +46,8 @@ public class CommandPreParser extends Observable {
 
     // add the rest of the view commands (commands that don't concern model)
 
-    public void sendAction (String input) { // fd sum xcor 50
+    public void sendAction (String input) {
+
         input = input.toLowerCase();
         for (Command v : myViewCommands) {
             for (String s : v.getCommands()) {
@@ -56,16 +57,9 @@ public class CommandPreParser extends Observable {
                 }
             }
         }
-        sendToController(input);
+
+        notifyObservers(input);
 
     }
 
-    public void sendToController (String input) {
-        myStringCommand = input;
-        notifyObservers();
-    }
-    
-    public String getParsedString () {
-        return myStringCommand;
-    }
 }
