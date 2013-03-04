@@ -11,7 +11,7 @@ public class RandomNode extends Node {
 	}
 
 	@Override
-	public void setOperation(){
+	public void setValue(){
 		Random r = new Random();
 		super.setValue(r.nextInt(getChildren().get(0).getValue()));
 	}
