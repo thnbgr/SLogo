@@ -57,6 +57,7 @@ public class CommandPreParser extends Observable {
                 }
             }
         }
+        setChanged();
         notifyObservers(input);
 
     }
