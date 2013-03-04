@@ -1,11 +1,13 @@
 package controller;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JFrame;
 import command.CommandPreParser;
 import model.Model;
 import util.Processable;
@@ -23,17 +25,34 @@ public class Controller implements Observer {
     private List<IView> myViewList;
     private Model myModel;
     private CommandPreParser myCommandParser;
+    public static final String TITLE = "Output Display";
 
 
-    public Controller () {
-        myModel = new Model();
+
+    public Controller (Model model) {
+        myModel = model;
         myDisplayView = new DisplayView(myDisplayViewSize);
-        
         myCommandParser = new CommandPreParser(myDisplayView);
         myCommandParser.addObserver(this);
-        
+        createOutputJFrame();
         myInputView = new InputView("Command Inputs", "English", myCommandParser, myInputViewSize);
     }
+
+
+
+    private void createOutputJFrame () {
+        JFrame frame = new JFrame(TITLE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // add our user interface components
+        frame.getContentPane().add(myDisplayView, BorderLayout.CENTER);
+        // display them
+        frame.pack();
+        frame.setVisible(true);
+        myDisplayView.addTurtle();
+        //myDisplayView.start();
+    }
+    
+    
 
     public void addView (IView view) {
         myViewList.add(view);

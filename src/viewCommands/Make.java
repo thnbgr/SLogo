@@ -13,9 +13,10 @@ public class Make extends ViewCommand {
         myCommands.add("make");
     }
 
-    public void executeCommand () {
+    public int executeCommand () {
         Turtle t = new Turtle();
         myDisplayView.addSprite(t);
+        return 0;
     }
 
 }
