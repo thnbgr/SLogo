@@ -22,28 +22,35 @@ import java.util.Arrays;
 public class Parser {
 	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
 	private CSVTable myCSVTable;
-	private ArrayList<Node> myVariables;
+	private ArrayList<VariableNode> myVariables;
 	private SyntaxCheck mySyntaxCheck;
 
 	//have it get passed in 
 	public Parser(){
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
-		myVariables = new ArrayList<Node>();
+		myVariables = new ArrayList<VariableNode>();
 		mySyntaxCheck = new SyntaxCheck();
 	}
 	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException{
-		command.toLowerCase();
+		command.toLowerCase(); //remove later 
 		Queue<String> myCommandParts = new LinkedList<String>();
 		myCommandParts.addAll(Arrays.asList(command.split(" ")));
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		while(myCommandParts.size() > 0){
 			String curValue = myCommandParts.remove();
+			//todo 
 			if(curValue.equals("make")){
 				String makeCommand = curValue;
 				while (!mySyntaxCheck.syntaxCheck(makeCommand)){
 					makeCommand += " " + myCommandParts.remove();
 				}
 				makeParser(makeCommand);
+			}
+			if(curValue.equals("if")){
+				String makeCommand = curValue;
+				while (!mySyntaxCheck.syntaxCheck(makeCommand)){
+					makeCommand += " " + myCommandParts.remove();
+				}
 			}
 			else{
 				Node temp = null;
@@ -69,6 +76,9 @@ public class Parser {
 			returnTree = new EncodeTree(curNode);
 		}
 		return returnTree;
+	}
+	public ArrayList<VariableNode> getVariables(){
+		return myVariables;
 	}
 	public void makeParser(String command){
 		try {
