@@ -108,6 +108,7 @@ public class Turtle extends Sprite {
      * @param pen draws shape
      */
     public void paint (Graphics2D pen) {
+        System.out.println(isPenUp());
         if (isVisible()) {
             DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
         }
