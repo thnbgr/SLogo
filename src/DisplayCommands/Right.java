@@ -17,7 +17,7 @@ public class Right extends Command {
     public int executeCommand () {
         String[] args = myCommandString.split(" ");
         int angle = Integer.parseInt(args[1]);
-        myDisplayView.getTurtle().getVector().turn(angle);
+        myDisplayView.getTurtle().turn(angle);
         return angle;
     }
 

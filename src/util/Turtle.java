@@ -88,6 +88,16 @@ public class Turtle extends Sprite {
         if (!isVisible()) return;
         DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
     }
+    
+    public void move (int distance) {
+        myVelocity.setMagnitude(distance);
+        myCenter.translate(myVelocity);
+    }
+    
+    public void turn (int angle) {
+        myVelocity.setDirection(myVelocity.getDirection()+angle);
+    }
+    
 
     public void moveToCenter () {
         // TODO Auto-generated method stub

@@ -16,7 +16,7 @@ public class SetHeading extends Command {
     public int executeCommand () {
         String[] args = myCommandString.split(" ");
         int angle = Integer.parseInt(args[1]);
-        int originalAngle = (int) (myDisplayView.getTurtle().getVector().getDirection() - angle);
+        int originalAngle = (int) (angle - myDisplayView.getTurtle().getVector().getDirection());
         myDisplayView.getTurtle().getVector().setDirection(angle);
         return originalAngle;
     }

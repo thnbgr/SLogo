@@ -101,7 +101,8 @@ public class InputView extends JFrame implements IView {
         myActionListener = new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                echo("action", e);
+                //echo("action", e);
+                showMessage(e.getActionCommand());
                 myCommandPreParser.sendAction(e.getActionCommand());
             }
         };
@@ -122,8 +123,8 @@ public class InputView extends JFrame implements IView {
     /**
      * Echo action events including time event occurs
      */
-    private void echo (String s, ActionEvent e) {
-        showMessage(s + " = " + e.getActionCommand() + " " + e.getWhen());
+    public void echo (String s, ActionEvent e) {
+        //showMessage(s + " = " + e.getActionCommand() + " " + e.getWhen());
     }
 
     /**
@@ -150,7 +151,7 @@ public class InputView extends JFrame implements IView {
      */
     private void echo (Writer w) {
         PrintWriter output = new PrintWriter(w);
-        output.println(myTextArea.getText());
+        //output.println(myTextArea.getText());
         output.flush();
         output.close();
     }
@@ -159,7 +160,7 @@ public class InputView extends JFrame implements IView {
      * Echo other events (e.g., Focus)
      */
     private void echo (String s, AWTEvent e) {
-        showMessage(s + " " + e);
+        //showMessage(s + " " + e);
     }
     
     /**
@@ -293,6 +294,11 @@ public class InputView extends JFrame implements IView {
     public void paint () {
         // TODO Auto-generated method stub
 
+    }
+
+    public void receiveReturnMessage (int r) {
+        showMessage("return: "+r);
+        
     }
 
 }

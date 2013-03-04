@@ -32,7 +32,7 @@ public class Controller implements Observer {
     private static final Dimension myDisplayViewSize = new Dimension(500, 500);
     private static final Dimension myInputViewSize = new Dimension(500, 600);
     private DisplayView myDisplayView;
-    private IView myInputView;
+    private InputView myInputView;
     private List<IView> myViewList;
     private Model myModel;
     private CommandPreParser myCommandPreParser;
@@ -77,7 +77,7 @@ public class Controller implements Observer {
         // This is where we send it to the model parser
         // We assume for now that is has been parsed
 
-        myCommandPerformer.sendAction(myCommand);
+        myInputView.receiveReturnMessage(myCommandPerformer.sendAction(myCommand));
     }
 
 }

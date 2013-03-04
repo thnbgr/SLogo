@@ -15,8 +15,6 @@ import javax.swing.Timer;
 import model.Model;
 import util.Drawable;
 import util.Location;
-import util.Movable;
-import util.Processable;
 import util.Sprite;
 import util.Turtle;
 

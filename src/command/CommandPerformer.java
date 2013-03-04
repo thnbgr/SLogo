@@ -1,15 +1,9 @@
 package command;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
-import util.Drawable;
-import util.Processable;
+
 import view.DisplayView;
 import view.IView;
 import viewCommands.*;
@@ -40,18 +34,18 @@ public class CommandPerformer extends Observable {
     }
     
 
-    public void sendAction (String input) { // fd 50
+    public int sendAction (String input) { // fd 50
 
         for (Command v : myDisplayCommands) {
             for (String s : v.getCommands()) {
                 if (input.contains(s)) {
                     v.addCommandString(input);
                     int r = v.executeCommand();
-                   // myDisplayView.sendToDisplayView(r);
+                    return r;
                 }
             }
         }
-
+        return 0;
     }
 
 }
