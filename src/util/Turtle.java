@@ -15,7 +15,11 @@ public class Turtle extends Sprite {
     /**
      * Create turtle Pixmap
      */
-    public static final Pixmap DEFUALT_IMAGE = new Pixmap("turtle.png");
+    public static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
+    public static final Location DEFAULT_LOCATION = new Location(100, 100);
+    public static final Dimension DEFAULT_SIZE = new Dimension(50, 50);
+
+    
     private boolean myIsPenUp;
     // state
     private Location myCenter;
@@ -28,10 +32,9 @@ public class Turtle extends Sprite {
     private Pixmap myOriginalView;
 
 
-    public Turtle (Pixmap image, Location center, Dimension size) {
-        this(image, center, size, new Vector());
+    public Turtle () {
+        this(DEFAULT_LOCATION, DEFAULT_SIZE);
     }
-    
     public Turtle(Location center, Dimension size) {
         this(center, size, new Vector());
     }
@@ -83,7 +86,6 @@ public class Turtle extends Sprite {
      */
     public void paint (Graphics2D pen)
     {
-        System.out.println("painted");
         DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
     }
     

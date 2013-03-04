@@ -11,7 +11,7 @@ public abstract class Command {
 
     public abstract int executeCommand ();
 
-    public void addCommand (String s) {
+    public void addCommandName (String s) {
         myCommands.add(s);
     }
     

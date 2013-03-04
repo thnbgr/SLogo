@@ -68,29 +68,4 @@ public class CommandPreParser extends Observable {
     public String getParsedString () {
         return myStringCommand;
     }
-    /*
-     * public void setStringCommand (String input) {
-     * myStringCommand = input;
-     * }
-     * 
-     * public void setProcessable (String input) {
-     * int id = extractIDFromString(input);
-     * myProcessable = myDisplayView.getProcessableByID(id);
-     * }
-     * 
-     * private int extractIDFromString (String input) {
-     * String[] array = input.split(", ");
-     * if (array.length < 2) return 0;
-     * return Integer.parseInt(array[1]);
-     * }
-     * 
-     * public void createBundle () {
-     * myCommandBundle = new CommandBundle(myStringCommand, myProcessable);
-     * }
-     * 
-     * public CommandBundle getBundle () {
-     * return myCommandBundle;
-     * }
-     */
-
 }

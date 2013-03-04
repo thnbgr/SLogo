@@ -38,7 +38,7 @@ public class DisplayView extends JComponent implements IView {
     /** */
     public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;
     private static Dimension DEFAULT_TURTLE_SIZE = new Dimension(50, 50);
-    private static Location DEFAULT_TURTLE_LOCATION = new Location();
+    private static Location DEFAULT_TURTLE_LOCATION;
     // drives the animation
     private Timer myTimer;
     // game to be animated
@@ -49,6 +49,7 @@ public class DisplayView extends JComponent implements IView {
      * @param size is the size of the display
      */
     public DisplayView(Dimension size) {
+        DEFAULT_TURTLE_LOCATION = new Location(size.getHeight() / 2, size.getWidth() / 2);
         setPreferredSize(size);
         setSize(size);
         assignID = 0;

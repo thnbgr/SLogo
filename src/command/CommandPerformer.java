@@ -24,7 +24,6 @@ import viewCommands.*;
  */
 public class CommandPerformer extends Observable {
 
-    private String myStringCommand;
     private DisplayView myDisplayView;
     // private CommandBundle myCommandBundle;
     private List<Command> myDisplayCommands;
@@ -39,7 +38,20 @@ public class CommandPerformer extends Observable {
         CommandBuilder builder = new CommandBuilder(myDisplayView);
         myDisplayCommands = builder.populateDisplayCommandsList();
     }
-
     
+
+    public void sendAction (String input) { // fd sum xcor 50
+        
+        for (Command v : myDisplayCommands) {
+            for (String s : v.getCommands()) {
+                if (input.contains(s)) {
+                    v.addCommandString(input);
+                    int r = v.executeCommand();
+                   // myDisplayView.sendToDisplayView(r);
+                }
+            }
+        }
+
+    }
 
 }
