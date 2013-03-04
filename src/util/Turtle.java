@@ -1,7 +1,10 @@
 package util;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,7 +22,7 @@ public class Turtle extends Sprite {
     public static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
     public static final Location DEFAULT_LOCATION = new Location(100, 100);
     public static final Dimension DEFAULT_SIZE = new Dimension(50, 50);
-
+    private List<Line> myLines;
     private boolean myIsPenUp;
     // state
     private Dimension mySize;
@@ -42,11 +45,13 @@ public class Turtle extends Sprite {
      */
     public Turtle (Location center, Dimension size, Vector velocity) {
         // make copies just to be sure no one else has access
+        myLines = new ArrayList<Line>();
         myOriginalCenter = new Location(center);
         myOriginalSize = new Dimension(size);
         myOriginalVelocity = new Vector(velocity);
         myOriginalView = new Pixmap(DEFAULT_IMAGE);
         setVisible(true);
+        setPenUp();
         reset();
     }
 
@@ -65,10 +70,17 @@ public class Turtle extends Sprite {
     }
 
     /**
-     * Returns myIsPenUp
+     * Returns !myIsPenUp
      */
     public boolean isPenDown () {
         return !myIsPenUp;
+    }
+    
+    /**
+     * Returns myIsPenUp
+     */
+    public boolean isPenUp () {
+        return myIsPenUp;
     }
 
     /**
@@ -82,24 +94,38 @@ public class Turtle extends Sprite {
 
     /**
      * Display this shape on the screen.
+     * @param pen draws shape
      */
-    public void paint (Graphics2D pen)
-    {
-        if (!isVisible()) return;
-        DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
+    public void paint (Graphics2D pen) {
+        if (isVisible()) {
+            DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
+        }
+        if (isPenUp()) {
+            for (Line l : myLines) {
+                l.paint((Graphics) pen);
+            }
+        }
     }
     
     public void move (int distance) {
         myVelocity.setMagnitude(distance);
+        Location newCenter = myCenter;
+        newCenter.translate(myVelocity);
+        addLine(myCenter, new Location(myCenter.x, myCenter.y));
         myCenter.translate(myVelocity);
     }
     
     public void turn (int angle) {
-        myVelocity.setDirection(myVelocity.getDirection()+angle);
+        myVelocity.setDirection(myVelocity.getDirection() + angle);
     }
     
-
-    public void moveToCenter () {
+    /**
+     * Add line to myLines
+     * @param start location of line
+     * @param end location of line
+     */
+    public void addLine(Location start, Location end) {
+        myLines.add(new Line(start, end, Color.black));
     }
 
 }

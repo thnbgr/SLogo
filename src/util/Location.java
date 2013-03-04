@@ -47,6 +47,7 @@ public class Location extends Point2D.Double {
 
     /**
      * Move this location by given vector.
+     * @return 
      * 
      * @see java.awt.Point#translate(int, int)
      */

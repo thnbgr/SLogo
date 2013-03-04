@@ -36,7 +36,6 @@ public class DisplayView extends JComponent implements IView {
     private static Dimension ourDefaultTurtleSize = new Dimension(TURTLE_SIZE, TURTLE_SIZE);
     private static Location ourDefaultTurtleLocation;
     private List<Drawable> myDrawables;
-    private List<Line> myLines;
     private Turtle myTurtle;
     private int myAssignID;
     // drives the animation
@@ -54,7 +53,6 @@ public class DisplayView extends JComponent implements IView {
         setSize(size);
         myAssignID = 0;
         myDrawables = new ArrayList<Drawable>();
-        myLines = new ArrayList<Line>();
         setVisible(true);
     }
 
@@ -73,9 +71,6 @@ public class DisplayView extends JComponent implements IView {
         pen.setColor(Color.WHITE);
         for (Drawable d : myDrawables) {
             d.paint((Graphics2D) pen);
-        }
-        for (Line l : myLines) {
-            l.paint((Graphics) pen);
         }
         
     }
@@ -139,16 +134,6 @@ public class DisplayView extends JComponent implements IView {
      */
     public Turtle getTurtle() {
         return myTurtle;
-    }
-    
-    /**
-     * Add line to myLines
-     * @param start location of line
-     * @param end location of line
-     */
-    public void addLine(Location start, Location end) {
-        myLines.add(new Line(start, end, Color.black));
-        repaint();
     }
 
     /**
