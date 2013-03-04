@@ -14,6 +14,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.Timer;
 import model.Model;
 import util.Drawable;
+import util.Location;
 import util.Movable;
 import util.Processable;
 import util.Sprite;
@@ -36,6 +37,8 @@ public class DisplayView extends JComponent implements IView {
     public static final int ONE_SECOND = 1000;
     /** */
     public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;
+    private static Dimension DEFAULT_TURTLE_SIZE = new Dimension(50, 50);
+    private static Location DEFAULT_TURTLE_LOCATION = new Location();
     // drives the animation
     private Timer myTimer;
     // game to be animated
@@ -118,7 +121,7 @@ public class DisplayView extends JComponent implements IView {
     }
     
     public void addTurtle () {
-        myTurtle = new Turtle();
+        myTurtle = new Turtle(DEFAULT_TURTLE_LOCATION, DEFAULT_TURTLE_SIZE);
         addSprite(myTurtle);
     }
     
@@ -127,15 +130,6 @@ public class DisplayView extends JComponent implements IView {
     }
 
 
-    public void updateMovable (Processable p) {
-        Movable m = (Movable) getDrawableByID(p.getID());
-        m.updateWithProcessable(p);
-    }
-
-    public Processable getProcessableByID (int id) {
-        Movable m = (Movable) getDrawableByID(id);
-        return m.extractProcessable();
-    }
 
     public Drawable getDrawableByID (int i) {
         for (Drawable d : myDrawables) {

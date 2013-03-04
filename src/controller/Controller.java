@@ -49,7 +49,7 @@ public class Controller implements Observer {
         frame.pack();
         frame.setVisible(true);
         myDisplayView.addTurtle();
-        //myDisplayView.start();
+        myDisplayView.start();
     }
     
     
