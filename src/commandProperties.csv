@@ -16,3 +16,8 @@ not			,				,	1		,	parser.node.logic.NotNode
 make		,				,	2		,	parser.node.control.MakeNode
 forward		,	fd			,	1		,	parser.node.turtleCommand.TurtleCommandNode
 backward	,	bk			,	1		,	parser.node.turtleCommand.TurtleCommandNode
+left		,	lt			,	1		,	parser.node.turtleCommand.TurtleCommandNode
+right		,	rt			,	1		,	parser.node.turtleCommand.TurtleCommandNode
+setheading	,	seth		,	1		,	parser.node.turtleCommand.TurtleCommandNode
+towards		,				,	2		,	parser.node.turtleCommand.TurtleCommandNode
+setxy		,				,	2		,	parser.node.turtleCommand.TurtleCommandNode

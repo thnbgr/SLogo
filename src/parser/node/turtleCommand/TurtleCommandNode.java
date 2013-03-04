@@ -8,7 +8,11 @@ public class TurtleCommandNode extends Node {
 		myName = new String();
 	}
 	public String toString(){
-		return myName + " " + getChildren().get(0).getValue();
+		String childrenValues = new String();
+		for(Node child : getChildren()){
+			childrenValues += " " + child.getValue();
+		}
+		return myName + childrenValues;
 	}
 	public void setName(String name){
 		myName = name;

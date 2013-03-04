@@ -47,10 +47,11 @@ public class Parser {
 				makeParser(makeCommand);
 			}
 			if(curValue.equals("if")){
-				String makeCommand = curValue;
-				while (!mySyntaxCheck.syntaxCheck(makeCommand)){
-					makeCommand += " " + myCommandParts.remove();
+				String ifCommand = curValue;
+				while (!mySyntaxCheck.syntaxCheck(ifCommand)){
+					ifCommand += " " + myCommandParts.remove();
 				}
+				ifParser(ifCommand);
 			}
 			else{
 				Node temp = null;
@@ -96,6 +97,18 @@ public class Parser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public void ifParser(String command){
+		try{
+			
+		}
+		catch(Exception e){
+			
+		}
+		
+	}
+	public void ifElseParser(String command){
+		
 	}
 	//put into model
 	public void decode(EncodeTree tree){
