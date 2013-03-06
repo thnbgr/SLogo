@@ -29,10 +29,10 @@ public class Node {
 		myNumArgs = numArgs;
 	}
 	public void setValue(int value){
-		myValue = value;
+		setMyValue(value);
 	}
 	public int getValue(){
-		return myValue;
+		return getMyValue();
 	}
 	public Node getHead(){ return myHead; }
 	public ArrayList<Node> getChildren(){
@@ -52,6 +52,14 @@ public class Node {
 			child.makeTree(tokens);
 		}
 	}
+
+    public int getMyValue () {
+        return myValue;
+    }
+
+    public void setMyValue (int myValue) {
+        this.myValue = myValue;
+    }
 }
 
 

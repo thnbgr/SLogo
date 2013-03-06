@@ -1,15 +1,39 @@
 package util;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.util.Random;
+
 
 public class Sprite extends Drawable {
 
-    private Location myLocation;
-    private Vector myVector;
-    private Pixmap myPixmap;
-    private Dimension mySize;
-    
+    protected Location myCenter;
+    protected Vector myVelocity;
+    protected Pixmap myPixmap;
+    protected Dimension mySize;
+
     public Sprite () {
-        
+
     }
+
+    @Override
+    public void paint (Graphics2D pen) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public Location getLocation () {
+        return myCenter;
+    }
+
+    public Vector getVector () {
+        return myVelocity;
+    }
+
+    public void update (Location center, Dimension size, Vector velocity) {
+        myCenter = center;
+        mySize = size;
+        myVelocity = velocity;
+    }
+
 }
