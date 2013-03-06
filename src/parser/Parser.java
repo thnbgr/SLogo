@@ -166,12 +166,13 @@ public class Parser {
 	public Node toParser(String command){
 		try{
 			StructureInfoPackage toStructPackage = mySyntaxCheck.splitToStructure(command);
-			String commandName = toStructPackage.getName();
+			String commandName = toStructPackage.getValue();
 			ArrayList<String> varNames = new ArrayList<String>();
-			for(String name : toStructPackage.getVarNames()){
+			for(String name : toStructPackage.getCommands().get(0)){
 				varNames.add(commandName + name); //name mangling
 			}
-			String customCommand = toStructPackage.getCustCommand();
+			ArrayList<String> customCommands = toStructPackage.getCommands().get(1); 
+									//changed to arraylist cuz there can be multiple commands
 		}
 		catch(Exception e){
 			

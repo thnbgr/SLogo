@@ -8,10 +8,7 @@ import java.util.Map;
 import controller.Controller;
 import parser.DecodeProcesser;
 import parser.EncodeTree;
-import parser.IfDecodeProcesser;
-import parser.IfElseDecodeProcesser;
 import parser.Parser;
-import parser.RepeatDecodeProcesser;
 import parser.node.Node;
 import parser.node.turtleCommand.*;
 import parser.node.control.IfNode;
@@ -19,9 +16,6 @@ import parser.node.control.IfNode;
 public class Model {
 	private Parser myParser;
 	private Controller myController;
-    private DecodeProcesser[] myDecodeProcessors = {new IfDecodeProcesser(this),
-    		          new IfElseDecodeProcesser(this), new RepeatDecodeProcesser(this)};
-    private String[] myKeywords = {"IF", "IFELSE", "REPEAT"};
 	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
     
 	public Model(){
