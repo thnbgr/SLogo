@@ -17,7 +17,7 @@ import view.InputView;
  * @author Natalia Carvalho
  * 
  */
-public class Controller implements Observer {
+public class ViewController implements Observer {
     /**
      */
     public static final String TITLE = "Output Display";
@@ -33,7 +33,7 @@ public class Controller implements Observer {
      * Constructor for controller
      * @param model is the model that we communicate with
      */
-    public Controller (Model model) {
+    public ViewController (Model model) {
         myModel = model;
         myDisplayView = new DisplayView(DISPLAY_VIEW_SIZE);
         myCommandPreParser = new CommandPreParser(myDisplayView);

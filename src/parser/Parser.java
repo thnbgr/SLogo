@@ -25,6 +25,7 @@ public class Parser {
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
+	//if view gets around to making workspaces...add these to a map k=workspace id, v=arraylist
 	private SyntaxCheck mySyntaxCheck;
 
 	//have it get passed in 
