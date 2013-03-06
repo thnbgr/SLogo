@@ -17,7 +17,7 @@ import model.Model;
 import view.IView;
 
 
-public class Controller{
+public class ModelController{
 
     private List<IView> myViewList;
     private Model myModel;
@@ -27,7 +27,7 @@ public class Controller{
 	private int structureCallStartIndex = -1;
 	private int structureCallEndIndex = -1;
     
-    public Controller (Model model) {
+    public ModelController (Model model) {
         myModel = model;
         mySyntaxCheck = new SyntaxCheck();
         myParser = new Parser(""); //add filename later 

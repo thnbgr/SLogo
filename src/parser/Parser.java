@@ -8,11 +8,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import parser.node.*;
-<<<<<<< HEAD
 import parser.node.control.*;
 import parser.node.turtleCommand.*;
-=======
->>>>>>> origin/master
 import java.util.ArrayList;
 import java.util.Arrays;
 
