@@ -3,7 +3,6 @@ package view;
 import command.CommandPreParser;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
-import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,14 +13,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -38,7 +35,7 @@ import javax.swing.JTextField;
  * @author Natalia Carvalho
  * 
  */
-public class InputView extends JFrame implements IView {
+public class InputView extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
@@ -118,32 +115,6 @@ public class InputView extends JFrame implements IView {
                 echo("lost", e);
             }
         };
-    }
-
-    /**
-     * Echo action events including time event occurs
-     */
-    public void echo (String s, ActionEvent e) {
-        //showMessage(s + " = " + e.getActionCommand() + " " + e.getWhen());
-    }
-
-    /**
-     * Echo data read from reader to display
-     */
-    private void echo (Reader r) {
-        try {
-            String s = "";
-            BufferedReader input = new BufferedReader(r);
-            String line = input.readLine();
-            while (line != null) {
-                s += line + "\n";
-                line = input.readLine();
-            }
-            showMessage(s);
-        }
-        catch (IOException e) {
-            showError(e.toString());
-        }
     }
 
     /**
@@ -288,16 +259,13 @@ public class InputView extends JFrame implements IView {
         });
         return result;
     }
-
-
-    @Override
-    public void paint () {
-        // TODO Auto-generated method stub
-
-    }
-
+    
+    /**
+     * Gets the return message from model
+     * @param r is the return message
+     */
     public void receiveReturnMessage (int r) {
-        showMessage("return: "+r);
+        showMessage("return: " + r);
         
     }
 

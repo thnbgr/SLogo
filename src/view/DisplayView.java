@@ -12,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import model.Model;
 import util.Drawable;
-import util.Line;
 import util.Location;
 import util.Sprite;
 import util.Turtle;
@@ -22,7 +21,7 @@ import util.Turtle;
  * @author Natalia Carvalho
  * @author Eric Wu
  */
-public class DisplayView extends JComponent implements IView {
+public class DisplayView extends JComponent {
     // better way to think about timed events (in milliseconds)
     /** */
     public static final int ONE_SECOND = 1000;    
@@ -36,7 +35,6 @@ public class DisplayView extends JComponent implements IView {
     private static Dimension ourDefaultTurtleSize = new Dimension(TURTLE_SIZE, TURTLE_SIZE);
     private static Location ourDefaultTurtleLocation;
     private List<Drawable> myDrawables;
-    private List<Line> myLines;
     private Turtle myTurtle;
     private int myAssignID;
     // drives the animation
@@ -52,7 +50,6 @@ public class DisplayView extends JComponent implements IView {
         setSize(size);
         myAssignID = 0;
         myDrawables = new ArrayList<Drawable>();
-        myLines = new ArrayList<Line>();
         setVisible(true);
     }
 
@@ -71,9 +68,6 @@ public class DisplayView extends JComponent implements IView {
         pen.setColor(Color.WHITE);
         for (Drawable d : myDrawables) {
             d.paint((Graphics2D) pen);
-        }
-        for (Line l : myLines) {
-            l.paint((Graphics) pen);
         }
         
     }
@@ -107,11 +101,6 @@ public class DisplayView extends JComponent implements IView {
         myTimer.stop();
     }
     
-    @Override
-    public void paint () {
-        
-    }
-    
     /**
      * Add sprite to myDrawables
      * @param s sprite to be added to myDrawables
@@ -134,16 +123,6 @@ public class DisplayView extends JComponent implements IView {
      */
     public Turtle getTurtle() {
         return myTurtle;
-    }
-    
-    /**
-     * Add line to myLines
-     * @param start location of line
-     * @param end location of line
-     */
-    public void addLine(Location start, Location end) {
-        myLines.add(new Line(start, end, Color.black));
-        repaint();
     }
 
     /**

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import view.DisplayView;
-import view.IView;
 
 
 /**
@@ -15,6 +14,7 @@ import view.IView;
  * In both cases, we receive a return value, and pass it to the view
  * 
  * @author Eric Wu
+ * @author Natalia Carvalho
  * 
  */
 public class CommandPreParser extends Observable {
@@ -22,8 +22,8 @@ public class CommandPreParser extends Observable {
     private DisplayView myDisplayView;
     private List<Command> myViewCommands;
 
-    public CommandPreParser (IView d) {
-        myDisplayView = (DisplayView) d;
+    public CommandPreParser (DisplayView d) {
+        myDisplayView = d;
         myViewCommands = new ArrayList<Command>();
         addViewCommands();
     }

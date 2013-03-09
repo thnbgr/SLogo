@@ -25,6 +25,8 @@ public class Vector {
 
     /**
      * Create a vector in the given direction with the given magnitude.
+     * @param angle of vector
+     * @param magnitude of vector
      */
     public Vector (double angle, double magnitude) {
         setDirection(angle);
@@ -34,6 +36,8 @@ public class Vector {
     /**
      * Create a vector whose direction and magnitude are determined by direction
      * and distance between the two given points.
+     * @param source point2D
+     * @param target target2D
      */
     public Vector (Point2D source, Point2D target) {
         double dx = target.getX() - source.getX();

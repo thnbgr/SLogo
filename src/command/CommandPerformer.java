@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import view.DisplayView;
-import view.IView;
 import viewCommands.*;
 
 
@@ -21,8 +20,8 @@ public class CommandPerformer extends Observable {
     // private CommandBundle myCommandBundle;
     private List<Command> myDisplayCommands;
 
-    public CommandPerformer (IView d) {
-        myDisplayView = (DisplayView) d;
+    public CommandPerformer (DisplayView d) {
+        myDisplayView = d;
         myDisplayCommands = new ArrayList<Command>();
         addDisplayCommands();
     }
