@@ -1,26 +1,15 @@
 package model;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import controller.Controller;
-import parser.DecodeProcesser;
 import parser.EncodeTree;
-import parser.Parser;
 import parser.node.Node;
 import parser.node.turtleCommand.*;
+import parser.node.control.IfElseNode;
 import parser.node.control.IfNode;
 
+
 public class Model {
-	private Parser myParser;
 	private Controller myController;
-	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
-    
-	public Model(){
-		myParser = new Parser("");
-	}
 	
 	public void setController(Controller controller){
 		myController = controller;
@@ -30,39 +19,64 @@ public class Model {
 		return myController;
 	}
     
-    /**
-     * Implements control structures and user-defined commands.
-     * @param et
-     * @return
-     */
-	public Node structureDecode(EncodeTree et){ //probably don't need this.
-		Node head = et.getHead();
-//		List<String> myKeywordsArrayList = Arrays.asList(myKeywords);
-//		int keywordsIndex = myKeywordsArrayList.indexOf(head.getType());
-//		myDecodeProcessors[keywordsIndex].controlStructureProcess(head);
-//		
-		
-		return head;
-	}
-	public String ifDecode(Node ifNode){
-		((IfNode)ifNode).getChildren().get(0).evaluate();
-		if(ifNode.getChildren().get(0).getValue() == 1){
-			for(Node ifCommand : ifNode.getChildren().get(1).getChildren()){
-				decode(new EncodeTree(ifCommand));
-			}
-		}
-		return new String();
-	}
-	public String decode(EncodeTree et){
-		Node head = et.getHead();
+	/**
+	 * Decodes the parsed tree.
+	 * @param tree
+	 */
+	public String decode(EncodeTree tree){
+		Node head = tree.getHead();
+		head.evaluate();
+		String result = "";
 		if(head instanceof IfNode){
-			ifDecode(head);
+			return ifDecode(head);
+		}
+		else if(head instanceof IfElseNode){
+			return ifElseDecode(head);
+		}
+		else if(head instanceof TurtleCommandNode){
+			result = ((TurtleCommandNode) head).toString();
+			//System.out.println("turtle " + result);
+			return result;
 		}
 		else{
-			head.evaluate();
+			result = Integer.toString(head.getValue());
+			//System.out.println("other " + result);
+			return result;
 		}
-		return ((TurtleCommandNode) head).toString();
-			
-		//}
+	}
+	
+	/**
+	 * Decodes if command.
+	 * @param ifNode
+	 * @return
+	 */
+	public String ifDecode(Node ifNode){
+		((IfNode)ifNode).getChildren().get(0).evaluate();
+		if(ifNode.getChildren().get(0).getValue() != 0){
+			for(Node ifCommand : ifNode.getChildren().get(1).getChildren()){
+				return decode(new EncodeTree(ifCommand));
+			}
+		}
+		return "";
+	}
+	
+	/**
+	 * Decodes ifelse command.
+	 * @param ifElseNode
+	 * @return
+	 */
+	public String ifElseDecode(Node ifElseNode){
+		((IfElseNode)ifElseNode).getChildren().get(0).evaluate();
+		if(ifElseNode.getChildren().get(0).getValue() != 0){
+			for(Node ifCommand : ifElseNode.getChildren().get(2).getChildren()){
+				return decode(new EncodeTree(ifCommand));
+			}
+		}
+		else if(ifElseNode.getChildren().get(0).getValue() == 0){
+			for(Node ifCommand : ifElseNode.getChildren().get(1).getChildren()){
+				return decode(new EncodeTree(ifCommand));
+			}
+		}
+		return "";
 	}
 }

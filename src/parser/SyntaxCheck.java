@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class SyntaxCheck {
 	
-	public static final String COMMAND_REGEXS_FILE_NAME = "commandRegexs.csv";
+	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
 	
 	private Map<String, String> validCommandRegex = new HashMap<String, String>();
 	private String lastCommandCall = "";
@@ -55,7 +55,7 @@ public class SyntaxCheck {
 	 */
 	public boolean syntaxCheck(String command) throws IOException{
 		if (command.equals("0")){
-			System.out.println("valid command!!!!");
+			//System.out.println("valid command!!!!");
 			return true;
 		}
 		findLastCommand(command);
@@ -99,6 +99,22 @@ public class SyntaxCheck {
 	}
 	
 	/**
+	 * Finds the first valid command composed of the given String array. Start
+	 * from the given index.
+	 * @throws IOException 
+	 * 
+	 */
+	public String findFirstValidCommand(String[] commandComponents, int index) throws IOException{
+		String validParameter = commandComponents[index];
+		int number = 1;
+		while (!syntaxCheck(validParameter)){
+			validParameter = validParameter + " " + commandComponents[index + number];
+			number += 1;
+		}
+		return validParameter;
+	}
+
+	/**
      * Identifies the multiple commands separated by space in a single input.
      * @return
 	 * @throws IOException 
@@ -118,6 +134,9 @@ public class SyntaxCheck {
 		}
     	return splitedCommands;
     }
+    
+    //TODO: can actually use syntax check until ending becomes [0] and [0][0]
+    //TODO: can actually make in one class (check endwith [0] until there's nothing)
 	
     /**
      * Splits a valid REPEAT structure into its components.
@@ -142,10 +161,6 @@ public class SyntaxCheck {
 		repeatCommands.add(splitedTrueCommands);
 		return new StructureInfoPackage("repeat", repeatValue, repeatCommands);
     }
-    
-    
-    //TODO: can actually use syntax check until ending becomes [0] and [0][0]
-    //TODO: can actually make in one class (check endwith [0] until there's nothing)
     
     /**
      * Splits a valid IF structure into its components.
@@ -266,5 +281,9 @@ public class SyntaxCheck {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+	}
+
+	public void updateValidSyntax(String commandName, String commandRegex) {
+		validCommandRegex.put(commandName, commandRegex);
 	}
 }
