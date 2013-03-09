@@ -5,15 +5,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SyntaxCheck {
 	
 	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
-	//static for testing purpose
+	
 	private Map<String, String> validCommandRegex = new HashMap<String, String>();
 	private String lastCommandCall = "";
 	private int commandCallStartIndex = 0;
@@ -42,48 +47,43 @@ public class SyntaxCheck {
 	}
 	
 	/**
-	 * Does syntax checking before parsing. 
-	 * Check doesn't include: invalid values and variables, and multiple commands.
+	 * Checks for syntax validity before parsing. 
+	 * Check doesn't include: invalid values and variables.
 	 * @param command the entire user input string
 	 * @return boolean that represents whether the input string is valid
+	 * @throws IOException 
 	 */
-	public boolean syntaxCheck(String command){ //static for testing propose
+	public boolean syntaxCheck(String command) throws IOException{
 		if (command.equals("0")){
 			System.out.println("valid command!!!!");
 			return true;
 		}
-		//TODO: rename/organize code
-		//TODO: FD :distance (possible situation??)
-				//NOT DONE: TO (?); AND; OR; NOT (tests?)
-		
 		findLastCommand(command);
 		
 		if (lastCommandCall.equals("")){
-			System.out.println("NO MATCHES!!"); //TODO: throw error here
 			return false;
 		}
 		
-		String commandPattern2 = validCommandRegex.get(lastCommandCall);
-		Pattern r2 = Pattern.compile(commandPattern2);
-		Matcher m2 = r2.matcher(command).region(commandCallEndIndex, command.length());
-		if (m2.find()){
+		String commandPattern = validCommandRegex.get(lastCommandCall);
+		Pattern r = Pattern.compile(commandPattern);
+		Matcher m = r.matcher(command).region(commandCallEndIndex, command.length());
+		if (m.find()){
 			//System.out.println(m2.group(1));
-			int endIndex2 = m2.end();
-			String simplifiedCommand = command.substring(0, commandCallStartIndex) + "0" + command.substring(endIndex2);
+			int endIndex = m.end();
+			String simplifiedCommand = command.substring(0, commandCallStartIndex) + "0" + command.substring(endIndex);
 			//System.out.println(simplifiedCommand);
 			return syntaxCheck(simplifiedCommand);
 		}else{
-			System.out.println("NO MATCHES!!!"); //TODO: throw error here
 			return false;
 		}
 	}
 
 	/**
-	 * finds the last Command in the input string.
+	 * Finds the last Command or Variable name in the input string.
 	 * @param command entire user input string
 	 */
 	private void findLastCommand (String command){
-		String commandPattern = "(\\w+)";
+		String commandPattern = "(\\w+|\\:)";
 		
 		Pattern r = Pattern.compile(commandPattern);
 		
@@ -98,6 +98,159 @@ public class SyntaxCheck {
 		}
 	}
 	
+	/**
+	 * @throws IOException 
+	 * 
+	 */
+	public String findFirstValidCommand(String[] commandComponents, int index) throws IOException{
+		String validParameter = commandComponents[index];
+		int number = 1;
+		while (!syntaxCheck(validParameter)){
+			validParameter = validParameter + " " + commandComponents[index + number];
+			number += 1;
+		}
+		return validParameter;
+	}
+	
+	
+	
+	/**
+     * Identifies the multiple commands separated by space in a single input.
+     * @return
+	 * @throws IOException 
+     */
+    public ArrayList<String> splitMultipleCommands(String command) throws IOException{
+    	ArrayList<String> splitedCommands = new ArrayList<String>();
+    	Queue<String> myCommandComponents = new LinkedList<String>();
+		myCommandComponents.addAll(Arrays.asList(command.split(" ")));
+    	
+		while (!myCommandComponents.isEmpty()){
+			String singleCommand = myCommandComponents.remove();
+			while (!syntaxCheck(singleCommand)){
+				singleCommand += " ";
+				singleCommand += myCommandComponents.remove();
+			}
+			splitedCommands.add(singleCommand);
+		}
+    	return splitedCommands;
+    }
+	
+    /**
+     * Splits a valid REPEAT structure into its components.
+     * @param command
+     * @return
+     * @throws IOException
+     */
+    public StructureInfoPackage splitRepeatStructure(String command) throws IOException{
+    	String commandPattern = "(\\[)";
+		
+		Pattern r = Pattern.compile(commandPattern);
+		
+		Matcher m = r.matcher(command);
+		int leftBracketStartIndex = -1;
+		while (m.find()){
+			leftBracketStartIndex = m.start();
+		}
+		String repeatValue = command.substring(7, leftBracketStartIndex-1);
+		String repeatTrueCommand = command.substring(leftBracketStartIndex+2, command.length()-2);
+		ArrayList<ArrayList<String>> repeatCommands = new ArrayList<ArrayList<String>>();
+		ArrayList<String> splitedTrueCommands = splitMultipleCommands(repeatTrueCommand);
+		repeatCommands.add(splitedTrueCommands);
+		return new StructureInfoPackage("repeat", repeatValue, repeatCommands);
+    }
+    
+    
+    //TODO: can actually use syntax check until ending becomes [0] and [0][0]
+    //TODO: can actually make in one class (check endwith [0] until there's nothing)
+    
+    /**
+     * Splits a valid IF structure into its components.
+     * @param command
+     * @return
+     * @throws IOException
+     */
+    public StructureInfoPackage splitIfStructure(String command) throws IOException{
+    	String commandPattern = "(\\[)";
+		
+		Pattern r = Pattern.compile(commandPattern);
+		
+		Matcher m = r.matcher(command);
+		int leftBracketStartIndex = -1;
+		while (m.find()){
+			leftBracketStartIndex = m.start();
+		}
+		String ifValue = command.substring(3, leftBracketStartIndex-1);
+		String ifTrueCommand = command.substring(leftBracketStartIndex+2, command.length()-2);
+		ArrayList<ArrayList<String>> ifCommands = new ArrayList<ArrayList<String>>();
+		ArrayList<String> splitedTrueCommands = splitMultipleCommands(ifTrueCommand);
+		ifCommands.add(splitedTrueCommands);
+		return new StructureInfoPackage("if", ifValue, ifCommands);
+    }
+    
+    /**
+     * Splits a valid IFELSE structure into its components.
+     * @param command
+     * @return
+     * @throws IOException
+     */
+    public StructureInfoPackage splitIfElseStructure(String command) throws IOException{
+    	String commandPattern = "(\\[)";
+		
+		Pattern r = Pattern.compile(commandPattern);
+		
+		Matcher m = r.matcher(command);
+		int trueLeftBracketStartIndex = -1;
+		int falseLeftBracketStartIndex = -1;
+		
+		while (m.find()){
+			trueLeftBracketStartIndex = falseLeftBracketStartIndex;
+			falseLeftBracketStartIndex = m.start();
+		}
+		String ifElseValue = command.substring(7, trueLeftBracketStartIndex-1);
+		String ifElseTrueCommand = command.substring(trueLeftBracketStartIndex+2, falseLeftBracketStartIndex-3);
+		String ifElseFalseCommand = command.substring(falseLeftBracketStartIndex+2, command.length()-2);
+		
+		ArrayList<ArrayList<String>> ifElseCommands = new ArrayList<ArrayList<String>>();
+		ArrayList<String> splitedTrueCommands = splitMultipleCommands(ifElseTrueCommand);
+		ArrayList<String> splitedFalseCommands = splitMultipleCommands(ifElseFalseCommand);
+		
+		ifElseCommands.add(splitedTrueCommands);
+		ifElseCommands.add(splitedFalseCommands);
+		return new StructureInfoPackage("ifelse", ifElseValue, ifElseCommands);
+    }
+    
+    /**
+     * Splits a valid TO structure into its components.
+     * @param command
+     * @return
+     * @throws IOException
+     */
+    public StructureInfoPackage splitToStructure(String command) throws IOException{
+    	String commandPattern = "(\\[)";
+		
+		Pattern r = Pattern.compile(commandPattern);
+		
+		Matcher m = r.matcher(command);
+		int parameterLeftBracketStartIndex = -1;
+		int commandLeftBracketStartIndex = -1;
+		
+		while (m.find()){
+			parameterLeftBracketStartIndex = commandLeftBracketStartIndex;
+			commandLeftBracketStartIndex = m.start();
+		}
+		String toValue = command.substring(3, parameterLeftBracketStartIndex-1);
+		String toParameterCommand = command.substring(parameterLeftBracketStartIndex+2, commandLeftBracketStartIndex-3);
+		String toCommandsCommand = command.substring(commandLeftBracketStartIndex+2, command.length()-2);
+		
+		ArrayList<ArrayList<String>> toCommands = new ArrayList<ArrayList<String>>();
+		ArrayList<String> splitedParameterCommands = splitMultipleCommands(toParameterCommand);
+		ArrayList<String> splitedCommandsCommands = splitMultipleCommands(toCommandsCommand);
+		
+		toCommands.add(splitedParameterCommands);
+		toCommands.add(splitedCommandsCommands);
+		return new StructureInfoPackage("to", toValue, toCommands);
+    }
+    
     /**
 	 * Testing purpose.
 	 */
@@ -124,10 +277,14 @@ public class SyntaxCheck {
 		try {
 			while(commandCount > 0){
 				String s = readUserInput("enter command: ");
-				sc.syntaxCheck(s);
+				sc.splitRepeatStructure(s);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+	}
+
+	public void updateValidSyntax(String commandName, String commandRegex) {
+		validCommandRegex.put(commandName, commandRegex);
 	}
 }

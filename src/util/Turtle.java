@@ -15,7 +15,6 @@ import java.util.List;
  * @author Eric Wu
  */
 public class Turtle extends Sprite {
-
     /**
      */
     public static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
