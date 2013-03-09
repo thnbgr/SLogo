@@ -27,20 +27,22 @@ public class Parser {
 	private ArrayList<CustomCommandNode> myCustomCommands;
 	//if view gets around to making workspaces...add these to a map k=workspace id, v=arraylist
 	private SyntaxCheck mySyntaxCheck;
+	private Queue<Node> myCurNodes;
 
 	//have it get passed in 
+	public Parser(){}
 	public Parser(String fileName){
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
 		//For later use: myCSVTable =  new CSVTable(fileName);
 		myVariables = new ArrayList<VariableNode>();
 		myCustomCommands = new ArrayList<CustomCommandNode>();
 		mySyntaxCheck = new SyntaxCheck();
+		myCurNodes = new LinkedList<Node>();
 	}
 	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException, IOException{
 		command.toLowerCase(); //remove later 
 		Queue<String> myCommandParts = new LinkedList<String>();
 		myCommandParts.addAll(Arrays.asList(command.split(" ")));
-		Queue<Node> myCurNodes = new LinkedList<Node>();
 		Node curNode = new Node();
 		
 		while(myCommandParts.size() > 0){
@@ -106,8 +108,23 @@ public class Parser {
 		returnTree = new EncodeTree(curNode);
 		return returnTree;
 	}
+	public SyntaxCheck getSyntaxCheck(){
+		return mySyntaxCheck;
+	}
 	public ArrayList<VariableNode> getVariables(){
 		return myVariables;
+	}
+	public ArrayList<CustomCommandNode> getCustomCommands(){
+		return myCustomCommands;
+	}
+	public void addVariable(VariableNode var){
+		myVariables.add(var);
+	}
+	public void addCustomCommand(CustomCommandNode custCommand){
+		myCustomCommands.add(custCommand);
+	}
+	public void addNode(Node node){
+		myCurNodes.add(node);
 	}
 	public void makeParser(String command){
 		try {
