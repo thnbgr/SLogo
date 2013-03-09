@@ -7,7 +7,12 @@ import parser.node.turtleCommand.*;
 import parser.node.control.IfElseNode;
 import parser.node.control.IfNode;
 
-
+/**
+ * 
+ * @author Junho Oh
+ * @author Wenshun Liu
+ *
+ */
 public class Model {
 	private Controller myController;
 	

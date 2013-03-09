@@ -4,7 +4,12 @@ import parser.Parser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
 import parser.node.control.RepeatNode;
-
+/**
+ * 
+ * @author Junho Oh
+ * @author Wenshun Liu
+ *
+ */
 public class RepeatStructureParserHelper extends StructureParserHelper {
 	private Parser myParser;
 	public RepeatStructureParserHelper(Parser parser) {

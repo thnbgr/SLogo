@@ -27,6 +27,7 @@ import java.util.Arrays;
 /**
  * 
  * @author Junho Oh
+ * @auther Wenshun Liu
  * 
  * This class is responsible for taking in a command string and parsing it into a tree structure
  * for the model to be able to evaluate. 

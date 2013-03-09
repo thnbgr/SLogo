@@ -4,6 +4,8 @@ import parser.node.*;
 /**
  * 
  * @author Junho Oh
+ * @author Wenshun Liu
+ *
  */
 public class EncodeTree {
 	Node myHead;
