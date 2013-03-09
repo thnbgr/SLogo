@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import parser.Parser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
-
+/**
+ * 
+ * @author Junho Oh
+ * @author Wenshun Liu
+ *
+ */
 public class ToStructureParserHelper extends StructureParserHelper {
 	private Parser myParser;
 	public ToStructureParserHelper(Parser parser) {

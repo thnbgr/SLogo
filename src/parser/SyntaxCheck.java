@@ -14,7 +14,12 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * 
+ * @author Junho Oh
+ * @author Wenshun Liu
+ *
+ */
 public class SyntaxCheck {
 	
 	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";

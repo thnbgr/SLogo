@@ -4,7 +4,12 @@ import parser.Parser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
 import parser.node.control.IfNode;
-
+/**
+ * 
+ * @author Junho Oh
+ * @author Wenshun Liu
+ *
+ */
 public class IfStructureParserHelper extends StructureParserHelper{
 	private Parser myParser;
 	public IfStructureParserHelper(Parser parser) {

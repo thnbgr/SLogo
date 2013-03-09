@@ -6,6 +6,8 @@ import java.util.Arrays;
 /**
  * 
  * @author Junho Oh
+ * @author Wenshun Liu
+ *
  */
 class CSVRow{
 	private String myCommand;

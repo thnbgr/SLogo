@@ -19,7 +19,12 @@ import parser.node.VariableNode;
 import parser.node.control.CustomCommandNode;
 import model.Model;
 
-
+/**
+ * 
+ * @author Junho Oh
+ * @author Wenshun Liu
+ *
+ */
 public class Controller{
 
     //private List<IView> myViewList;
