@@ -19,12 +19,7 @@ import parser.node.VariableNode;
 import parser.node.control.CustomCommandNode;
 import model.Model;
 
-/**
- * 
- * @author Junho Oh
- * @author Wenshun Liu
- *
- */
+
 public class Controller{
 
     //private List<IView> myViewList;
@@ -32,6 +27,8 @@ public class Controller{
     private SyntaxCheck mySyntaxCheck;
     private Parser myParser;
     private String lastStructureCall = "";
+	private int structureCallStartIndex = -1;
+	private int structureCallEndIndex = -1;
     
     public Controller (Model model) {
         myModel = model;
@@ -68,13 +65,7 @@ public class Controller{
         }
     }
     
-    /**
-     * Finds custom command names and variables in the input string. Replaces 
-     * with actual commands and variable values.
-     * @param command
-     * @return
-     * @throws IOException
-     */
+
     public String preParseCustomCommandAndVariable(String command) throws IOException{
     	String[] commandComponents = command.split(" ");
     	ArrayList<String> customCommandList = new ArrayList<String>();
@@ -111,11 +102,7 @@ public class Controller{
     	return preParsedCommand.substring(0, preParsedCommand.length()-1);
     }
     
-    /**
-     * Finds the corresponding value of a custom variable.
-     * @param inputVariable
-     * @return the value of the custom variable.
-     */
+
     private String preParseVairable(String inputVariable) {
     	ArrayList<VariableNode> variableList = myParser.getVariables();
     	String preParsedVariable = "0";
@@ -127,13 +114,7 @@ public class Controller{
 		}
 		return preParsedVariable;
 	}
-    
-    /**
-     * Finds the corresponding command and replaces the parameters of a custom command name.
-     * @param matchedCommand
-     * @param inputParameters
-     * @return
-     */
+
 	private String preParseCustomCommand(CustomCommandNode matchedCommand, List<String> inputParameters){
 		Map<String, String> customedVariableList = makeCustomVariableList(matchedCommand, inputParameters);
 		String customeCommand = matchedCommand.getCommand();
@@ -150,12 +131,6 @@ public class Controller{
 		return convertedCustomCommand;
     }
     
-	/**
-	 * Creates a customed variable list for a specific custom command.
-	 * @param matchedCommand
-	 * @param inputParameters
-	 * @return
-	 */
     private Map<String, String> makeCustomVariableList(
 			CustomCommandNode matchedCommand, List<String> inputParameters) {
     	Map<String, String> customedVariableList = new HashMap<String, String>();
@@ -187,11 +162,40 @@ public class Controller{
 		for (String s: splitedCommands){
 			EncodeTree et = myParser.encode(s);
 			String commandResult = myModel.decode(et);
-
-			System.out.println(commandResult);
 			//UPDATE VIEW HERE!!!!!!!
 		}
 		return;
+    	
+    	
+    	/**findLastStructure(inputCommand);
+    	
+    	if (lastStructureCall == null){
+    		String[] splitedCommands = inputCommand.split(" ; ");
+    		for (String s: splitedCommands){
+    			EncodeTree et = myParser.encode(s);
+    			String commandResult = myModel.decode(et);
+    			//UPDATE VIEW HERE!!!!!!!
+    		}
+    		return;
+    	}
+    	EncodeTree et = myParser.encode(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
+		List<Node> structureResults = new ArrayList<Node>();
+    	structureResults.add(myModel.structureDecode(et)); // need test to see whether all added
+    	if (structureCallStartIndex == 0){
+    		for (Node s: structureResults){
+    			String result = ((TurtleCommandNode) s).toString();
+    			//UPDATE VIEW HERE!!!!!!!
+    		}
+    		return;
+    	}
+    	Node lastResult = structureResults.get(structureResults.size()-1);
+    	int StructureCallResultValue = -1;
+    	if (lastResult instanceof TurtleCommandNode){
+    		structureCallResultValue = lastResult.getValue();
+    	}
+    	int structureCallResultValue = lastResult.getValue();
+    	inputCommand = inputCommand.substring(0, structureCallStartIndex) + Double.toString(structureCallResultValue) + inputCommand.substring(structureCallEndIndex);
+    	processInputString(inputCommand);*/
     }
     
     /**
@@ -203,8 +207,6 @@ public class Controller{
     	String controlStructurePattern = "(REPEAT|IF|IFELSE|TO)";
     	Pattern r = Pattern.compile(controlStructurePattern);
     	Matcher m = r.matcher(inputCommand);
-    	int structureCallStartIndex = -1;
-    	int structureCallEndIndex = -1;
     	
     	while (m.find()){
     		lastStructureCall = m.group(1);
@@ -226,7 +228,7 @@ public class Controller{
     			structureCallEndIndex = m2.end();
     		}
     	}
-    	//System.out.println(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
+    	System.out.println(inputCommand.substring(structureCallStartIndex, structureCallEndIndex));
     }
     
     /**
@@ -280,4 +282,33 @@ public class Controller{
 			e.printStackTrace();
 		}	
 	}
+    
+    /**public List<Node> processIndividualStructure(String structureCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException{
+    	//String[] structureComponents = structureCommand.split(" [ ");
+    	//List<String[]> structureCommandsList = new ArrayList<String[]>();
+    	for (int i = 1; i<structureComponents.length; ++i){
+    		String commandString = structureComponents[i].substring(0, structureComponents[i].length()-2);
+    		String[] individualCommand = commandString.split(";"); //BUG
+    		structureCommandsList.add(individualCommand); //CHANGE NEED: make structureNodes store list of commands
+    	}
+    	
+    	
+    	
+    	String commandPattern2 = "\\[.+\\]";
+		Pattern r2 = Pattern.compile(commandPattern2);
+		Matcher m2 = r2.matcher(inputCommand).region(structureCallEndIndex, inputCommand.length());
+		List<Node> structureResults = new ArrayList<Node>();
+		if (m2.find()){
+			leftBracketIndex = m2.start();
+			rightBracketIndex = m2.end();
+			String structureCall = inputCommand.substring(structureCallStartIndex, rightBracketIndex);
+			String commands = inputCommand.substring(structureCallEndIndex + leftBracketIndex, structureCallEndIndex + rightBracketIndex);
+			String[] individualCommands = commands.split(";");
+			for (String s: individualCommands){ //actually just need the last one
+				EncodeTree et = myParser.encode(inputCommand.substring(0, leftBracketIndex+1) + " " + s + " ]");
+				structureResults.add(myModel.decode(et));
+			}
+		}
+		return structureResults;
+    }*/
 }
