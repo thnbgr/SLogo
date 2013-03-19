@@ -124,6 +124,10 @@ public class DisplayView extends JComponent {
     public Turtle getTurtle() {
         return myTurtle;
     }
+    
+    public boolean hasTurtle() {
+        return myTurtle == null;
+    }
 
     /**
      * get a drawable given it's ID

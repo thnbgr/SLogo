@@ -1,6 +1,6 @@
 package parser.structureParser;
 
-import controller.Controller;
+import controller.ModelController;
 import parser.node.Node;
 /**
  * 

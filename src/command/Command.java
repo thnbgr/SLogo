@@ -10,7 +10,7 @@ public abstract class Command {
     protected String myCommandString;
 
     public abstract int executeCommand ();
-
+    
     public void addCommandName (String s) {
         myCommands.add(s);
     }

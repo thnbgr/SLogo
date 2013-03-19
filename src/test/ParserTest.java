@@ -1,6 +1,4 @@
-package test;
-
-import static org.junit.Assert.*;
+/*package test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -53,3 +51,4 @@ public class ParserTest {
 	
 	
 }
+*/

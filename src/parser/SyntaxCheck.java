@@ -14,7 +14,12 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * 
+ * @author Junho Oh
+ * @author Wenshun Liu
+ *
+ */
 public class SyntaxCheck {
 	
 	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
@@ -47,11 +52,7 @@ public class SyntaxCheck {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Does syntax checking before parsing. 
-=======
 	 * Checks for syntax validity before parsing. 
->>>>>>> 89fe579da68637528ea4196673d1dfcc9f857509
 	 * Check doesn't include: invalid values and variables.
 	 * @param command the entire user input string
 	 * @return boolean that represents whether the input string is valid
@@ -59,7 +60,7 @@ public class SyntaxCheck {
 	 */
 	public boolean syntaxCheck(String command) throws IOException{
 		if (command.equals("0")){
-			System.out.println("valid command!!!!");
+			//System.out.println("valid command!!!!");
 			return true;
 		}
 		findLastCommand(command);
@@ -83,11 +84,7 @@ public class SyntaxCheck {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Finds the last Command in the input string.
-=======
 	 * Finds the last Command or Variable name in the input string.
->>>>>>> 89fe579da68637528ea4196673d1dfcc9f857509
 	 * @param command entire user input string
 	 */
 	private void findLastCommand (String command){
@@ -107,9 +104,8 @@ public class SyntaxCheck {
 	}
 	
 	/**
-<<<<<<< HEAD
-     * Identifies the multiple commands in a single input separated by space.
-=======
+	 * Finds the first valid command composed of the given String array. Start
+	 * from the given index.
 	 * @throws IOException 
 	 * 
 	 */
@@ -122,12 +118,9 @@ public class SyntaxCheck {
 		}
 		return validParameter;
 	}
-	
-	
-	
+
 	/**
      * Identifies the multiple commands separated by space in a single input.
->>>>>>> 89fe579da68637528ea4196673d1dfcc9f857509
      * @return
 	 * @throws IOException 
      */
@@ -146,6 +139,9 @@ public class SyntaxCheck {
 		}
     	return splitedCommands;
     }
+    
+    //TODO: can actually use syntax check until ending becomes [0] and [0][0]
+    //TODO: can actually make in one class (check endwith [0] until there's nothing)
 	
     /**
      * Splits a valid REPEAT structure into its components.
@@ -170,10 +166,6 @@ public class SyntaxCheck {
 		repeatCommands.add(splitedTrueCommands);
 		return new StructureInfoPackage("repeat", repeatValue, repeatCommands);
     }
-    
-    
-    //TODO: can actually use syntax check until ending becomes [0] and [0][0]
-    //TODO: can actually make in one class (check endwith [0] until there's nothing)
     
     /**
      * Splits a valid IF structure into its components.

@@ -3,7 +3,7 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
-import controller.Controller;
+import controller.ModelController;
 import parser.EncodeTree;
 import parser.Parser;
 import parser.node.Node;
@@ -18,18 +18,18 @@ import parser.node.control.IfNode;
  */
 public class Model {
 	private Parser myParser;
-	private Controller myController;
+	private ModelController myController;
 	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
     
 	public Model(){
 		myParser = new Parser("");
 	}
 	
-	public void setController(Controller controller){
+	public void setController(ModelController controller){
 		myController = controller;
 	}
 	
-	public Controller getController() {
+	public ModelController getController() {
 		return myController;
 	}
     

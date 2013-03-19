@@ -10,6 +10,7 @@ import viewCommands.*;
 /**
  * 
  * This makes all changes necessary to DisplayView
+ * performs the processed, simplified command
  * 
  * @author Eric Wu
  * 
@@ -17,22 +18,22 @@ import viewCommands.*;
 public class CommandPerformer extends Observable {
 
     private DisplayView myDisplayView;
-    // private CommandBundle myCommandBundle;
     private List<Command> myDisplayCommands;
+    private CommandBuilder myCommandBuilder;
 
-    public CommandPerformer (DisplayView d) {
+    public CommandPerformer (DisplayView d, CommandBuilder c) {
         myDisplayView = d;
         myDisplayCommands = new ArrayList<Command>();
+        myCommandBuilder = c;
         addDisplayCommands();
     }
 
     public void addDisplayCommands () {
-        CommandBuilder builder = new CommandBuilder(myDisplayView);
-        myDisplayCommands = builder.populateDisplayCommandsList();
+        myDisplayCommands = myCommandBuilder.populateDisplayCommandsList();
     }
     
 
-    public int sendAction (String input) { // fd 50
+    public int sendAction (String input) {
 
         for (Command v : myDisplayCommands) {
             for (String s : v.getCommands()) {

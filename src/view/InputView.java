@@ -99,8 +99,8 @@ public class InputView extends JFrame {
             @Override
             public void actionPerformed (ActionEvent e) {
                 //echo("action", e);
+                myCommandPreParser.sendAction(e.getActionCommand());
                 showMessage(e.getActionCommand());
-                receiveReturnMessage(myCommandPreParser.sendAction(e.getActionCommand()));
             }
         };
         // listener for low-level focus events, i.e., the mouse

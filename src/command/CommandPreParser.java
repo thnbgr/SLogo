@@ -13,6 +13,8 @@ import view.DisplayView;
  * If not, it passes it to the model
  * In both cases, we receive a return value, and pass it to the view
  * 
+ * ViewController observes CommandPreParser
+ * 
  * @author Eric Wu
  * @author Natalia Carvalho
  * 
@@ -21,16 +23,17 @@ public class CommandPreParser extends Observable {
 
     private DisplayView myDisplayView;
     private List<Command> myViewCommands;
+    private CommandBuilder myCommandBuilder;
 
-    public CommandPreParser (DisplayView d) {
+    public CommandPreParser (DisplayView d, CommandBuilder c) {
         myDisplayView = d;
         myViewCommands = new ArrayList<Command>();
+        myCommandBuilder = c;
         addViewCommands();
     }
 
     public void addViewCommands () {
-        CommandBuilder builder = new CommandBuilder(myDisplayView);
-        myViewCommands = builder.populateViewCommandsList();
+        myViewCommands = myCommandBuilder.populateViewCommandsList();
     }
 
     // add the rest of the view commands (commands that don't concern model)

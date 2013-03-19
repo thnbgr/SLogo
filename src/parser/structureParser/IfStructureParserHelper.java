@@ -1,4 +1,4 @@
-11package parser.structureParser;
+package parser.structureParser;
 
 import parser.Parser;
 import parser.StructureInfoPackage;
