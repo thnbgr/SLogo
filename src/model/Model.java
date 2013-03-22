@@ -59,12 +59,14 @@ public class Model {
 	public String decode(EncodeTree et){
 		Node head = et.getHead();
 		if(head instanceof IfNode){
+			System.out.println("hi");
 			ifDecode(head);
 		}
 		else{
 			head.evaluate();
+			return ((TurtleCommandNode) head).toString();
 		}
-		return ((TurtleCommandNode) head).toString();
+		return "";
 			
 		//}
 	}
