@@ -10,10 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JComponent;
@@ -21,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import model.Model;
 import view.DisplayView;
 import view.InputView;
 
@@ -156,6 +151,11 @@ public class MainController implements Observer {
         myTextArea.append(message + "\n");
         myTextArea.setCaretPosition(myTextArea.getText().length());
     }
+    
+    public void receiveReturnMessage (String i) {
+        showMessage("return: " + i);
+        
+    }
 
     /**
      * Create a display area for showing out to the user, since it may display
@@ -180,7 +180,7 @@ public class MainController implements Observer {
         String myCommand = (String) a;
 
         if (o.getClass().getName().equals("controller.ModelController")) {
-            myInputView.receiveReturnMessage(myCommandPerformer.sendAction(myCommand));
+            receiveReturnMessage(myCommandPerformer.sendAction(myCommand)+"");
         }
         else {
 

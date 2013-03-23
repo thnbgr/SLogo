@@ -33,7 +33,7 @@ import java.util.Arrays;
  * for the model to be able to evaluate. 
  */
 public class Parser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
+	public static final String COMMAND_PROPERTIES_FILE_NAME = "src/commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
@@ -77,6 +77,7 @@ public class Parser {
 			else{
 				Node temp = null;
 				if(myCSVTable.returnCSVRow(curValue) == null){
+				        
 					temp = new ValueNode(Integer.parseInt(curValue));
 				}
 				else{

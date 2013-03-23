@@ -11,6 +11,7 @@ public class Forward extends Command {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
         myCommands.add("fd");
+        myCommands.add("forward");
     }
 
     @Override

@@ -158,11 +158,20 @@ public class ModelController extends Observable {
      * @throws InvocationTargetException
      * @throws IOException 
      */
-    public void processInputString(String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
+    public void processInputString(String inputCommand) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands){
-			EncodeTree et = myParser.encode(s);
-			String commandResult = myModel.decode(et);
+			EncodeTree et;
+			String commandResult;
+            try {
+                et = myParser.encode(s);
+           
+			commandResult = myModel.decode(et);
+            }
+            catch (IOException e) {
+                        commandResult = "error";
+            }
+            System.out.println("processInputString processed: "+commandResult);
 			setChanged();
 			notifyObservers(commandResult);
 		}

@@ -10,6 +10,7 @@ public class SetHeading extends Command {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
         myCommands.add("seth");
+        myCommands.add("setheading");
     }
 
     @Override

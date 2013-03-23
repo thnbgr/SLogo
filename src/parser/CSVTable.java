@@ -22,10 +22,10 @@ class CSVRow{
 		if(dataArray.length != 4){
 			return;
 		}
-		myCommand = dataArray[0].trim();
-		mySymbol = dataArray[1].trim();
-		myCommandNumArgs = dataArray[2].trim();
-		myCommandFilePath = dataArray[3].trim();
+		myCommand = dataArray[0].substring(1, dataArray[0].length()-1).trim();
+		mySymbol = dataArray[1].substring(1, dataArray[1].length()-1).trim();
+		myCommandNumArgs = dataArray[2].substring(1, dataArray[2].length()-1).trim();
+		myCommandFilePath = dataArray[3].substring(1, dataArray[3].length()-1).trim();
 	}
 	public boolean isValidCommand(String command){
 		return myCommand.equals(command) || mySymbol.equals(command);

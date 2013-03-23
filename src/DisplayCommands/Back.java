@@ -10,6 +10,8 @@ public class Back extends Command {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
         myCommands.add("bk");
+        myCommands.add("back");
+
     }
 
     @Override

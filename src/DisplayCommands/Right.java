@@ -11,6 +11,8 @@ public class Right extends Command {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
         myCommands.add("rt");
+        myCommands.add("right");
+
     }
 
     @Override

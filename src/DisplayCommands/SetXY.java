@@ -11,6 +11,8 @@ public class SetXY extends Command {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
         myCommands.add("setxy");
+        myCommands.add("goto");
+
     }
 
     @Override
