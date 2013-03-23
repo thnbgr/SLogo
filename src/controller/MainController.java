@@ -50,10 +50,10 @@ public class MainController implements Observer {
 
         myCommandBuilder = new CommandBuilder(myDisplayView);
         
-        myCommandPreParser = new CommandPreParser(myDisplayView, myCommandBuilder);
+        myCommandPreParser = new CommandPreParser(myCommandBuilder);
         myCommandPreParser.addObserver(this);
 
-        myCommandPerformer = new CommandPerformer(myDisplayView, myCommandBuilder);
+        myCommandPerformer = new CommandPerformer(myCommandBuilder);
 
         createOutputJFrame();
         myInputView =
