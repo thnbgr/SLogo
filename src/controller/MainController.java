@@ -80,8 +80,10 @@ public class MainController implements Observer {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // add our user interface components
         makeListeners();
-        frame.getContentPane().add(myDisplayView, BorderLayout.CENTER);
+        frame.getContentPane().add(myDisplayView, BorderLayout.EAST);
         frame.getContentPane().add(makeTextField(), BorderLayout.NORTH);
+        frame.getContentPane().add(makeDisplay(), BorderLayout.WEST);
+
         // display them
         frame.pack();
         frame.setVisible(true);
