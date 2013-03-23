@@ -1,18 +1,20 @@
 package view;
-import util.Sprite;
+import util.Turtle;
 import java.util.ArrayList;
 
 public class Workspace {
 //this is the workspace class
-	private ArrayList<Sprite> mySprites;
+	private ArrayList<Turtle> myTurtles;
+	private ArrayList<Turtle> filteredTurtles;
+	private String myCommand;
 	
 	public Workspace() {
 		// TODO Auto-generated constructor stub
-		mySprites = new ArrayList<Sprite>();
+		myTurtles = new ArrayList<Turtle>();
 	}
 
-	public ArrayList<Sprite> getSprites(){
-		return mySprites;
+	public ArrayList<Turtle> getTurtles(){
+		return filteredTurtles;
 	}
 	
 	public void save(){
@@ -20,5 +22,8 @@ public class Workspace {
 		
 	}
 	
+	public void update() {
+		
+	}
 	
 }
