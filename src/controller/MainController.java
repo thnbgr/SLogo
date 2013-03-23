@@ -72,8 +72,6 @@ public class MainController implements Observer {
         myCommandPerformer = new CommandPerformer(myDisplayView, myCommandBuilder);
 
         createOutputJFrame();
-        myInputView =
-                new InputView("Command Inputs", "English", myCommandPreParser, INPUT_VIEW_SIZE);
 
     }
 
