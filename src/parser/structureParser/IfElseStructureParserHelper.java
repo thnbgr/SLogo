@@ -1,6 +1,6 @@
 package parser.structureParser;
 
-import parser.Parser;
+import parser.TreeMakingParser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
 import parser.node.control.IfElseNode;
@@ -11,9 +11,9 @@ import parser.node.control.IfElseNode;
  *
  */
 public class IfElseStructureParserHelper extends StructureParserHelper {
-	private Parser myParser;
-	public IfElseStructureParserHelper(Parser parser) {
-		myParser = parser;
+	private TreeMakingParser myParser;
+	public IfElseStructureParserHelper(TreeMakingParser treeMakingParser) {
+		myParser = treeMakingParser;
 	}
 
 	@Override

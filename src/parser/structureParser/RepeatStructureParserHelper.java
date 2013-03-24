@@ -1,6 +1,6 @@
 package parser.structureParser;
 
-import parser.Parser;
+import parser.TreeMakingParser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
 import parser.node.control.RepeatNode;
@@ -11,9 +11,9 @@ import parser.node.control.RepeatNode;
  *
  */
 public class RepeatStructureParserHelper extends StructureParserHelper {
-	private Parser myParser;
-	public RepeatStructureParserHelper(Parser parser) {
-		myParser = parser;
+	private TreeMakingParser myParser;
+	public RepeatStructureParserHelper(TreeMakingParser treeMakingParser) {
+		myParser = treeMakingParser;
 	}
 	
 	@Override

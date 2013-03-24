@@ -2,7 +2,7 @@ package parser.structureParser;
 
 import java.util.ArrayList;
 
-import parser.Parser;
+import parser.TreeMakingParser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
 /**
@@ -12,9 +12,9 @@ import parser.node.Node;
  *
  */
 public class ToStructureParserHelper extends StructureParserHelper {
-	private Parser myParser;
-	public ToStructureParserHelper(Parser parser) {
-		myParser = parser;
+	private TreeMakingParser myParser;
+	public ToStructureParserHelper(TreeMakingParser treeMakingParser) {
+		myParser = treeMakingParser;
 	}
 
 	@Override

@@ -1,14 +1,14 @@
 package parser.structureParser;
 
 import parser.EncodeTree;
-import parser.Parser;
+import parser.TreeMakingParser;
 import parser.node.Node;
 import parser.node.VariableNode;
 
 public class MakeStructureParserHelper extends StructureParserHelper{
-	private Parser myParser;
-	public MakeStructureParserHelper(Parser parser) {
-		myParser = parser;
+	private TreeMakingParser myParser;
+	public MakeStructureParserHelper(TreeMakingParser treeMakingParser) {
+		myParser = treeMakingParser;
 	}
 	
 	@Override

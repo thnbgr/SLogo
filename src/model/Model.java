@@ -5,7 +5,7 @@ import java.util.Map;
 
 import controller.ModelController;
 import parser.EncodeTree;
-import parser.Parser;
+import parser.TreeMakingParser;
 import parser.node.Node;
 import parser.node.turtleCommand.*;
 import parser.node.control.IfNode;
@@ -17,12 +17,12 @@ import parser.node.control.IfNode;
  *
  */
 public class Model {
-	private Parser myParser;
+	private TreeMakingParser myParser;
 	private ModelController myController;
 	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
     
 	public Model(){
-		myParser = new Parser("");
+		myParser = new TreeMakingParser("");
 	}
 	
 	public void setController(ModelController controller){
