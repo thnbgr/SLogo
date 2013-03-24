@@ -32,7 +32,7 @@ public class Turtle extends Sprite {
     private Location myOriginalCenter;
     private Vector myOriginalVelocity;
     private Dimension myOriginalSize;
-
+    
     /**
      */
     public Turtle () {

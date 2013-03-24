@@ -255,6 +255,11 @@ public class SyntaxCheck {
 		return new StructureInfoPackage("to", toValue, toCommands);
     }
     
+
+	public void updateValidSyntax(String commandName, String commandRegex) {
+		validCommandRegex.put(commandName, commandRegex);
+	}
+    
     /**
 	 * Testing purpose.
 	 */
@@ -286,9 +291,5 @@ public class SyntaxCheck {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-	}
-
-	public void updateValidSyntax(String commandName, String commandRegex) {
-		validCommandRegex.put(commandName, commandRegex);
 	}
 }

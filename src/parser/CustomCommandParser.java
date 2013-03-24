@@ -14,9 +14,11 @@ import parser.node.control.CustomCommandNode;
 public class CustomCommandParser extends AbstractParser {
 
 	private TreeMakingParser myTreeMakingParser;
+	private List<String> myCustomCommandList;
 	
 	public CustomCommandParser(TreeMakingParser treeMakingParser) {
 		myTreeMakingParser = treeMakingParser;
+		myCustomCommandList = new ArrayList<String>();
 	}
 	
 	@Override
@@ -30,21 +32,32 @@ public class CustomCommandParser extends AbstractParser {
 		ccn.addVarName(":var1");
 		ccn.addVarName(":var2");
 		ccn.setCustomCommand("sum :var1 :var2 fd 5");
-		temp.add(ccn);*/ //END: TESTING
+		temp.add(ccn); 
+		
+		CustomCommandNode ccn2 = new CustomCommandNode();
+		ccn2.setName("house");
+		ccn2.addVarName(":var1");
+		ccn2.addVarName(":var2");
+		ccn2.setCustomCommand("fd :var1 ssuumm :var2 4");
+		temp.add(ccn2);*///END: TESTING
     	
-		ArrayList<String> customCommandList = new ArrayList<String>();
     	//for (CustomCommandNode c: temp){ //ADD FOR TESTING
 		for (CustomCommandNode c: myTreeMakingParser.getCustomCommands()){ //DELETE FOR TESTING
-        		customCommandList.add(c.getName());
+        		myCustomCommandList.add(c.getName());
         }
+		
+		if (!hasCustomCommand(commandComponents)){
+			return command;
+		}
+		
     	String preParsedCommand = "";
     	String current = "";
     	int i = 0;
     	while (i<commandComponents.length){
     		current = commandComponents[i];
-    		if (customCommandList.contains(current)){
-    			//CustomCommandNode matchedCommand = temp.get(customCommandList.indexOf(current)); //TESTING
-    			CustomCommandNode matchedCommand = myTreeMakingParser.getCustomCommands().get(customCommandList.indexOf(current)); //DELETE FOR TESTING
+    		if (myCustomCommandList.contains(current)){
+    			//CustomCommandNode matchedCommand = temp.get(myCustomCommandList.indexOf(current)); //TESTING
+    			CustomCommandNode matchedCommand = myTreeMakingParser.getCustomCommands().get(myCustomCommandList.indexOf(current)); //DELETE FOR TESTING
     			List<String> inputParameters = new ArrayList<String>();
     			int prmStartIndex = i + 1;
     			for (int prmNumber = 0; prmNumber<matchedCommand.getVarNames().size(); ++prmNumber){
@@ -65,7 +78,17 @@ public class CustomCommandParser extends AbstractParser {
     			i += 1;
     		}
     	}
-    	return preParsedCommand.substring(0, preParsedCommand.length()-1);
+    	return parse(preParsedCommand.substring(0, preParsedCommand.length()-1));
+	}
+	
+	private boolean hasCustomCommand(String[] commandComponents){
+		boolean result = false;
+		for (String s: commandComponents){
+			if (myCustomCommandList.contains(s)){
+				result = true;
+			}
+		}
+		return result;
 	}
 	
 	private boolean isInteger(String s) {
@@ -99,14 +122,22 @@ public class CustomCommandParser extends AbstractParser {
      * @return
      */
 	private String preParseCustomCommand(CustomCommandNode matchedCommand, List<String> inputParameters){
-		Map<String, String> customedVariableList = makeCustomVariableList(matchedCommand, inputParameters);
-		String customeCommand = matchedCommand.getCommand();
-		String[] customeCommandSplited = customeCommand.split(" ");
+		Map<String, String> localVariableList = makeLocalVariableList(matchedCommand, inputParameters);
+		Map<String, String> globalVariableList = makeGlobalVariableList();
+		ArrayList<String> customCommand = matchedCommand.getCommand();
+		String entireCustomCommand = "";
+		for (String s: customCommand){
+			entireCustomCommand += s + " ";
+		}
+		String[] customeCommandSplited = entireCustomCommand.substring(0,entireCustomCommand.length()-1).split(" ");
 		StringBuilder sb = new StringBuilder();
 		for (int k = 0; k<customeCommandSplited.length; k++){
-			if (customedVariableList.containsKey(customeCommandSplited[k])){
-				sb.append(customedVariableList.get(customeCommandSplited[k]) + " ");
-			}else{
+			if (localVariableList.containsKey(customeCommandSplited[k])){
+				sb.append(localVariableList.get(customeCommandSplited[k]) + " ");
+			}else if (globalVariableList.containsKey(customeCommandSplited[k])){
+				sb.append(globalVariableList.get(customeCommandSplited[k]) + " ");
+			}
+			else{
 				sb.append(customeCommandSplited[k] + " ");
 			}
 		}
@@ -114,23 +145,22 @@ public class CustomCommandParser extends AbstractParser {
 		return convertedCustomCommand;
     }
 	
-	/**
-	 * Creates a customed variable list for a specific custom command.
-	 * @param matchedCommand
-	 * @param inputParameters
-	 * @return
-	 */
-    private Map<String, String> makeCustomVariableList(
+	
+    private Map<String, String> makeLocalVariableList(
 			CustomCommandNode matchedCommand, List<String> inputParameters) {
-    	//TODO: give local one priority
-    	Map<String, String> customedVariableList = new HashMap<String, String>();
-		for (VariableNode v: myTreeMakingParser.getVariables()){
-			customedVariableList.put(v.getName(), Integer.toString(v.getValue()));
-		}
+    	Map<String, String> localVariableList = new HashMap<String, String>();
 		for (int j = 0; j<matchedCommand.getVarNames().size(); ++j){
-			customedVariableList.put(matchedCommand.getVarNames().get(j), inputParameters.get(j));
+			localVariableList.put(matchedCommand.getVarNames().get(j), inputParameters.get(j));
 		}
-		return customedVariableList;
+		return localVariableList;
+	}
+    
+    private Map<String, String> makeGlobalVariableList() {
+    	Map<String, String> globalVariableList = new HashMap<String, String>();
+		for (VariableNode v: myTreeMakingParser.getVariables()){
+			globalVariableList.put(v.getName(), Integer.toString(v.getValue()));
+		}
+		return globalVariableList;
 	}
     
     /**

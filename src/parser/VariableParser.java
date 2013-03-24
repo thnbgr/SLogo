@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import parser.node.VariableNode;
 import parser.node.control.CustomCommandNode;
@@ -17,7 +18,7 @@ public class VariableParser extends AbstractParser{
 	}
 	
 	@Override
-	public String parse(String command){
+	public String parse(String command) throws IOException{
 		String[] commandComponents = command.split(" ");
     	String preParsedCommand = "";
     	String current = "";
@@ -25,16 +26,57 @@ public class VariableParser extends AbstractParser{
     	while (i<commandComponents.length){
     		String previous = current;
     		current = commandComponents[i];
-    		if (current.startsWith(":") && !previous.equals("make")){
-    			String preParsedVariable = preParseVairable(current);
+    		if (current.equals("to")){ //UGLY!!!!!!!!!!!!
+    			String makeCommand = current;
+				while (!myParser.getSyntaxCheck().syntaxCheck(makeCommand)){
+					i += 1;
+					makeCommand += " " + commandComponents[i];
+				}
+				StructureInfoPackage toPackage = myParser.getSyntaxCheck().splitToStructure(makeCommand);
+				//System.out.println(toPackage.getType());
+				preParsedCommand += structureParse(toPackage) + " ";
+				i += 1;
+    		}else if (current.equals("dotimes")){
+    			//TODO: these three methods should be able to combine
+    		}else if (current.equals("for")){
+    			//TODO
+    		}else if (current.startsWith(":") && !previous.equals("make")){
+    			String preParsedVariable = preParseVariable(current);
     			preParsedCommand += preParsedVariable;
     			preParsedCommand += " ";
+    			i+=1;
     		}else{
     			preParsedCommand += commandComponents[i] + " ";
+    			i+=1;
     		}
-    		i+=1;
     	}
+    	//System.out.println(preParsedCommand.substring(0, preParsedCommand.length()-1));
     	return preParsedCommand.substring(0, preParsedCommand.length()-1);
+	}
+	
+	private String structureParse(StructureInfoPackage siPackage){
+		String result = "";
+		result += siPackage.getType() + " ";
+		result += siPackage.getValue() + " ";
+		List<String> localVariables = new ArrayList<String>();
+		result += "[ ";
+		for (String s: siPackage.getCommands().get(0)){
+			result = result + s + " ";
+			localVariables.add(s);
+		}
+		result += "] [ ";
+		for (String s: siPackage.getCommands().get(1)){
+			String[] commandComponents = s.split(" ");
+			for (String ss: commandComponents){
+				if (localVariables.contains(ss) || !ss.startsWith(":")){
+					result = result + ss + " ";
+				}else{
+					result = preParseVariable(ss) + " ";
+				}
+			}
+		}
+		result += "]";
+		return result;
 	}
 	
 	/**
@@ -42,7 +84,7 @@ public class VariableParser extends AbstractParser{
      * @param inputVariable
      * @return the value of the custom variable.
      */
-    private String preParseVairable(String inputVariable) {
+    private String preParseVariable(String inputVariable) {
     	ArrayList<VariableNode> variableList = myParser.getVariables();
     	String preParsedVariable = "0";
     	for (int j = 0; j<variableList.size(); ++j){

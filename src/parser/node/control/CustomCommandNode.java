@@ -6,11 +6,17 @@ import java.util.ArrayList;
 public class CustomCommandNode extends Node {
 	private ArrayList<String> myVariableNames;
 	private String myName;
-	private String myCustomCommand;
+	private ArrayList<String> myCustomCommand;
 	
 	public CustomCommandNode() {
 		myName = new String();
 		myVariableNames = new ArrayList<String>();
+	}
+	
+	public CustomCommandNode(String name, ArrayList<String> variableNames, ArrayList<String> customCommand){
+		myName = name;
+		myCustomCommand = customCommand;
+		myVariableNames = variableNames;
 	}
 	
 	public void addVarName(String varName){
@@ -19,7 +25,7 @@ public class CustomCommandNode extends Node {
 	public void setName(String name){
 		myName = name;
 	}
-	public void setCustomCommand(String custCommand){
+	public void setCustomCommand(ArrayList<String> custCommand){
 		myCustomCommand = custCommand;
 	}
 	public ArrayList<String> getVarNames(){
@@ -28,7 +34,7 @@ public class CustomCommandNode extends Node {
 	public String getName(){
 		return myName;
 	}
-	public String getCommand(){
+	public ArrayList<String> getCommand(){
 		return myCustomCommand;
 	}
 }

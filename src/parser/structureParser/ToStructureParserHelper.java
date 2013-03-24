@@ -1,10 +1,12 @@
 package parser.structureParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import parser.TreeMakingParser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
+import parser.node.control.CustomCommandNode;
 /**
  * 
  * @author Junho Oh
@@ -22,12 +24,11 @@ public class ToStructureParserHelper extends StructureParserHelper {
 		try{
 			StructureInfoPackage toStructPackage = myParser.getSyntaxCheck().splitToStructure(command);
 			String commandName = toStructPackage.getValue();
-			ArrayList<String> varNames = new ArrayList<String>();
-			for(String name : toStructPackage.getCommands().get(0)){
-				varNames.add(commandName + name); //name mangling
-			}
+			ArrayList<String> varNames = toStructPackage.getCommands().get(0);
 			ArrayList<String> customCommands = toStructPackage.getCommands().get(1); 
 									//changed to arraylist cuz there can be multiple commands
+			CustomCommandNode temp = new CustomCommandNode(commandName, varNames, customCommands);
+			myParser.addCustomCommands(temp);
 			updateSyntax(varNames.size(), commandName);
 		}
 		catch(Exception e){
@@ -36,7 +37,7 @@ public class ToStructureParserHelper extends StructureParserHelper {
 		return null;
 	}
 	
-	private void updateSyntax(int prmSize, String commandName){
+	private void updateSyntax(int prmSize, String commandName) throws IOException{
 		StringBuilder customCommandRegex = new StringBuilder(); //start updating syntax
 		customCommandRegex.append("(^");
 		for (int i = 0; i<prmSize; ++i){

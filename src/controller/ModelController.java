@@ -21,6 +21,7 @@ import parser.SyntaxCheck;
 import parser.VariableParser;
 import parser.node.VariableNode;
 import parser.node.control.CustomCommandNode;
+import view.Workspace;
 import model.Model;
 
 
@@ -29,14 +30,16 @@ public class ModelController extends Observable {
     //private List<IView> myViewList;
     private Model myModel;
     private SyntaxCheck mySyntaxCheck;
-    private TreeMakingParser myTreeMakingParser = new TreeMakingParser("");
+    private static TreeMakingParser myTreeMakingParser = new TreeMakingParser("");
     private AbstractParser[] myParsers= {new VariableParser(myTreeMakingParser), new CustomCommandParser(myTreeMakingParser)};
     
     public ModelController (Model model) {
         myModel = model;
         mySyntaxCheck = new SyntaxCheck();
+        myTreeMakingParser.setSyntaxCheck(mySyntaxCheck);
         //myTreeMakingParser = new TreeMakingParser(""); //add filename later 
         myModel.setController(this);
+        myModel.setParser(myTreeMakingParser);
     }
 
     /**
@@ -59,7 +62,7 @@ public class ModelController extends Observable {
         		for (AbstractParser p: myParsers){
         			preParsedCommand = p.parse(preParsedCommand);
         		}
-        		System.out.println(preParsedCommand);
+        		//System.out.println(preParsedCommand);
         		processInputString(preParsedCommand);
         	}else{
         		throw new IOException();
@@ -85,8 +88,10 @@ public class ModelController extends Observable {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands){
 			EncodeTree et = myTreeMakingParser.encode(s);
-			String commandResult = myModel.decode(et);
-			System.out.println(commandResult);
+			if (et.getHead().getHead() != null){ //TODO: need to find another way. Should actually return a value. E.g. TO
+				String commandResult = myModel.decode(et);
+				System.out.println(commandResult);
+			}
 			//UPDATE VIEW HERE!!!!!!!
 		}
 		return;
@@ -145,6 +150,18 @@ public class ModelController extends Observable {
     }
     
     /**
+     * Testing purpose for TO commands.
+     */
+    private static void getCustomCommand(){
+    	ArrayList<CustomCommandNode> temp = myTreeMakingParser.getCustomCommands();
+    	for (CustomCommandNode ccn: temp){
+    		System.out.println(ccn.getName());
+    		System.out.println(ccn.getVarNames());
+    		System.out.println(ccn.getCommand());
+    	}
+    }
+    
+    /**
 	 * Testing purpose.
 	 */
 	private static String readUserInput(String printMessage) throws IOException{
@@ -172,6 +189,7 @@ public class ModelController extends Observable {
 			while(commandCount > 0){
 				String s = readUserInput("enter command: ");
 				controller.checkInputValidAndProcess(s);
+				//getCustomCommand();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -20,6 +20,7 @@ import parser.structureParser.MakeStructureParserHelper;
 import parser.structureParser.RepeatStructureParserHelper;
 import parser.structureParser.StructureParserHelper;
 import parser.structureParser.ToStructureParserHelper;
+import view.Workspace;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,11 +53,15 @@ public class TreeMakingParser {
 		//For later use: myCSVTable =  new CSVTable(fileName);
 		myVariables = new ArrayList<VariableNode>();
 		myCustomCommands = new ArrayList<CustomCommandNode>();
-		mySyntaxCheck = new SyntaxCheck();
 		for (int i = 0; i<myStructureCommands.length; ++i){
 			myStructureParserMap.put(myStructureCommands[i], myStructureParser[i]);
 		}
 	}
+	
+	public void setSyntaxCheck(SyntaxCheck s){
+		mySyntaxCheck = s;
+	}
+	
 	public EncodeTree encode(String command) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, SecurityException, InvocationTargetException, IOException{ 
 		Queue<String> myCommandParts = new LinkedList<String>();
 		myCommandParts.addAll(Arrays.asList(command.split(" ")));
@@ -70,8 +75,11 @@ public class TreeMakingParser {
 				while (!mySyntaxCheck.syntaxCheck(makeCommand)){
 					makeCommand += " " + myCommandParts.remove();
 				}
-				Node temp = myStructureParserMap.get(curValue).parser(makeCommand); //return Node and add to myCurNodes??
-				myCurNodes.add(temp);
+				//System.out.println(makeCommand);
+				//System.out.println(curValue);
+				myStructureParserMap.get(curValue).parser(makeCommand); //return Node and add to myCurNodes??
+															//not in case of TO but in cases of IF/IFELSE?
+				//myCurNodes.add(temp);
 			}
 			
 			else{
@@ -111,6 +119,10 @@ public class TreeMakingParser {
 	
 	public ArrayList<CustomCommandNode> getCustomCommands(){
 		return myCustomCommands;
+	}
+	
+	public void addCustomCommands(CustomCommandNode n){
+		myCustomCommands.add(n);
 	}
 	
 	public SyntaxCheck getSyntaxCheck(){
