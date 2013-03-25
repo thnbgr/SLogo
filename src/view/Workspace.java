@@ -36,7 +36,13 @@ public class Workspace {
 		myTurtles = new ArrayList<Turtle>();
 		ryan = new Turtle();
 	}
-
+	/**
+	 * 1. ifelsenode needs debugging
+	 * 2. parentheses for sum, need generics to get all thingies
+	 * 3. workspace into model check values of turtle
+	 * 4. decode into nodes. 
+	 * 
+	 */
 	public ArrayList<Turtle> getTurtles(){
 		return filteredTurtles;
 	}
