@@ -3,7 +3,7 @@ package parser.structureParser;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import parser.TreeMakingParser;
+import parser.CommandTreeParser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
 import parser.node.control.CustomCommandNode;
@@ -14,8 +14,8 @@ import parser.node.control.CustomCommandNode;
  *
  */
 public class ToStructureParserHelper extends StructureParserHelper {
-	private TreeMakingParser myParser;
-	public ToStructureParserHelper(TreeMakingParser treeMakingParser) {
+	private CommandTreeParser myParser;
+	public ToStructureParserHelper(CommandTreeParser treeMakingParser) {
 		myParser = treeMakingParser;
 	}
 

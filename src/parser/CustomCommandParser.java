@@ -13,10 +13,10 @@ import parser.node.control.CustomCommandNode;
 
 public class CustomCommandParser extends AbstractParser {
 
-	private TreeMakingParser myTreeMakingParser;
+	private CommandTreeParser myTreeMakingParser;
 	private List<String> myCustomCommandList;
 	
-	public CustomCommandParser(TreeMakingParser treeMakingParser) {
+	public CustomCommandParser(CommandTreeParser treeMakingParser) {
 		myTreeMakingParser = treeMakingParser;
 		myCustomCommandList = new ArrayList<String>();
 	}
@@ -184,7 +184,7 @@ public class CustomCommandParser extends AbstractParser {
 	 * Testing purpose.
 	 */
 	public static void main(String args[]) {
-		TreeMakingParser parser = new TreeMakingParser("");
+		CommandTreeParser parser = new CommandTreeParser("");
 		CustomCommandParser ccp = new CustomCommandParser(parser);
 		
 		int commandCount = 10;

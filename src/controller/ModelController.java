@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import parser.CustomCommandParser;
 import parser.EncodeTree;
 import parser.AbstractParser;
-import parser.TreeMakingParser;
+import parser.CommandTreeParser;
 import parser.SyntaxCheck;
 import parser.VariableParser;
 import parser.node.VariableNode;
@@ -30,7 +30,7 @@ public class ModelController extends Observable {
     //private List<IView> myViewList;
     private Model myModel;
     private SyntaxCheck mySyntaxCheck;
-    private static TreeMakingParser myTreeMakingParser = new TreeMakingParser("");
+    private static CommandTreeParser myTreeMakingParser = new CommandTreeParser("");
     private AbstractParser[] myParsers= {new VariableParser(myTreeMakingParser), new CustomCommandParser(myTreeMakingParser)};
     
     public ModelController (Model model) {
