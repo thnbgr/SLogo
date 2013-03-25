@@ -5,6 +5,7 @@ import command.CommandPerformer;
 import command.CommandPreParser;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -83,6 +84,8 @@ public class MainController implements Observer {
         frame.getContentPane().add(myDisplayView, BorderLayout.EAST);
         frame.getContentPane().add(makeTextField(), BorderLayout.NORTH);
         frame.getContentPane().add(makeDisplay(), BorderLayout.WEST);
+        //changes background color:
+        //frame.getContentPane().setBackground(Color.red);
 
         // display them
         frame.pack();
@@ -194,7 +197,8 @@ public class MainController implements Observer {
             }
 
         }
-
     }
+    
+    
 
 }
