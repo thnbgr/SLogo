@@ -18,7 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import view.DisplayView;
-import view.InputView;
 
 
 /**
@@ -34,9 +33,7 @@ public class MainController implements Observer {
     public static final String TITLE = "Output Display";
     private static final int FIELD_SIZE = 30;
     private static final Dimension DISPLAY_VIEW_SIZE = new Dimension(500, 500);
-    private static final Dimension INPUT_VIEW_SIZE = new Dimension(500, 600);
     private DisplayView myDisplayView;
-    private InputView myInputView;
     private JTextArea myTextArea;
     private ModelController myModelController;
     private CommandPreParser myCommandPreParser;
@@ -78,7 +75,6 @@ public class MainController implements Observer {
         frame.getContentPane().add(myDisplayView, BorderLayout.EAST);
         frame.getContentPane().add(makeTextField(), BorderLayout.NORTH);
         frame.getContentPane().add(makeDisplay(), BorderLayout.WEST);
-
         // display them
         frame.pack();
         frame.setVisible(true);
