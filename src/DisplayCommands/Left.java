@@ -11,6 +11,8 @@ public class Left extends Command {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
         myCommands.add("lt");
+        myCommands.add("left");
+
     }
 
     @Override

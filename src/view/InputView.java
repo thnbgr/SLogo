@@ -276,7 +276,7 @@ public class InputView extends JFrame {
      * Gets the return message from model
      * @param r is the return message
      */
-    public void receiveReturnMessage (int r) {
+    public void receiveReturnMessage (String r) {
         showMessage("return: " + r);
         
     }

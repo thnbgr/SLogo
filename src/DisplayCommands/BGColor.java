@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
-public class Back extends Command {
+public class BGColor extends Command {
     
-    public Back (DisplayView m) {
+    public BGCOlor (DisplayView m) {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
-        myCommands.add("bk");
-        myCommands.add("back");
-
+        myCommands.add("bgcolor");
     }
 
     @Override
@@ -23,3 +21,7 @@ public class Back extends Command {
     }
     
 }
+
+    frame.getContentPane().setBackground();
+
+

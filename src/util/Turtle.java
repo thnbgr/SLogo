@@ -17,7 +17,7 @@ import java.util.List;
 public class Turtle extends Sprite {
     /**
      */
-    public static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
+    public static Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
     /**
      */
     public static final Location DEFAULT_LOCATION = new Location(100, 100);
@@ -63,6 +63,14 @@ public class Turtle extends Sprite {
         setVisible(true);
         setPenUp();
         reset();
+    }
+    
+    /**
+     * Change default turtle image to another pixmap image
+     * @param image is the new image
+     */
+    public void changeTurtleImage (Pixmap image) {
+        DEFAULT_IMAGE = image;
     }
 
     /**
@@ -145,11 +153,6 @@ public class Turtle extends Sprite {
      */
     public void addLine(Location start, Location end) {
         myLines.add(new Line(start, end, Color.black));
-    }
-
-    public void moveToCenter () {
-        // TODO Auto-generated method stub
-        
     }
 
 }

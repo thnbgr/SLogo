@@ -21,12 +21,10 @@ import view.DisplayView;
  */
 public class CommandPreParser extends Observable {
 
-    private DisplayView myDisplayView;
     private List<Command> myViewCommands;
     private CommandBuilder myCommandBuilder;
 
-    public CommandPreParser (DisplayView d, CommandBuilder c) {
-        myDisplayView = d;
+    public CommandPreParser (CommandBuilder c) {
         myViewCommands = new ArrayList<Command>();
         myCommandBuilder = c;
         addViewCommands();

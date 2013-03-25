@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 
@@ -30,6 +31,13 @@ public class Pixmap {
         setImage(fileName);
     }
 
+    /**
+     * Create an image from a BufferedImage
+     * @param image is image that will be set
+     */
+    public Pixmap (BufferedImage image) {
+        myImage = image;
+    }
     /**
      * Create a copy of image from the given other image.
      */
