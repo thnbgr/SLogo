@@ -88,10 +88,8 @@ public class ModelController extends Observable {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands){
 			EncodeTree et = myTreeMakingParser.encode(s);
-			if (et.getHead().getHead() != null){ //TODO: need to find another way. Should actually return a value. E.g. TO
-				String commandResult = myModel.decode(et);
-				System.out.println(commandResult);
-			}
+			String commandResult = myModel.decode(et);
+			System.out.println(commandResult);
 			//UPDATE VIEW HERE!!!!!!!
 		}
 		return;

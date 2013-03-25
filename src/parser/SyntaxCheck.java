@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  */
 public class SyntaxCheck {
 	
-	public static final String COMMAND_REGEXS_FILE_NAME = "commandRegexs.csv";
+	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
 	
 	private Map<String, String> validCommandRegex = new HashMap<String, String>();
 	private String lastCommandCall = "";
@@ -60,7 +60,7 @@ public class SyntaxCheck {
 	 */
 	public boolean syntaxCheck(String command) throws IOException{
 		if (command.equals("0")){
-			//System.out.println("valid command!!!!");
+			System.out.println("valid command!!!!");
 			return true;
 		}
 		findLastCommand(command);
@@ -131,11 +131,15 @@ public class SyntaxCheck {
     	
 		while (!myCommandComponents.isEmpty()){
 			String singleCommand = myCommandComponents.remove();
-			while (!syntaxCheck(singleCommand)){
-				singleCommand += " ";
-				singleCommand += myCommandComponents.remove();
+			if (!validCommandRegex.containsKey(singleCommand)){
+				splitedCommands.add(singleCommand);
+			}else{
+				while (!syntaxCheck(singleCommand)){
+					singleCommand += " ";
+					singleCommand += myCommandComponents.remove();
+				}
+				splitedCommands.add(singleCommand);
 			}
-			splitedCommands.add(singleCommand);
 		}
     	return splitedCommands;
     }
@@ -286,7 +290,7 @@ public class SyntaxCheck {
 		try {
 			while(commandCount > 0){
 				String s = readUserInput("enter command: ");
-				sc.splitRepeatStructure(s);
+				sc.syntaxCheck(s);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

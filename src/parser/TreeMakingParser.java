@@ -34,7 +34,7 @@ import java.util.Arrays;
  * for the model to be able to evaluate. 
  */
 public class TreeMakingParser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
+	public static final String COMMAND_PROPERTIES_FILE_NAME = "src/commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
@@ -75,11 +75,10 @@ public class TreeMakingParser {
 				while (!mySyntaxCheck.syntaxCheck(makeCommand)){
 					makeCommand += " " + myCommandParts.remove();
 				}
-				//System.out.println(makeCommand);
-				//System.out.println(curValue);
-				myStructureParserMap.get(curValue).parser(makeCommand); //return Node and add to myCurNodes??
-															//not in case of TO but in cases of IF/IFELSE?
-				//myCurNodes.add(temp);
+				Node temp = myStructureParserMap.get(curValue).parser(makeCommand); //return Node and add to myCurNodes??
+				if (!curValue.equals("to")){
+					myCurNodes.add(temp);
+				}
 			}
 			
 			else{
