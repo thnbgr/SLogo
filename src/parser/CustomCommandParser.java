@@ -42,6 +42,7 @@ public class CustomCommandParser extends AbstractParser {
 		temp.add(ccn2);*///END: TESTING
     	
     	//for (CustomCommandNode c: temp){ //ADD FOR TESTING
+		myCustomCommandList = new ArrayList<String>();
 		for (CustomCommandNode c: myTreeMakingParser.getCustomCommands()){ //DELETE FOR TESTING
         		myCustomCommandList.add(c.getName());
         }

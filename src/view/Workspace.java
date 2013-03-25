@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Workspace {
 //this is the workspace class
-	private HashMap<Integer, TurtleData> mySTH = new HashMap<Integer, TurtleData>();
+	//private HashMap<Integer, TurtleData> mySTH = new HashMap<Integer, TurtleData>();
 	//COMMENT: would this be better? the View will pass us this HashMap and the workspace ID
 				//- what Jimmy was talking about passing a collection of data
 	//Integer is the turtle ID, TurtleData is a package that contains the part of the turtle that we can change
@@ -28,24 +28,26 @@ public class Workspace {
 	
 	private ArrayList<Turtle> myTurtles;
 	private ArrayList<Turtle> filteredTurtles;
+	private Turtle ryan; //for testing
 	private String myCommand;
 	private HashMap<Integer, ArrayList<String>> myViewCommands = new HashMap<Integer, ArrayList<String>>();
 	
 	public Workspace() {
 		myTurtles = new ArrayList<Turtle>();
+		ryan = new Turtle();
 	}
 
 	public ArrayList<Turtle> getTurtles(){
 		return filteredTurtles;
 	}
-	
+	public Turtle getTurtle(){
+		return ryan;
+	}
 	public String getCommand(){
 		return myCommand;
 	}
-	
 	public void save(){
-		//save to a resource bundle the necessary information required to relaunch the program. 
-		
+		//save to a resource bundle the necessary information required to relaunch the program. 	
 	}
 	
 	public void update(String s) { //update to all Turtles

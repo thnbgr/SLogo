@@ -34,7 +34,7 @@ import java.util.Arrays;
  * for the model to be able to evaluate. 
  */
 public class TreeMakingParser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME = "src/commandProperties.csv";
+	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;

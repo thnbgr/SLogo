@@ -67,6 +67,7 @@ public class Model {
 	 * @return
 	 */
 	public String ifDecode(Node ifNode){
+		//System.out.println("hi");
 		((IfNode)ifNode).getChildren().get(0).evaluate();
 		if(ifNode.getChildren().get(0).getValue() != 0){
 			for(Node ifCommand : ifNode.getChildren().get(1).getChildren()){
