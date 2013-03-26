@@ -22,7 +22,6 @@ public class ToStructureParserHelper extends StructureParserHelper {
 	@Override
 	public Node parser(String command) {
 		try{
-			System.out.println("aawdffa");
 			StructureInfoPackage toStructPackage = myParser.getSyntaxCheck().splitToStructure(command);
 			if (toStructPackage == null){
 				System.out.println("null!!!!!");
