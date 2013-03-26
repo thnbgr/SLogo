@@ -14,11 +14,22 @@ public class ControlNode extends Node {
 	public ArrayList<String> getReturnCommands(){
 		return myReturnCommands;
 	}
-	public void addReturnCommand(Node command){
+	private void addReturnCommand(Node command){
 		if(command instanceof TurtleCommandNode){
 			System.out.println(((TurtleCommandNode)command).toString());
 			myReturnCommands.add(((TurtleCommandNode)command).toString());
 		}
+	}
+	public void evaluateChildren(ArrayList<Node> children){
+		for(Node command : children){
+			command.evaluate();
+			addReturnCommand(command);
+			System.out.println(command.getValue());
+
+			System.out.println("hi");
+		}
+		int childSize = children.size();
+		setValue(children.get(childSize-1).getValue());
 	}
 	
 }

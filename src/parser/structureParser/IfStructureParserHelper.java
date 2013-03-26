@@ -22,6 +22,7 @@ public class IfStructureParserHelper extends StructureParserHelper{
 	
 	@Override
 	public Node parseChildren(Node valueNode, StructureInfoPackage controlStructPackage) {
+	
 		IfNode ifNode = new IfNode();
 		Node ifCommands = new Node();
 		

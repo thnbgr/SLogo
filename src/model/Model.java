@@ -42,10 +42,8 @@ public class Model {
 	public String decode (Node head) {
 		head.evaluate();
 		String result = "";
-		if (head instanceof IfElseNode) {
-			return ifElseDecode(head);
-		}
-		else if (head instanceof TurtleCommandNode) {
+
+		if (head instanceof TurtleCommandNode) {
 			result = ((TurtleCommandNode) head).toString();
 			return result;
 		}
@@ -55,23 +53,4 @@ public class Model {
 		}
 	}
 
-	/**
-	 * Decodes ifelse command.
-	 * @param ifElseNode
-	 * @return
-	 */
-	public String ifElseDecode (Node ifElseNode) {
-		((IfElseNode)ifElseNode).getChildren().get(0).evaluate();
-		if (ifElseNode.getChildren().get(0).getValue() != 0) {
-			for (Node ifCommand : ifElseNode.getChildren().get(2).getChildren()) {
-				return decode(ifCommand);
-			}
-		}
-		else if(ifElseNode.getChildren().get(0).getValue() == 0){
-			for (Node ifCommand : ifElseNode.getChildren().get(1).getChildren()){
-				return decode(ifCommand);
-			}
-		}
-		return "";
-	}
 }
