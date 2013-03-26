@@ -6,11 +6,15 @@ import util.Drawable;
 import util.Turtle;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
 
 public class ClearScreen extends Command {
-
-    public ClearScreen (DisplayView m) {
-        myDisplayView = m;
+    
+    public ClearScreen () {
         myCommands = new ArrayList<String>();
         myCommands.add("clearscreen");
         myCommands.add("cs");

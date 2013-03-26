@@ -4,24 +4,22 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
-
 /**
  * 
  * @author Eric Wu
  *
  */
 
-public class HideTurtle extends Command {
 
-    public HideTurtle () {
+public class ID extends Command {
+
+    public ID () {
         myCommands = new ArrayList<String>();
-        myCommands.add("hideturtle");
-        myCommands.add("ht");
+        myCommands.add("id");
     }
 
     public int executeCommand () {
-        myDisplayView.getTurtle().setVisible(false);
-        return 0;
+        return myDisplayView.getTurtle().getID();
     }
 
 }

@@ -6,9 +6,7 @@ import view.DisplayView;
 
 public class Forward extends Command {
     
-    private DisplayView myDisplayView;
-    public Forward (DisplayView m) {
-        myDisplayView = m;
+    public Forward () {
         myCommands = new ArrayList<String>();
         myCommands.add("fd");
         myCommands.add("forward");

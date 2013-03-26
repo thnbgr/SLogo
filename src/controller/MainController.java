@@ -6,6 +6,7 @@ import command.CommandPreParser;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -22,6 +23,7 @@ import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -36,6 +38,7 @@ import view.DisplayView;
 
 /**
  * Controller handles the communication between model and view
+ * 
  * @author Eric Wu
  * @author Natalia Carvalho
  */
@@ -47,7 +50,8 @@ public class MainController implements Observer {
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
     private static final String language = "English";
     private static final int FIELD_SIZE = 30;
-    private static final Dimension DISPLAY_VIEW_SIZE = new Dimension(500, 500);
+    public static final Dimension DISPLAY_VIEW_SIZE = new Dimension(500, 500);
+    private static final String COMMANDS_TITLE = "Logo Commands";
     private DisplayView myDisplayView;
     private JTextArea myTextArea;
     private ModelController myModelController;
@@ -59,9 +63,9 @@ public class MainController implements Observer {
     private JFileChooser myChooser;
     private ResourceBundle myResources;
 
-    
     /**
      * Constructor for controller
+     * 
      * @param modelcontroller is the model that we communicate with
      */
     public MainController (ModelController modelcontroller) {
@@ -72,18 +76,16 @@ public class MainController implements Observer {
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myDisplayView = new DisplayView(DISPLAY_VIEW_SIZE);
 
-        
         myModelController = modelcontroller;
         myModelController.addObserver(this);
 
-        myCommandBuilder = new CommandBuilder(myDisplayView);
-        
+        myCommandBuilder = new CommandBuilder(myDisplayView, myResources);
+
         myCommandPreParser = new CommandPreParser(myCommandBuilder);
         myCommandPreParser.addObserver(this);
 
         myCommandPerformer = new CommandPerformer(myCommandBuilder);
 
-        
         createOutputJFrame();
 
     }
@@ -96,7 +98,7 @@ public class MainController implements Observer {
         frame.getContentPane().add(myDisplayView, BorderLayout.EAST);
         frame.getContentPane().add(makeTextField(), BorderLayout.NORTH);
         frame.getContentPane().add(makeDisplay(), BorderLayout.WEST);
-        
+
         frame.setJMenuBar(makeMenus());
         // display them
         frame.pack();
@@ -105,7 +107,6 @@ public class MainController implements Observer {
         myDisplayView.addTurtle();
         myDisplayView.start();
     }
-    
 
     /**
      * Create a standard text field (a single line that responds to enter being
@@ -118,7 +119,7 @@ public class MainController implements Observer {
         result.addActionListener(myActionListener);
         return result;
     }
-    
+
     /**
      * Create all the listeners so they can be later assigned to specific
      * components.
@@ -137,7 +138,7 @@ public class MainController implements Observer {
                 showMessage(e.getActionCommand());
                 int r = myCommandPreParser.sendAction(e.getActionCommand());
                 if (myCommandPreParser.isValidCommand()) {
-                    receiveReturnMessage(r+"");
+                    receiveReturnMessage(r + "");
                 }
             }
         };
@@ -148,38 +149,39 @@ public class MainController implements Observer {
             public void focusGained (FocusEvent e) {
                 echo("gained", e);
             }
+
             @Override
             public void focusLost (FocusEvent e) {
                 echo("lost", e);
             }
         };
     }
-   
-    
-    
+
     /**
      * Echo other events (e.g., Focus)
      */
     private void echo (String s, AWTEvent e) {
-        //showMessage(s + " " + e);
+        // showMessage(s + " " + e);
     }
 
     /**
      * Display any string message in the main text area.
+     * 
      * @param message message to display
      */
     public void showMessage (String message) {
         myTextArea.append(message + "\n");
         myTextArea.setCaretPosition(myTextArea.getText().length());
     }
-    
+
     /**
      * Receives a return message
+     * 
      * @param i message to return
      */
     public void receiveReturnMessage (String i) {
         showMessage("return: " + i);
-        
+
     }
 
     /**
@@ -191,17 +193,55 @@ public class MainController implements Observer {
         myTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
         return new JScrollPane(myTextArea);
     }
-    
+
     /**
-     * Create a menu to appear at the top of the frame, 
-     *   usually File, Edit, App Specific Actions, Help
+     * Create a menu to appear at the top of the frame,
+     * usually File, Edit, App Specific Actions, Help
      */
     protected JMenuBar makeMenus () {
         JMenuBar result = new JMenuBar();
         result.add(makeFileMenu());
+        result.add(makeViewCommand());
+
         return result;
     }
-    
+
+    private JMenu makeViewCommand () {
+        JMenu result = new JMenu(myResources.getString("ViewCommand"));
+        result.add(new AbstractAction(myResources.getString("ViewCommand")) {
+            private static final long serialVersionUID = 1L;
+
+            public void actionPerformed (ActionEvent e) {
+            makeViewWindow();
+            }
+        });
+        return result;
+    }
+
+    private void makeViewWindow () {
+        JFrame frame = new JFrame(COMMANDS_TITLE);
+        frame.setMinimumSize(new Dimension(800, 800));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JScrollPane pane = new JScrollPane();
+        try {
+            JEditorPane htmlPane =
+                    new JEditorPane(
+                                    "http://www.cs.duke.edu/courses/cps108/current/assign/03_slogo/commands.php");
+            htmlPane.setEditable(false);
+            pane = new JScrollPane(htmlPane);
+        }
+        catch (IOException ioe) {
+            System.out.println("Error displaying");
+        }
+
+        frame.getContentPane().add(pane);
+
+        frame.pack();
+        frame.setVisible(true);
+        myDisplayView.addFrame(frame);
+    }
+
     /**
      * Create a menu that will pop up when the menu button is pressed in the
      * frame. File menu usually contains Open, Save, and Exit
@@ -218,7 +258,7 @@ public class MainController implements Observer {
             @Override
             public void actionPerformed (ActionEvent e) {
                 try {
-                    
+
                     int response = myChooser.showOpenDialog(null);
                     if (response == JFileChooser.APPROVE_OPTION) {
                         FileReader reader = new FileReader(myChooser.getSelectedFile());
@@ -232,7 +272,7 @@ public class MainController implements Observer {
                 }
                 catch (IOException io) {
                     // let user know an error occurred, but keep going; bug needs to be fixed
-                   // showError(io.toString());
+                    // showError(io.toString());
                 }
             }
         });
@@ -253,26 +293,25 @@ public class MainController implements Observer {
             @Override
             public void actionPerformed (ActionEvent e) {
                 try {
-                    
+
                     int response = myChooser.showOpenDialog(null);
                     if (response == JFileChooser.APPROVE_OPTION) {
                         File file = myChooser.getSelectedFile();
                         BufferedImage myBufferedImage = ImageIO.read(file);
                         Pixmap myImage = new Pixmap(myBufferedImage);
-                        receiveReturnMessage(myDisplayView.setShapeIndex(myImage)+"");
+                        receiveReturnMessage(myDisplayView.setShapeIndex(myImage) + "");
                         myDisplayView.getTurtle().changeTurtleImage(myImage);
                     }
                 }
                 catch (IOException io) {
                     // let user know an error occurred, but keep going; bug needs to be fixed
-                   // showError(io.toString());
+                    // showError(io.toString());
                 }
             }
         });
+
         return result;
     }
-    
-    
 
     /**
      * This is the observer, it is called when CommandPreParser pre-parses the command string
@@ -288,34 +327,32 @@ public class MainController implements Observer {
             receiveReturnMessage(myCommandPerformer.sendAction(myCommand) + "");
         }
         else {
-                CommandPreParser preParser = (CommandPreParser) o;
-            
+            CommandPreParser preParser = (CommandPreParser) o;
 
             // call the method under model to parse the command
-                try {
-                    // Called after the preprocessing and before the model processing
-                    myModelController.checkInputValidAndProcess(myCommand);
-                }
-                
-                catch (IOException e) {
-                    if (!preParser.isValidCommand())
+            try {
+                // Called after the preprocessing and before the model processing
+                myModelController.checkInputValidAndProcess(myCommand);
+            }
+
+            catch (IOException e) {
+                if (!preParser.isValidCommand())
                     receiveReturnMessage("Invalid Command");
 
-                }
-                
-                catch (ClassCastException e) {}
-                
-                catch (IndexOutOfBoundsException e) {}
-                
-                catch (Exception e) {
-                    receiveReturnMessage("Model returned error");
-                    e.printStackTrace();
+            }
 
-                }
+            catch (ClassCastException e) {
+            }
+
+            catch (IndexOutOfBoundsException e) {
+            }
+
+            catch (Exception e) {
+                receiveReturnMessage("Model returned error");
+
+            }
 
         }
     }
-    
-    
 
 }

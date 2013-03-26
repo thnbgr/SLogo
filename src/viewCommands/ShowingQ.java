@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 
 public class ShowingQ extends Command {
 
-    public ShowingQ (DisplayView m) {
-        myDisplayView = m;
+    public ShowingQ () {
         myCommands = new ArrayList<String>();
         myCommands.add("showing?");
         myCommands.add("showingp");

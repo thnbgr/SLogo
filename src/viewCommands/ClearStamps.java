@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
 
 public class ClearStamps extends Command {
 
-    public ClearStamps (DisplayView m) {
-        myDisplayView = m;
+    public ClearStamps () {
         myCommands = new ArrayList<String>();
         myCommands.add("clearstamps");
     }

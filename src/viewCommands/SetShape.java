@@ -5,11 +5,16 @@ import command.Command;
 import util.Turtle;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 
 public class SetShape extends Command {
 
-    public SetShape (DisplayView m) {
-        myDisplayView = m;
+    public SetShape () {
         myCommands = new ArrayList<String>();
         myCommands.add("setshape");
         myCommands.add("setsh");

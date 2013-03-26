@@ -16,8 +16,7 @@ public class PenDown extends Command {
      * Constructor for pendown
      * @param m displayview
      */
-    public PenDown (DisplayView m) {
-        myDisplayView = m;
+    public PenDown () {
         myCommands = new ArrayList<String>();
         myCommands.add("pendown");
         myCommands.add("pd");

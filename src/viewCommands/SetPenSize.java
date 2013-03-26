@@ -6,10 +6,17 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
+
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
+
 public class SetPenSize extends Command {
     
-    public SetPenSize (DisplayView m) {
-        myDisplayView = m;
+    public SetPenSize () {
         myCommands = new ArrayList<String>();
         myCommands.add("setpensize");
         myCommands.add("setps");

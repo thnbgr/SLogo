@@ -7,11 +7,16 @@ import util.Sprite;
 import util.Turtle;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 
 public class XCor extends Command {
 
-    public XCor (DisplayView m) {
-        myDisplayView = m;
+    public XCor () {
         myCommands = new ArrayList<String>();
         myCommands.add("xcor");
     }

@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 
 public class SetPalette extends Command {
 
-    public SetPalette (DisplayView m) {
-        myDisplayView = m;
+    public SetPalette () {
         myCommands = new ArrayList<String>();
         myCommands.add("setpalette");
     }

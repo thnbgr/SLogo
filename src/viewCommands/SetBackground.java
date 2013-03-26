@@ -6,10 +6,16 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
+
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 public class SetBackground extends Command {
     
-    public SetBackground (DisplayView m) {
-        myDisplayView = m;
+    public SetBackground () {
         myCommands = new ArrayList<String>();
         myCommands.add("setbackground");
         myCommands.add("setbg");

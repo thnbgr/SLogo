@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 
 public class ShowTurtle extends Command {
 
-    public ShowTurtle (DisplayView m) {
-        myDisplayView = m;
+    public ShowTurtle () {
         myCommands = new ArrayList<String>();
         myCommands.add("showturtle");
         myCommands.add("st");

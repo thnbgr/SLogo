@@ -1,5 +1,6 @@
 package command;
 
+import java.util.ArrayList;
 import java.util.List;
 import view.DisplayView;
 
@@ -15,6 +16,10 @@ public abstract class Command {
         myCommands.add(s);
     }
     
+    public void addDisplayView (DisplayView d) {
+        myDisplayView = d;
+    }
+    
     public void addCommandString (String s) {
         myCommandString = s;
     }
@@ -26,5 +31,6 @@ public abstract class Command {
     public List<String> getCommands () {
         return myCommands;
     }
+
 
 }

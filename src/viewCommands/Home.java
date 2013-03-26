@@ -7,10 +7,15 @@ import util.Turtle;
 import view.DisplayView;
 
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 public class Home extends Command {
 
-    public Home (DisplayView m) {
-        myDisplayView = m;
+    public Home () {
         myCommands = new ArrayList<String>();
         myCommands.add("home");
     }

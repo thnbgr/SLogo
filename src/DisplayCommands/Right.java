@@ -7,8 +7,7 @@ import view.DisplayView;
 
 public class Right extends Command {
 
-    public Right (DisplayView m) {
-        myDisplayView = m;
+    public Right () {
         myCommands = new ArrayList<String>();
         myCommands.add("rt");
         myCommands.add("right");

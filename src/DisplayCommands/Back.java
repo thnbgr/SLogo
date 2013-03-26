@@ -6,8 +6,7 @@ import view.DisplayView;
 
 public class Back extends Command {
     
-    public Back (DisplayView m) {
-        myDisplayView = m;
+    public Back () {
         myCommands = new ArrayList<String>();
         myCommands.add("bk");
         myCommands.add("back");

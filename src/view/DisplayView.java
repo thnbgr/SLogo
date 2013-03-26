@@ -12,7 +12,9 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import controller.MainController;
 import util.Colors;
+import util.Line;
 import util.Location;
 import util.Pixmap;
 import util.Turtle;
@@ -43,6 +45,7 @@ public class DisplayView extends JComponent {
     private int myShapeIndex;
     private List<Pixmap> myShapes;
     public List<Turtle> myStamps;
+    boolean gridEnabled;
     // drives the animation
     private Timer myTimer;
     private JFrame myJFrame;
@@ -61,6 +64,7 @@ public class DisplayView extends JComponent {
         myShapes = new ArrayList<Pixmap>();
         myStamps = new ArrayList<Turtle>();
         myShapeIndex = 0;
+        gridEnabled = false;
         setShapeIndex(Turtle.DEFAULT_IMAGE);
         setVisible(true);
         
@@ -120,13 +124,29 @@ public class DisplayView extends JComponent {
     @Override
     public void paint (Graphics pen) {
         pen.setColor(Color.WHITE);
+        if (gridEnabled) paintGrid(pen);
         for (Turtle d : myTurtles) {
             d.paint((Graphics2D) pen);
         }
         for (Turtle t : myStamps) {
+            if (t != null) {
             t.paint((Graphics2D) pen);
+            }
         }
         
+    }
+    
+    public void paintGrid (Graphics pen) {
+        pen.setColor(Color.GRAY);
+        int width = MainController.DISPLAY_VIEW_SIZE.width;
+        int height = MainController.DISPLAY_VIEW_SIZE.height;
+        int increment = 20;
+        for (int i=0;i<width;i+=increment) {
+            new Line(new Location(i, 0), new Location(i, height), myColors.getLineColor()).paint(pen);
+        }
+        for (int i=0;i<height;i+=increment) {
+            new Line(new Location(0, i), new Location(width, i), myColors.getLineColor()).paint(pen);
+        }
     }
     
     /**
@@ -233,6 +253,19 @@ public class DisplayView extends JComponent {
      */
     public JFrame getFrame () {
         return myJFrame;
+    }
+
+    public void setTurtleCommandable (int id) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public int getIDsAssigned () {
+        return myAssignID;
+    }
+
+    public void setGrid (int enable) {
+        gridEnabled = (enable == 1);
     }
 
 

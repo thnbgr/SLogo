@@ -51,6 +51,10 @@ public class Turtle extends Sprite {
     public Turtle (Location center, Dimension size, Colors c) {
         this(center, size, new Vector(), c);
     }
+    
+    public Turtle (Location center, Dimension size) {
+        this(center, size, new Vector(), new Colors());
+    }
 
     /**
      * Create a shape at the given position, with the given size, velocity, and color.
@@ -70,6 +74,11 @@ public class Turtle extends Sprite {
         setVisible(true);
         setPenDown();
         reset();
+    }
+    
+    
+    public Turtle stamp() {
+        return new Turtle(myCenter, mySize);
     }
     
     /**

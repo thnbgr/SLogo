@@ -7,16 +7,22 @@ import util.Sprite;
 import util.Turtle;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 
 public class YCor extends Command {
 
-    public YCor (DisplayView m) {
-        myDisplayView = m;
+    public YCor () {
         myCommands = new ArrayList<String>();
         myCommands.add("ycor");
     }
     
     public int executeCommand () {
+        System.out.println(this.getClass());
         return (int) myDisplayView.getTurtle().getLocation().getY();
     }
 

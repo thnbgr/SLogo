@@ -6,10 +6,16 @@ import java.util.ArrayList;
 import command.Command;
 import view.DisplayView;
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
+
 public class SetPenColor extends Command {
     
-    public SetPenColor (DisplayView m) {
-        myDisplayView = m;
+    public SetPenColor () {
         myCommands = new ArrayList<String>();
         myCommands.add("setpencolor");
         myCommands.add("setpc");

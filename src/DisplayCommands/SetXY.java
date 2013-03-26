@@ -7,8 +7,7 @@ import view.DisplayView;
 
 public class SetXY extends Command {
 
-    public SetXY (DisplayView m) {
-        myDisplayView = m;
+    public SetXY () {
         myCommands = new ArrayList<String>();
         myCommands.add("setxy");
         myCommands.add("goto");

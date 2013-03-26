@@ -6,10 +6,15 @@ import util.Turtle;
 import view.DisplayView;
 
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 public class PenDownQ extends Command {
 
-    public PenDownQ (DisplayView m) {
-        myDisplayView = m;
+    public PenDownQ () {
         myCommands = new ArrayList<String>();
         myCommands.add("pendown?");
         myCommands.add("pendownp");

@@ -5,10 +5,15 @@ import command.Command;
 import view.DisplayView;
 
 
+/**
+ * 
+ * @author Eric Wu
+ *
+ */
+
 public class Shape extends Command {
 
-    public Shape (DisplayView m) {
-        myDisplayView = m;
+    public Shape () {
         myCommands = new ArrayList<String>();
         myCommands.add("shape");
         myCommands.add("sh");
