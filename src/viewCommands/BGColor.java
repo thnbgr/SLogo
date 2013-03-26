@@ -11,7 +11,8 @@ public class BGColor extends Command {
     public BGColor (DisplayView m) {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
-        myCommands.add("bgcolor");
+        myCommands.add("setbackground");
+        myCommands.add("setbg");
     }
 
     @Override

@@ -9,8 +9,7 @@ import java.util.List;
 
 
 /**
- * Create Turtle
- * 
+ * Create Turtle 
  * @author Natalia Carvalho
  * @author Eric Wu
  */
@@ -141,9 +140,9 @@ public class Turtle extends Sprite {
         if (isVisible()) {
             DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
         }
-            for (Line l : myLines) {
-                l.paint((Graphics) pen);
-            }
+        for (Line l : myLines) {
+            l.paint((Graphics) pen);
+        }
     }
     
     /**
@@ -155,9 +154,9 @@ public class Turtle extends Sprite {
         myVelocity.setMagnitude(distance);
         Location newCenter = myCenter;
         newCenter.translate(myVelocity);
-        System.out.println("is pen down? "+isPenDown());
-        if (isPenDown()) addLine(myCenter, new Location(myCenter.x, myCenter.y));
-        System.out.println(myLines.size());
+        if (isPenDown()) {
+            addLine(myCenter, new Location(myCenter.x, myCenter.y));
+        }
         myCenter.translate(myVelocity);
     }
     
@@ -191,3 +190,4 @@ public class Turtle extends Sprite {
     }
 
 }
+
