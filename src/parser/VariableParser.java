@@ -32,7 +32,7 @@ public class VariableParser extends AbstractParser{
 					i += 1;
 					makeCommand += " " + commandComponents[i];
 				}
-				StructureInfoPackage toPackage = myParser.getSyntaxCheck().splitToStructure(makeCommand);
+				StructureInfoPackage toPackage = myParser.getSyntaxCheck().splitControlStructure("to", makeCommand);
 				//System.out.println(toPackage.getType());
 				preParsedCommand += structureParse(toPackage) + " ";
 				i += 1;

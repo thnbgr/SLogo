@@ -22,8 +22,14 @@ public class ToStructureParserHelper extends StructureParserHelper {
 	public Node parse(String command) {
 		try{
 			StructureInfoPackage toStructPackage = myParser.getSyntaxCheck().splitToStructure(command);
+			if (toStructPackage == null){
+				System.out.println("null!!!!!");
+			}
 			String commandName = toStructPackage.getValue();
+			System.out.println(toStructPackage.getValue());
+			System.out.println(toStructPackage.getCommands());
 			ArrayList<String> varNames = toStructPackage.getCommands().get(0);
+			System.out.println("varNames: " + varNames);
 			ArrayList<String> customCommands = toStructPackage.getCommands().get(1); 
 									//changed to arraylist cuz there can be multiple commands
 			CustomCommandNode temp = new CustomCommandNode(commandName, varNames, customCommands);
@@ -38,11 +44,16 @@ public class ToStructureParserHelper extends StructureParserHelper {
 	
 	private void updateSyntax(int prmSize, String commandName) throws IOException{
 		StringBuilder customCommandRegex = new StringBuilder(); //start updating syntax
-		customCommandRegex.append("(^");
-		for (int i = 0; i<prmSize; ++i){
-			customCommandRegex.append("\\s\\d+");
+		if (prmSize == 1){
+			System.out.println("aaaa");
+			customCommandRegex.append("(^$)");
+		}else{
+			customCommandRegex.append("(^");
+			for (int i = 0; i<prmSize; ++i){
+				customCommandRegex.append("\\s\\d+");
+			}
+			customCommandRegex.append(")");
 		}
-		customCommandRegex.append(")");
 		myParser.getSyntaxCheck().updateValidSyntax(commandName, customCommandRegex.toString());
 	}
 

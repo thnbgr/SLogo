@@ -60,7 +60,6 @@ public class SyntaxCheck {
 	 */
 	public boolean syntaxCheck(String command) throws IOException{
 		if (command.equals("0")){
-			System.out.println("valid command!!!!");
 			return true;
 		}
 		findLastCommand(command);
@@ -144,16 +143,19 @@ public class SyntaxCheck {
     	return splitedCommands;
     }
     
-    //TODO: can actually use syntax check until ending becomes [0] and [0][0]
-    //TODO: can actually make in one class (check endwith [0] until there's nothing)
-	
-    /**
-     * Splits a valid REPEAT structure into its components.
-     * @param command
-     * @return
-     * @throws IOException
-     */
-    public StructureInfoPackage splitRepeatStructure(String command) throws IOException{
+    public StructureInfoPackage splitControlStructure(String controlName, String command) throws IOException{
+    	int firstBraceIndex = command.indexOf('[');
+    	String controlValue = command.substring(controlName.length()+1, firstBraceIndex-1);
+    	ArrayList<ArrayList<String>> childCommands = new ArrayList<ArrayList<String>>();
+    	splitControlStructureHelper(command, childCommands);
+    	return new StructureInfoPackage(controlName, controlValue, childCommands);
+    }
+    
+    public void splitControlStructureHelper(String command, ArrayList<ArrayList<String>> childCommands) throws IOException{
+    	if (command.endsWith("[ 0 ]")){
+    		command = command.substring(0, command.length()-6);
+    	}
+
     	String commandPattern = "(\\[)";
 		
 		Pattern r = Pattern.compile(commandPattern);
@@ -163,100 +165,14 @@ public class SyntaxCheck {
 		while (m.find()){
 			leftBracketStartIndex = m.start();
 		}
-		String repeatValue = command.substring(7, leftBracketStartIndex-1);
-		String repeatTrueCommand = command.substring(leftBracketStartIndex+2, command.length()-2);
-		ArrayList<ArrayList<String>> repeatCommands = new ArrayList<ArrayList<String>>();
-		ArrayList<String> splitedTrueCommands = splitMultipleCommands(repeatTrueCommand);
-		repeatCommands.add(splitedTrueCommands);
-		return new StructureInfoPackage("repeat", repeatValue, repeatCommands);
-    }
-    
-    /**
-     * Splits a valid IF structure into its components.
-     * @param command
-     * @return
-     * @throws IOException
-     */
-    public StructureInfoPackage splitIfStructure(String command) throws IOException{
-    	String commandPattern = "(\\[)";
-		
-		Pattern r = Pattern.compile(commandPattern);
-		
-		Matcher m = r.matcher(command);
-		int leftBracketStartIndex = -1;
-		while (m.find()){
-			leftBracketStartIndex = m.start();
+		if (leftBracketStartIndex == -1){
+			return;
 		}
-		String ifValue = command.substring(3, leftBracketStartIndex-1);
-		String ifTrueCommand = command.substring(leftBracketStartIndex+2, command.length()-2);
-		ArrayList<ArrayList<String>> ifCommands = new ArrayList<ArrayList<String>>();
-		ArrayList<String> splitedTrueCommands = splitMultipleCommands(ifTrueCommand);
-		ifCommands.add(splitedTrueCommands);
-		return new StructureInfoPackage("if", ifValue, ifCommands);
-    }
-    
-    /**
-     * Splits a valid IFELSE structure into its components.
-     * @param command
-     * @return
-     * @throws IOException
-     */
-    public StructureInfoPackage splitIfElseStructure(String command) throws IOException{
-    	String commandPattern = "(\\[)";
 		
-		Pattern r = Pattern.compile(commandPattern);
-		
-		Matcher m = r.matcher(command);
-		int trueLeftBracketStartIndex = -1;
-		int falseLeftBracketStartIndex = -1;
-		
-		while (m.find()){
-			trueLeftBracketStartIndex = falseLeftBracketStartIndex;
-			falseLeftBracketStartIndex = m.start();
-		}
-		String ifElseValue = command.substring(7, trueLeftBracketStartIndex-1);
-		String ifElseTrueCommand = command.substring(trueLeftBracketStartIndex+2, falseLeftBracketStartIndex-3);
-		String ifElseFalseCommand = command.substring(falseLeftBracketStartIndex+2, command.length()-2);
-		
-		ArrayList<ArrayList<String>> ifElseCommands = new ArrayList<ArrayList<String>>();
-		ArrayList<String> splitedTrueCommands = splitMultipleCommands(ifElseTrueCommand);
-		ArrayList<String> splitedFalseCommands = splitMultipleCommands(ifElseFalseCommand);
-		
-		ifElseCommands.add(splitedTrueCommands);
-		ifElseCommands.add(splitedFalseCommands);
-		return new StructureInfoPackage("ifelse", ifElseValue, ifElseCommands);
-    }
-    
-    /**
-     * Splits a valid TO structure into its components.
-     * @param command
-     * @return
-     * @throws IOException
-     */
-    public StructureInfoPackage splitToStructure(String command) throws IOException{
-    	String commandPattern = "(\\[)";
-		
-		Pattern r = Pattern.compile(commandPattern);
-		
-		Matcher m = r.matcher(command);
-		int parameterLeftBracketStartIndex = -1;
-		int commandLeftBracketStartIndex = -1;
-		
-		while (m.find()){
-			parameterLeftBracketStartIndex = commandLeftBracketStartIndex;
-			commandLeftBracketStartIndex = m.start();
-		}
-		String toValue = command.substring(3, parameterLeftBracketStartIndex-1);
-		String toParameterCommand = command.substring(parameterLeftBracketStartIndex+2, commandLeftBracketStartIndex-3);
-		String toCommandsCommand = command.substring(commandLeftBracketStartIndex+2, command.length()-2);
-		
-		ArrayList<ArrayList<String>> toCommands = new ArrayList<ArrayList<String>>();
-		ArrayList<String> splitedParameterCommands = splitMultipleCommands(toParameterCommand);
-		ArrayList<String> splitedCommandsCommands = splitMultipleCommands(toCommandsCommand);
-		
-		toCommands.add(splitedParameterCommands);
-		toCommands.add(splitedCommandsCommands);
-		return new StructureInfoPackage("to", toValue, toCommands);
+		ArrayList<String> childCommand = splitMultipleCommands(command.substring(leftBracketStartIndex+2, command.length()-2));
+		childCommands.add(0, childCommand);
+		command = command.substring(0, leftBracketStartIndex + 2) + "0 ]";
+		splitControlStructureHelper(command, childCommands);
     }
     
 
@@ -290,7 +206,7 @@ public class SyntaxCheck {
 		try {
 			while(commandCount > 0){
 				String s = readUserInput("enter command: ");
-				sc.syntaxCheck(s);
+				sc.splitControlStructure("ifelse", s);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
