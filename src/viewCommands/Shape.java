@@ -1,18 +1,18 @@
 package viewCommands;
 
-import java.util.ArrayList;
 import command.Command;
-import view.DisplayView;
-
+import java.util.ArrayList;
 
 /**
- * 
+ * returns shape ID of current pixmap picture
+ * @author Natalia Carvalho
  * @author Eric Wu
- *
  */
-
 public class Shape extends Command {
 
+    /**
+     * shape constructor
+     */
     public Shape () {
         myCommands = new ArrayList<String>();
         myCommands.add("shape");
@@ -21,7 +21,7 @@ public class Shape extends Command {
 
     @Override
     public int executeCommand () {
-        return myDisplayView.getIndexByPixmap((myDisplayView.getTurtle().getImage()));
+        return myDisplayView.getIndexByPixmap(myDisplayView.getTurtle().getImage());
     }
 
 }

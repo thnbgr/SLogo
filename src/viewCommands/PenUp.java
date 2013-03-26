@@ -1,24 +1,27 @@
 package viewCommands;
 
-import java.util.ArrayList;
 import command.Command;
-import util.Turtle;
-import view.DisplayView;
+import java.util.ArrayList;
 
 /**
- * 
+ * changes whether pen is up
+ * @author Natalia Carvalho
  * @author Eric Wu
- *
  */
-
 public class PenUp extends Command {
-
+    
+    /**
+     * pen up command
+     */
     public PenUp () {
         myCommands = new ArrayList<String>();
         myCommands.add("penup");
         myCommands.add("pu");
     }
 
+    /**
+     * executes command
+     */
     public int executeCommand () {
         myDisplayView.getTurtle().setPenUp();
         return 0;

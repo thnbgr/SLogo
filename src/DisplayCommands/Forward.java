@@ -2,7 +2,6 @@ package DisplayCommands;
 
 import java.util.ArrayList;
 import command.Command;
-import view.DisplayView;
 
 public class Forward extends Command {
     

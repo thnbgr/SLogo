@@ -1,9 +1,7 @@
 package viewCommands;
 
-import java.util.ArrayList;
 import command.Command;
-import util.Turtle;
-import view.DisplayView;
+import java.util.ArrayList;
 
 /**
  * Pendown class
@@ -14,7 +12,6 @@ public class PenDown extends Command {
     
     /**
      * Constructor for pendown
-     * @param m displayview
      */
     public PenDown () {
         myCommands = new ArrayList<String>();

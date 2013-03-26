@@ -80,7 +80,6 @@ public class CommandBuilder {
         for (Command c : myViewCommandsList) {
             ArrayList<String> commands = (ArrayList<String>) c.getCommands();
             for (int i = 0; i < commands.size(); i++) {
-                System.out.println(commands.get(i));
                 if (!myResources.containsKey(commands.get(i))) continue;
                 String temp = myResources.getString(commands.get(i));
                 commands.set(i, temp);
@@ -127,7 +126,6 @@ public class CommandBuilder {
         for (Command c : myViewCommandsList) {
             ArrayList<String> commands = (ArrayList<String>) c.getCommands();
             for (int i = 0; i < commands.size(); i++) {
-                System.out.println(commands.get(i));
                 if (!myResources.containsKey(commands.get(i))) continue;
                 String temp = myResources.getString(commands.get(i));
                 commands.set(i, temp);

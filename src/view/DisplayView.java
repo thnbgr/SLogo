@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -38,13 +37,14 @@ public class DisplayView extends JComponent {
     private static final long serialVersionUID = 1L;
     private static Dimension ourDefaultTurtleSize = new Dimension(TURTLE_SIZE, TURTLE_SIZE);
     private static Location ourDefaultTurtleLocation;
+    /** */
+    private List<Turtle> myStamps;
     private List<Turtle> myTurtles;
     private Turtle myTurtle;
     private int myAssignID;
     private Colors myColors;
     private int myShapeIndex;
     private List<Pixmap> myShapes;
-    public List<Turtle> myStamps;
     boolean gridEnabled;
     // drives the animation
     private Timer myTimer;
@@ -75,26 +75,45 @@ public class DisplayView extends JComponent {
         myAssignID++;
     }
 
+    /**
+     * Sets shapeIndex of pixmap
+     * @param p is pixmap
+     */
     public int setShapeIndex (Pixmap p) {
         p.setIndex(myShapeIndex);
         myShapes.add(myShapeIndex, p);
         myShapeIndex++;
-        return myShapeIndex-1;
+        return myShapeIndex - 1;
     }
     
+    /**
+     * Gets shapeIndex of pixmap
+     * @param p is pixmap
+     */
     public int getIndexByPixmap (Pixmap p) {
         return p.getIndex();
     }
     
+    /**
+     * Gets pixmap by shapeIndex
+     * @param shapeIndex is index
+     */
     public Pixmap getPixmapByIndex (int shapeIndex) {
         return myShapes.get(shapeIndex);
     }
     
+    /**
+     * Creates stamp of turtle
+     * @param t is turtle
+     */
     public void createStamp (Turtle t) {
         Turtle stamp = (Turtle) t.stamp();
         myStamps.add(stamp);
     }
     
+    /**
+     * Clears all stamps
+     */
     public void clearStamps () {
         myStamps.clear();
     }
@@ -253,6 +272,21 @@ public class DisplayView extends JComponent {
      */
     public JFrame getFrame () {
         return myJFrame;
+    }
+    
+    /**
+     * gets myStamps
+     */
+    public List<Turtle> getMyStamps () {
+        return myStamps;
+    }
+
+    /**
+     * Adds stamp to myStamps
+     * @param myStamp is stamp to be added
+     */
+    public void addStamp (Turtle myStamp) {
+        myStamps.add(myStamp);
     }
 
     public void setTurtleCommandable (int id) {

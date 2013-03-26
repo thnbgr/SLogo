@@ -1,20 +1,19 @@
 package viewCommands;
 
-import java.awt.Color;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import command.Command;
-import view.DisplayView;
-
+import java.awt.Color;
+import java.util.ArrayList;
 
 /**
- * 
+ * Set background command
  * @author Eric Wu
- *
+ * @author Natalia Carvalho
  */
-
 public class SetBackground extends Command {
     
+    /**
+     * set background command
+     */
     public SetBackground () {
         myCommands = new ArrayList<String>();
         myCommands.add("setbackground");
