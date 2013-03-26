@@ -1,9 +1,9 @@
 package util;
 
-import java.awt.Graphics2D;
 import java.awt.Dimension;
-import java.awt.geom.Point2D;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
@@ -26,6 +26,7 @@ public class Pixmap {
 
     /**
      * Create an image from the given filename.
+     * @param fileName of image
      */
     public Pixmap (String fileName) {
         setImage(fileName);
@@ -40,6 +41,7 @@ public class Pixmap {
     }
     /**
      * Create a copy of image from the given other image.
+     * @param other pixmap copy
      */
     public Pixmap (Pixmap other) {
         this(other.myFileName);
@@ -47,6 +49,7 @@ public class Pixmap {
 
     /**
      * Set this image to the image referred to by the given filename.
+     * @param fileName image
      */
     public void setImage (String fileName) {
         myImage = new ImageIcon(getClass().getResource(RESOURCE_LOCATION + fileName)).getImage();
@@ -55,6 +58,9 @@ public class Pixmap {
 
     /**
      * Describes how to draw the image on the screen.
+     * @param pen is graphics pen
+     * @param center is center of image
+     * @param size of image
      */
     public void paint (Graphics2D pen, Point2D center, Dimension size) {
         paint(pen, center, size, 0);
@@ -62,6 +68,10 @@ public class Pixmap {
 
     /**
      * Describes how to draw the image rotated on the screen.
+     * @param pen graphics pen
+     * @param center is center of object
+     * @param size is size of object
+     * @param angle is to rotate by
      */
     public void paint (Graphics2D pen, Point2D center, Dimension size, double angle) {
         // save current state of the graphics area
