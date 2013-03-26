@@ -11,13 +11,13 @@ import parser.node.control.RepeatNode;
  *
  */
 public class RepeatStructureParserHelper extends StructureParserHelper {
-	private CommandTreeParser myParser;
+
 	public RepeatStructureParserHelper(CommandTreeParser treeMakingParser) {
-		myParser = treeMakingParser;
+		super(treeMakingParser);
 	}
 	
 	@Override
-	public Node parser(String command) {
+	public Node parse(String command) {
 		try{
 			StructureInfoPackage repeatStructPackage = myParser.getSyntaxCheck().splitRepeatStructure(command);
 			Node repeatValueNode = myParser.encode(repeatStructPackage.getValue()).getHead();

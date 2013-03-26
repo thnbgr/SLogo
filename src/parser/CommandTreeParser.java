@@ -1,10 +1,6 @@
 package parser;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,7 +16,6 @@ import parser.structureParser.MakeStructureParserHelper;
 import parser.structureParser.RepeatStructureParserHelper;
 import parser.structureParser.StructureParserHelper;
 import parser.structureParser.ToStructureParserHelper;
-import view.Workspace;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +33,7 @@ public class CommandTreeParser {
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
-	private String[] myStructureCommands = { "if", "ifelse", "make", "to",
+	private String[] myControlTypes = { "if", "ifelse", "make", "to",
 			"repeat" };
 	private StructureParserHelper[] myStructureParser = {
 			new IfStructureParserHelper(this),
@@ -57,8 +52,8 @@ public class CommandTreeParser {
 		// For later use: myCSVTable = new CSVTable(fileName);
 		myVariables = new ArrayList<VariableNode>();
 		myCustomCommands = new ArrayList<CustomCommandNode>();
-		for (int i = 0; i < myStructureCommands.length; ++i) {
-			myStructureParserMap.put(myStructureCommands[i],
+		for (int i = 0; i < myControlTypes.length; ++i) {
+			myStructureParserMap.put(myControlTypes[i],
 					myStructureParser[i]);
 		}
 	}
@@ -83,8 +78,7 @@ public class CommandTreeParser {
 				while (!mySyntaxCheck.syntaxCheck(makeCommand)) {
 					makeCommand += " " + myCommandParts.remove();
 				}
-				Node temp = myStructureParserMap.get(curValue).parser(
-						makeCommand); // return Node and add to myCurNodes??
+				Node temp = myStructureParserMap.get(curValue).parse(makeCommand); // return Node and add to myCurNodes??
 				if (!curValue.equals("to")) {
 					myCurNodes.add(temp);
 				}

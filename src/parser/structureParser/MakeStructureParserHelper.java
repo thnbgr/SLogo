@@ -6,13 +6,13 @@ import parser.node.Node;
 import parser.node.VariableNode;
 
 public class MakeStructureParserHelper extends StructureParserHelper{
-	private CommandTreeParser myParser;
+
 	public MakeStructureParserHelper(CommandTreeParser treeMakingParser) {
-		myParser = treeMakingParser;
+		super(treeMakingParser);
 	}
 	
 	@Override
-	public Node parser(String command) {
+	public Node parse(String command) {
 		try {
 			String[] commandParts = command.split(" ");
 			String varName = commandParts[1];

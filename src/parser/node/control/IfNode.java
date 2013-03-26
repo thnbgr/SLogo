@@ -1,7 +1,9 @@
 package parser.node.control;
 
-import parser.node.Node;
-
-public class IfNode extends Node {
+public class IfNode extends ControlNode {
 	
+	@Override
+	public void evaluate(){
+		
+	}
 }

@@ -18,7 +18,6 @@ public class CustomCommandNode extends Node {
 		myCustomCommand = customCommand;
 		myVariableNames = variableNames;
 	}
-	
 	public void addVarName(String varName){
 		myVariableNames.add(varName);
 	}

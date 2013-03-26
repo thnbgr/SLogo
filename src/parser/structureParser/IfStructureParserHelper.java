@@ -4,6 +4,7 @@ import parser.CommandTreeParser;
 import parser.StructureInfoPackage;
 import parser.node.Node;
 import parser.node.control.IfNode;
+
 /**
  * 
  * @author Junho Oh
@@ -11,31 +12,25 @@ import parser.node.control.IfNode;
  *
  */
 public class IfStructureParserHelper extends StructureParserHelper{
-	private CommandTreeParser myParser;
 	public IfStructureParserHelper(CommandTreeParser treeMakingParser) {
-		myParser = treeMakingParser;
+		super(treeMakingParser);
 	}
-
+	
 	@Override
-	public Node parser(String command) {
+	public Node parseChildren(Node valueNode, StructureInfoPackage controlStructPackage) {
+		IfNode ifNode = new IfNode();
+		Node ifCommands = new Node();
+		System.out.println("hi");
+		ifNode.addChild(valueNode);
 		try{
-			StructureInfoPackage IfStructPackage = myParser.getSyntaxCheck().splitIfStructure(command);
-			Node ifValueNode = myParser.encode(IfStructPackage.getValue()).getHead();
-			Node ifCommands = new Node();
-			for(String ifCommand : IfStructPackage.getCommands().get(0)){
-				ifCommands.addChild(myParser.encode(ifCommand).getHead());
-			}
-			IfNode ifNode = new IfNode();
-			ifNode.addChild(ifValueNode);
+			addChildCommands(ifCommands, controlStructPackage.getCommands().get(0));
 			ifNode.addChild(ifCommands);
-			
 			return ifNode;
 		}
 		catch(Exception e){
 			
 		}
-		return null;
-		
+		return new Node();
 	}
 
 }

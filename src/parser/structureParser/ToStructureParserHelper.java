@@ -14,13 +14,12 @@ import parser.node.control.CustomCommandNode;
  *
  */
 public class ToStructureParserHelper extends StructureParserHelper {
-	private CommandTreeParser myParser;
 	public ToStructureParserHelper(CommandTreeParser treeMakingParser) {
-		myParser = treeMakingParser;
+		super(treeMakingParser);
 	}
 
 	@Override
-	public Node parser(String command) {
+	public Node parse(String command) {
 		try{
 			StructureInfoPackage toStructPackage = myParser.getSyntaxCheck().splitToStructure(command);
 			String commandName = toStructPackage.getValue();
