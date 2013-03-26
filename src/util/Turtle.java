@@ -32,11 +32,12 @@ public class Turtle extends Sprite {
     private Location myOriginalCenter;
     private Vector myOriginalVelocity;
     private Dimension myOriginalSize;
+    private Colors myColors;
 
     /**
      */
     public Turtle () {
-        this(DEFAULT_LOCATION, DEFAULT_SIZE);
+        this(DEFAULT_LOCATION, DEFAULT_SIZE, new Vector(), new Colors());
     }
     
     /**
@@ -44,8 +45,8 @@ public class Turtle extends Sprite {
      * @param center of turtle
      * @param size of turtle
      */
-    public Turtle (Location center, Dimension size) {
-        this(center, size, new Vector());
+    public Turtle (Location center, Dimension size, Colors c) {
+        this(center, size, new Vector(), c);
     }
 
     /**
@@ -54,12 +55,13 @@ public class Turtle extends Sprite {
      * @param size of turtle
      * @param velocity of vector
      */
-    public Turtle (Location center, Dimension size, Vector velocity) {
+    public Turtle (Location center, Dimension size, Vector velocity, Colors c) {
         // make copies just to be sure no one else has access
         myLines = new ArrayList<Line>();
         myOriginalCenter = new Location(center);
         myOriginalSize = new Dimension(size);
         myOriginalVelocity = new Vector(velocity);
+        myColors = c;
         setVisible(true);
         setPenUp();
         reset();
@@ -73,6 +75,13 @@ public class Turtle extends Sprite {
         DEFAULT_IMAGE = image;
     }
 
+    public void setColors (Colors c) {
+        myColors = c;
+    }
+    
+    public void clearLines () {
+        myLines.clear();
+    }
     /**
      * Sets pen to be down
      */
@@ -152,7 +161,12 @@ public class Turtle extends Sprite {
      * @param end location of line
      */
     public void addLine(Location start, Location end) {
-        myLines.add(new Line(start, end, Color.black));
+        myLines.add(new Line(start, end, myColors.getLineColor()));
+    }
+
+    public void moveToCenter () {
+        // TODO Auto-generated method stub
+        
     }
 
 }

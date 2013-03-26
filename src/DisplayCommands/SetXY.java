@@ -22,6 +22,7 @@ public class SetXY extends Command {
         int y = Integer.parseInt(args[2]);
         int r = (int) myDisplayView.getTurtle().getLocation().distance(x, y);
         myDisplayView.getTurtle().getLocation().setLocation(x, y);
+        myDisplayView.getTurtle().clearLines();
         return r;
     }
 

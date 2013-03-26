@@ -25,6 +25,7 @@ public class ViewCommandBuilder {
         myViewCommandsList.add(new HideTurtle(myDisplayView));
         myViewCommandsList.add(new XCor(myDisplayView));
         myViewCommandsList.add(new YCor(myDisplayView));
+        
         return myViewCommandsList;
     }
 

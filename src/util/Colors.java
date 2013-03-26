@@ -1,13 +1,20 @@
 package util;
 import java.awt.Color;
-import java.util.HashMap;
 
 public class Colors {
 
-    HashMap<String, Color> map = new HashMap<String, Color>();
+    Color lineColor;
     
     public Colors () {
-        Color.getColor("red");
-        //map.add(Color.getColor("red")));
+        lineColor = Color.black;
+        
+    }
+    
+    public Color getLineColor() {
+        return lineColor;
+    }
+    
+    public void setLineColor(Color c) {
+        lineColor = c;
     }
 }

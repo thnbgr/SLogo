@@ -24,7 +24,7 @@ public class ClearScreen extends Command {
         int r = (int) myDisplayView.getTurtle().getLocation().difference(t.getLocation()).getMagnitude();
                 
         myDisplayView.clear();
-        myDisplayView.addSprite(t);
+        myDisplayView.addTurtle(t);
         return r;
     }
 
