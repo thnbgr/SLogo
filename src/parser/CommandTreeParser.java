@@ -82,18 +82,9 @@ public class CommandTreeParser {
 	 * Encodes the user input String into an EncodeTree
 	 * @param command The user inputString
 	 * @return an EncodeTree parsed from the command
-	 * @throws ClassNotFoundException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws SecurityException
-	 * @throws InvocationTargetException
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public EncodeTree encode(String command) throws ClassNotFoundException,
-		InstantiationException, IllegalAccessException,
-		IllegalArgumentException, SecurityException,
-		InvocationTargetException, IOException {
+	public EncodeTree encode(String command) throws Exception {
 	    Queue<String> myCommandParts = new LinkedList<String>();
 		myCommandParts.addAll(Arrays.asList(command.split(" ")));
 		Queue<Node> myCurNodes = new LinkedList<Node>();

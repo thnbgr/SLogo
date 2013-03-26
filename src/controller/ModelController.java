@@ -52,17 +52,10 @@ public class ModelController extends Observable {
      * Takes the user input string and checks its validity.
      * If valid calls processInputString to start processing.
      * @param inputCommand the user input string
-     * @throws IllegalArgumentException
-     * @throws SecurityException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
+     * @throws Exception 
      */
     public void checkInputValidAndProcess (String inputCommand)
-    		throws IOException, IllegalArgumentException, SecurityException,
-    		ClassNotFoundException, InstantiationException,
-    		IllegalAccessException, InvocationTargetException {
+    		throws Exception {
     	String[] individualInputCommands = inputCommand.split(" ; ");
         for (String s: individualInputCommands) {
         	if (mySyntaxCheck.syntaxCheck(s)) {
@@ -84,19 +77,10 @@ public class ModelController extends Observable {
      * with their return values. Then processes the updated string that
      * consists only of operation calls.
      * @param inputCommand
-     * @throws IllegalArgumentException
-     * @throws SecurityException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws IOException
+	 * @throws Exception 
      */
     public void processInputString(String inputCommand) throws
-    			IllegalArgumentException, SecurityException,
-    			ClassNotFoundException, InstantiationException,
-    			IllegalAccessException, InvocationTargetException,
-    			IOException {
+    			Exception {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands) {
 			EncodeTree et = myTreeMakingParser.encode(s);
@@ -110,19 +94,10 @@ public class ModelController extends Observable {
      * Calls CommandTreeParser to encode the given String.
      * @param command
      * @return
-     * @throws IllegalArgumentException
-     * @throws SecurityException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws IOException
+     * @throws Exception 
      */
     public EncodeTree encode(String command) throws 
-    			IllegalArgumentException, SecurityException, 
-    			ClassNotFoundException, InstantiationException, 
-    			IllegalAccessException, InvocationTargetException, 
-    			IOException {
+    			Exception {
     	EncodeTree et = myTreeMakingParser.encode(command);
     	return et;
     }
