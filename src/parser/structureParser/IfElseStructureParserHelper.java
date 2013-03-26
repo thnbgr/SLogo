@@ -25,9 +25,14 @@ public class IfElseStructureParserHelper extends StructureParserHelper {
 			for(String ifCommand : IfElseStructPackage.getCommands().get(0)){
 				ifCommands.addChild(myParser.encode(ifCommand).getHead());
 			}
+			Node ifElseCommands = new Node();
+			for(String ifElseCommand : IfElseStructPackage.getCommands().get(1)){
+				ifElseCommands.addChild(myParser.encode(ifElseCommand).getHead());
+			}
 			IfElseNode ifElseNode = new IfElseNode();
 			ifElseNode.addChild(ifValueNode);
 			ifElseNode.addChild(ifCommands);
+			ifElseNode.addChild(ifElseCommands);
 			
 			return ifElseNode;
 		}
