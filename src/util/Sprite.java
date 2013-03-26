@@ -11,10 +11,10 @@ import java.awt.Graphics2D;
  */
 public class Sprite extends Drawable {
 
-    protected Location myCenter;
-    protected Vector myVelocity;
-    protected Pixmap myPixmap;
-    protected Dimension mySize;
+    private Location myCenter;
+    private Vector myVelocity;
+    private Pixmap myPixmap;
+    private Dimension mySize;
 
     /**
      * Constructor
@@ -42,14 +42,14 @@ public class Sprite extends Drawable {
      * Return location of sprite
      */
     public Location getLocation () {
-        return myCenter;
+        return getMyCenter();
     }
     
     /**
      * Return velocity of sprite
      */
     public Vector getVector () {
-        return myVelocity;
+        return getMyVelocity();
     }
 
     /**
@@ -59,9 +59,29 @@ public class Sprite extends Drawable {
      * @param velocity of sprite
      */
     public void update (Location center, Dimension size, Vector velocity) {
-        myCenter = center;
+        setMyCenter(center);
         mySize = size;
-        myVelocity = velocity;
+        setMyVelocity(velocity);
+    }
+
+
+    public Location getMyCenter () {
+        return myCenter;
+    }
+
+
+    public void setMyCenter (Location myCenter) {
+        this.myCenter = myCenter;
+    }
+
+
+    public Vector getMyVelocity () {
+        return myVelocity;
+    }
+
+
+    public void setMyVelocity (Vector myVelocity) {
+        this.myVelocity = myVelocity;
     }
 
 }

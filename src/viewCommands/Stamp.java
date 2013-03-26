@@ -25,7 +25,6 @@ public class Stamp extends Command {
      * execute command
      */
     public int executeCommand () {
-        System.out.println(myDisplayView.myStamps.size());
         myDisplayView.createStamp(myDisplayView.getTurtle());
         return 0;
     }

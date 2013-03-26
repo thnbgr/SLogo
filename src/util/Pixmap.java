@@ -40,6 +40,7 @@ public class Pixmap {
     public Pixmap (BufferedImage image) {
         myImage = image;
     }
+    
     /**
      * Create a copy of image from the given other image.
      * @param other pixmap copy
@@ -48,10 +49,17 @@ public class Pixmap {
         this(other.myFileName);
     }
 
+    /**
+     * set shape index
+     * @param i index to be set
+     */
     public void setIndex (int i) {
         myShapeIndex = i;
     }
     
+    /**
+     * Gets myShapeIndex
+     */
     public int getIndex () {
         return myShapeIndex;
     }

@@ -17,6 +17,8 @@ public class Turtle extends Sprite {
     /**
      */
     public static Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
+    /**
+     */
     public static int DEFAULT_PEN_SIZE = 1;
 
     /**
@@ -126,9 +128,9 @@ public class Turtle extends Sprite {
      * Reset shape back to its original values.
      */
     public void reset () {
-        myCenter = new Location(myOriginalCenter);
+        setMyCenter(new Location(myOriginalCenter));
         mySize = new Dimension(myOriginalSize);
-        myVelocity = new Vector(myOriginalVelocity);
+        setMyVelocity(new Vector(myOriginalVelocity));
     }
 
     /**
@@ -138,7 +140,7 @@ public class Turtle extends Sprite {
     public void paint (Graphics2D pen) {
         pen.setStroke(myPen);
         if (isVisible()) {
-            DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
+            DEFAULT_IMAGE.paint(pen, getMyCenter(), mySize, getMyVelocity().getDirection());
         }
         for (Line l : myLines) {
             l.paint((Graphics) pen);
@@ -151,13 +153,13 @@ public class Turtle extends Sprite {
      * @param distance is amount for turtle to move
      */
     public void move (int distance) {
-        myVelocity.setMagnitude(distance);
-        Location newCenter = myCenter;
-        newCenter.translate(myVelocity);
+        getMyVelocity().setMagnitude(distance);
+        Location newCenter = getMyCenter();
+        newCenter.translate(getMyVelocity());
         if (isPenDown()) {
-            addLine(myCenter, new Location(myCenter.x, myCenter.y));
+            addLine(getMyCenter(), new Location(getMyCenter().x, getMyCenter().y));
         }
-        myCenter.translate(myVelocity);
+        getMyCenter().translate(getMyVelocity());
     }
     
     /**
@@ -165,7 +167,7 @@ public class Turtle extends Sprite {
      * @param angle for turtle to move
      */
     public void turn (int angle) {
-        myVelocity.setDirection(myVelocity.getDirection() + angle);
+        getMyVelocity().setDirection(getMyVelocity().getDirection() + angle);
     }
     
     /**
@@ -178,14 +180,24 @@ public class Turtle extends Sprite {
         myLines.add(new Line(start, end, myColors.getLineColor()));
     }
 
+    /**
+     * Moves turtle back to original poistion
+     */
     public void moveToCenter () {
-        myCenter = myOriginalCenter;
+        setMyCenter(myOriginalCenter);
     }
 
+    /**
+     * Sets pen size to given position
+     * @param penSize is width of pen
+     */
     public void setPenSize (int penSize) {
         myPen = new BasicStroke(penSize);
     }
 
+    /**
+     * Gets default image
+     */
     public Pixmap getImage () {
         return DEFAULT_IMAGE;
     }
