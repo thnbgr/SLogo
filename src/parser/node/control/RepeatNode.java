@@ -1,9 +1,13 @@
 package parser.node.control;
 
-import parser.node.Node;
+public class RepeatNode extends ControlNode {
 
-public class RepeatNode extends Node {
-
-	public RepeatNode() {
+	@Override
+	public void evaluate(){
+		getChildren().get(0).evaluate();
+		int numIterations = getChildren().get(0).getValue();
+		for(int i = 0; i < numIterations; i++){
+			evaluateChildren(getChildren().get(1).getChildren());
+		}
 	}
 }

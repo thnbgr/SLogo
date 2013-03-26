@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class SyntaxCheck {
 
 	public static final String COMMAND_REGEXS_FILE_NAME
-						= "src/commandRegexs.csv";
+						= "commandRegexs.csv";
 
 	private Map<String, String> myValidCommandRegex
 					= new HashMap<String, String>();

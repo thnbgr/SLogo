@@ -24,7 +24,6 @@ public abstract class StructureParserHelper {
 			return parseChildren(controlValueNode, controlStructPackage);
 		}
 		catch(Exception e){	
-			
 		}
 		return new Node();
 	}
@@ -35,5 +34,8 @@ public abstract class StructureParserHelper {
 	}
 	public abstract Node parseChildren(Node valueNode, StructureInfoPackage controlStructPackage);
 	public abstract String getType();
+	public CommandTreeParser getParser(){
+		return myParser;
+	}
 	
 }

@@ -1,6 +1,5 @@
 package parser.node.math;
 
-import parser.node.Container;
 import parser.node.Node;
 /**
  * 

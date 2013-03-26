@@ -1,8 +1,6 @@
 package parser.node.math;
 
 import java.util.Random;
-
-import parser.node.Container;
 import parser.node.Node;
 
 public class RandomNode extends Node {

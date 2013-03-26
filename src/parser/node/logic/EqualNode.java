@@ -1,6 +1,5 @@
 package parser.node.logic;
 
-import parser.node.Container;
 import parser.node.Node;
 
 public class EqualNode extends Node {

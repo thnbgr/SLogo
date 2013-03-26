@@ -21,19 +21,16 @@ public class ToStructureParserHelper extends StructureParserHelper {
 	@Override
 	public Node parse(String command) {
 		try{
-			StructureInfoPackage toStructPackage = myParser.getSyntaxCheck().splitToStructure(command);
-			if (toStructPackage == null){
-				System.out.println("null!!!!!");
-			}
+			StructureInfoPackage toStructPackage = getParser().getSyntaxSpliter().splitControlStructure("to", command);
+
 			String commandName = toStructPackage.getValue();
 			System.out.println(toStructPackage.getValue());
 			System.out.println(toStructPackage.getCommands());
 			ArrayList<String> varNames = toStructPackage.getCommands().get(0);
 			System.out.println("varNames: " + varNames);
 			ArrayList<String> customCommands = toStructPackage.getCommands().get(1); 
-									//changed to arraylist cuz there can be multiple commands
 			CustomCommandNode temp = new CustomCommandNode(commandName, varNames, customCommands);
-			myParser.addCustomCommands(temp);
+			getParser().addCustomCommands(temp);
 			updateSyntax(varNames.size(), commandName);
 		}
 		catch(Exception e){
@@ -54,19 +51,17 @@ public class ToStructureParserHelper extends StructureParserHelper {
 			}
 			customCommandRegex.append(")");
 		}
-		myParser.getSyntaxCheck().updateValidSyntax(commandName, customCommandRegex.toString());
+		getParser().getSyntaxCheck().updateValidSyntax(commandName, customCommandRegex.toString());
 	}
 
-	@Override
+	@Deprecated
 	public Node parseChildren(Node valueNode,
 			StructureInfoPackage controlStructPackage) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Deprecated
 	public String getType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

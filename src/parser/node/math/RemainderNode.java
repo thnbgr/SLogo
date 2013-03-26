@@ -1,13 +1,12 @@
 package parser.node.math;
 
-import parser.node.Container;
 import parser.node.Node;
 /**
  * 
  * @author Junho Oh
  */
 public class RemainderNode extends Node {
-	//should be extension of quotient? 
+
 	public RemainderNode() {
 	}
 

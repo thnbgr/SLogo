@@ -25,8 +25,6 @@ public class ControlNode extends Node {
 			command.evaluate();
 			addReturnCommand(command);
 			System.out.println(command.getValue());
-
-			System.out.println("hi");
 		}
 		int childSize = children.size();
 		setValue(children.get(childSize-1).getValue());

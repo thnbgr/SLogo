@@ -15,39 +15,27 @@ public class RepeatStructureParserHelper extends StructureParserHelper {
 	public RepeatStructureParserHelper(CommandTreeParser treeMakingParser) {
 		super(treeMakingParser);
 	}
-	
 	@Override
-	public Node parse(String command) {
+	public String getType() {
+		return "repeat";
+	}
+
+	@Override
+	public Node parseChildren(Node valueNode, StructureInfoPackage controlStructPackage) {
+		RepeatNode repeatNode = new RepeatNode();
+		Node repeatCommands = new Node();
+		repeatNode.addChild(valueNode);
 		try{
-			StructureInfoPackage repeatStructPackage = myParser.getSyntaxCheck().splitRepeatStructure(command);
-			Node repeatValueNode = myParser.encode(repeatStructPackage.getValue()).getHead();
-			Node repeatCommands = new Node();
-			for(String repeatCommand : repeatStructPackage.getCommands().get(0)){
-				repeatCommands.addChild(myParser.encode(repeatCommand).getHead());
-			}
-			RepeatNode repeatNode = new RepeatNode();
-			repeatNode.addChild(repeatValueNode);
+			addChildCommands(repeatCommands, controlStructPackage.getCommands().get(0));
 			repeatNode.addChild(repeatCommands);
-			
 			return repeatNode;
 		}
 		catch(Exception e){
 			
 		}
-		return null;
+		return new Node();
 	}
 
-	@Override
-	public Node parseChildren(Node valueNode,
-			StructureInfoPackage controlStructPackage) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

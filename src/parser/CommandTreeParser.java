@@ -30,7 +30,7 @@ import java.util.Arrays;
  */
 public class CommandTreeParser {
 	public static final String COMMAND_PROPERTIES_FILE_NAME 
-										= "src/commandProperties.csv";
+										= "commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
