@@ -11,12 +11,8 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
-import model.Model;
 import util.Colors;
-import util.Drawable;
-import util.Line;
 import util.Location;
-import util.Sprite;
 import util.Turtle;
 
 /**
@@ -64,10 +60,16 @@ public class DisplayView extends JComponent {
         myAssignID++;
     }
 
+    /**
+     * Returns myColors
+     */
     public Colors getColors() {
         return myColors;
     }
     
+    /**
+     * Updates turtle colors
+     */
     public void updateTurtleColors() {
         for (Turtle d : myTurtles) {
             d.setColors(myColors);
@@ -120,7 +122,7 @@ public class DisplayView extends JComponent {
     
 
     /**
-     * Add turtle to myDrawables
+     * Add turtle to myTurtles
      */
     public void addTurtle () {
         myTurtle = new Turtle(ourDefaultTurtleLocation, ourDefaultTurtleSize, myColors);
@@ -128,6 +130,10 @@ public class DisplayView extends JComponent {
         myTurtles.add(myTurtle);
     }
     
+    /**
+     * Add turtle to myTurtles
+     * @param t is turtle t
+     */
     public void addTurtle (Turtle t) {
         setTurtlesID(t);
         myTurtles.add(t);
@@ -140,6 +146,9 @@ public class DisplayView extends JComponent {
         return myTurtles.get(0);
     }
     
+    /**
+     * Returns true if there is a turtle
+     */
     public boolean hasTurtle() {
         return myTurtles.size() == 0;
     }
@@ -165,18 +174,25 @@ public class DisplayView extends JComponent {
     }
 
     /**
-     * cleaer myDrawables
+     * clear myTurtles
      */
     public void clear () {
         myTurtles = new ArrayList<Turtle>();
         myAssignID = 0;
     }
 
+    /**
+     * add JFrame
+     * @param frame is frame to be added
+     */
     public void addFrame (JFrame frame) {
         myJFrame = frame;
         
     }
     
+    /**
+     * add get JFrame
+     */
     public JFrame getFrame () {
         return myJFrame;
     }

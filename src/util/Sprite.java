@@ -5,6 +5,11 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 
+/**
+ * Sprite class
+ * @author Eric Wu
+ * @author Natalia Carvalho
+ */
 public class Sprite extends Drawable {
 
     protected Location myCenter;
@@ -12,24 +17,38 @@ public class Sprite extends Drawable {
     protected Pixmap myPixmap;
     protected Dimension mySize;
 
+    /**
+     * Constructor
+     */
     public Sprite () {
 
     }
 
     @Override
     public void paint (Graphics2D pen) {
-        // TODO Auto-generated method stub
 
     }
 
+    /**
+     * Return location of sprite
+     */
     public Location getLocation () {
         return myCenter;
     }
-
+    
+    /**
+     * Return velocity of sprite
+     */
     public Vector getVector () {
         return myVelocity;
     }
 
+    /**
+     * Update sprite location, size, velocity
+     * @param center of sprite
+     * @param size of sprite
+     * @param velocity of sprite
+     */
     public void update (Location center, Dimension size, Vector velocity) {
         myCenter = center;
         mySize = size;

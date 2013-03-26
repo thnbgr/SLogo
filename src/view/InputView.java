@@ -30,7 +30,6 @@ import javax.swing.JTextField;
 
 
 /**
- * 
  * @author Eric Wu
  * @author Natalia Carvalho
  * 

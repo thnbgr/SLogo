@@ -8,9 +8,13 @@ import java.awt.Graphics2D;
  * @author Natalia Carvalho and Eric Wu
  */
 public abstract class Drawable {
+    private int myID;
     private boolean myIsVisible;
-    protected int myID;
 
+    /**
+     * abstract paint method
+     * @param pen is graphics pen
+     */
     public abstract void paint (Graphics2D pen);
     
 
