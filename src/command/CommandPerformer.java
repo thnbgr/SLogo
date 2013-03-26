@@ -17,12 +17,10 @@ import viewCommands.*;
  */
 public class CommandPerformer extends Observable {
 
-    private DisplayView myDisplayView;
     private List<Command> myDisplayCommands;
     private CommandBuilder myCommandBuilder;
 
-    public CommandPerformer (DisplayView d, CommandBuilder c) {
-        myDisplayView = d;
+    public CommandPerformer (CommandBuilder c) {
         myDisplayCommands = new ArrayList<Command>();
         myCommandBuilder = c;
         addDisplayCommands();
@@ -34,7 +32,7 @@ public class CommandPerformer extends Observable {
     
 
     public int sendAction (String input) {
-
+        System.out.println(input);
         for (Command v : myDisplayCommands) {
             for (String s : v.getCommands()) {
                 if (input.contains(s)) {

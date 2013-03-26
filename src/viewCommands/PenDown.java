@@ -1,20 +1,27 @@
 package viewCommands;
 
-import java.util.ArrayList;
 import command.Command;
-import util.Turtle;
-import view.DisplayView;
+import java.util.ArrayList;
 
-
+/**
+ * Pendown class
+ * @author Natalia Carvalho
+ * @author Eric Wu
+ */
 public class PenDown extends Command {
-
-    public PenDown (DisplayView m) {
-        myDisplayView = m;
+    
+    /**
+     * Constructor for pendown
+     */
+    public PenDown () {
         myCommands = new ArrayList<String>();
         myCommands.add("pendown");
         myCommands.add("pd");
     }
 
+    /**
+     * Executes command
+     */
     public int executeCommand () {
         myDisplayView.getTurtle().setPenDown();
         return 1;

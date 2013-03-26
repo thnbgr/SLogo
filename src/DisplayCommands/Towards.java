@@ -6,8 +6,7 @@ import view.DisplayView;
 
 public class Towards extends Command {
     
-    public Towards (DisplayView m) {
-        myDisplayView = m;
+    public Towards () {
         myCommands = new ArrayList<String>();
         myCommands.add("towards");
     }

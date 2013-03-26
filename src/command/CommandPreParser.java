@@ -21,12 +21,11 @@ import view.DisplayView;
  */
 public class CommandPreParser extends Observable {
 
-    private DisplayView myDisplayView;
     private List<Command> myViewCommands;
     private CommandBuilder myCommandBuilder;
+    private boolean validCommand;
 
-    public CommandPreParser (DisplayView d, CommandBuilder c) {
-        myDisplayView = d;
+    public CommandPreParser (CommandBuilder c) {
         myViewCommands = new ArrayList<Command>();
         myCommandBuilder = c;
         addViewCommands();
@@ -38,18 +37,29 @@ public class CommandPreParser extends Observable {
 
     // add the rest of the view commands (commands that don't concern model)
 
+    public boolean isValidCommand() {
+        return validCommand;
+    }
+    
     public int sendAction (String input) {
-
+        
         input = input.toLowerCase();
+        String originalInput = input;
         int r = 0;
+
         for (Command v : myViewCommands) {
             for (String s : v.getCommands()) {
-                if (input.contains(s)) {
-                    r = v.executeCommand();
-                    input = input.replace(s, r + "");
+                String[] inputArgs = input.split(" ");
+                for (String arg : inputArgs) {
+                    if (arg.equals(s)) {
+                        v.addCommandString(input);
+                        r = v.executeCommand();
+                        input = input.replace(s, r + "");
+                    }
                 }
             }
         }
+        validCommand = !originalInput.equals(input);
         setChanged();
         notifyObservers(input);
         return r;

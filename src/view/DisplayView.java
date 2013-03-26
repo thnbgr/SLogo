@@ -9,11 +9,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.Timer;
-import model.Model;
-import util.Drawable;
+import controller.MainController;
+import util.Colors;
+import util.Line;
 import util.Location;
-import util.Sprite;
+import util.Pixmap;
 import util.Turtle;
 
 /**
@@ -31,14 +33,22 @@ public class DisplayView extends JComponent {
     public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;   
     /** */
     public static final int TURTLE_SIZE = 50;
+    
     private static final long serialVersionUID = 1L;
     private static Dimension ourDefaultTurtleSize = new Dimension(TURTLE_SIZE, TURTLE_SIZE);
     private static Location ourDefaultTurtleLocation;
-    private List<Drawable> myDrawables;
+    /** */
+    private List<Turtle> myStamps;
+    private List<Turtle> myTurtles;
     private Turtle myTurtle;
     private int myAssignID;
+    private Colors myColors;
+    private int myShapeIndex;
+    private List<Pixmap> myShapes;
+    boolean gridEnabled;
     // drives the animation
     private Timer myTimer;
+    private JFrame myJFrame;
 
     /**
      * Sets the size of the display view
@@ -49,15 +59,82 @@ public class DisplayView extends JComponent {
         setPreferredSize(size);
         setSize(size);
         myAssignID = 0;
-        myDrawables = new ArrayList<Drawable>();
+        myTurtles = new ArrayList<Turtle>();
+        myColors = new Colors();
+        myShapes = new ArrayList<Pixmap>();
+        myStamps = new ArrayList<Turtle>();
+        myShapeIndex = 0;
+        gridEnabled = false;
+        setShapeIndex(Turtle.DEFAULT_IMAGE);
         setVisible(true);
+        
     }
 
-    private void setDrawableID (Drawable d) {
+    private void setTurtlesID (Turtle d) {
         d.setID(myAssignID);
         myAssignID++;
     }
 
+    /**
+     * Sets shapeIndex of pixmap
+     * @param p is pixmap
+     */
+    public int setShapeIndex (Pixmap p) {
+        p.setIndex(myShapeIndex);
+        myShapes.add(myShapeIndex, p);
+        myShapeIndex++;
+        return myShapeIndex - 1;
+    }
+    
+    /**
+     * Gets shapeIndex of pixmap
+     * @param p is pixmap
+     */
+    public int getIndexByPixmap (Pixmap p) {
+        return p.getIndex();
+    }
+    
+    /**
+     * Gets pixmap by shapeIndex
+     * @param shapeIndex is index
+     */
+    public Pixmap getPixmapByIndex (int shapeIndex) {
+        return myShapes.get(shapeIndex);
+    }
+    
+    /**
+     * Creates stamp of turtle
+     * @param t is turtle
+     */
+    public void createStamp (Turtle t) {
+        Turtle stamp = (Turtle) t.stamp();
+        myStamps.add(stamp);
+    }
+    
+    /**
+     * Clears all stamps
+     */
+    public void clearStamps () {
+        myStamps.clear();
+    }
+    
+    /**
+     * Returns myColors
+     */
+    public Colors getColors() {
+        return myColors;
+    }
+    
+    /**
+     * Updates turtle colors
+     */
+    public void updateTurtleColors() {
+        for (Turtle d : myTurtles) {
+            d.setColors(myColors);
+        }
+        
+    }
+    
     
     /**
      * Sets the size of the display view
@@ -66,10 +143,29 @@ public class DisplayView extends JComponent {
     @Override
     public void paint (Graphics pen) {
         pen.setColor(Color.WHITE);
-        for (Drawable d : myDrawables) {
+        if (gridEnabled) paintGrid(pen);
+        for (Turtle d : myTurtles) {
             d.paint((Graphics2D) pen);
         }
+        for (Turtle t : myStamps) {
+            if (t != null) {
+            t.paint((Graphics2D) pen);
+            }
+        }
         
+    }
+    
+    public void paintGrid (Graphics pen) {
+        pen.setColor(Color.GRAY);
+        int width = MainController.DISPLAY_VIEW_SIZE.width;
+        int height = MainController.DISPLAY_VIEW_SIZE.height;
+        int increment = 20;
+        for (int i=0;i<width;i+=increment) {
+            new Line(new Location(i, 0), new Location(i, height), myColors.getLineColor()).paint(pen);
+        }
+        for (int i=0;i<height;i+=increment) {
+            new Line(new Location(0, i), new Location(width, i), myColors.getLineColor()).paint(pen);
+        }
     }
     
     /**
@@ -101,40 +197,45 @@ public class DisplayView extends JComponent {
         myTimer.stop();
     }
     
+
     /**
-     * Add sprite to myDrawables
-     * @param s sprite to be added to myDrawables
+     * Add turtle to myTurtles
      */
-    public void addSprite (Sprite s) {
-        setDrawableID(s);
-        myDrawables.add(s);
+    public void addTurtle () {
+        myTurtle = new Turtle(ourDefaultTurtleLocation, ourDefaultTurtleSize, myColors);
+        setTurtlesID(myTurtle);
+        myTurtles.add(myTurtle);
     }
     
     /**
-     * Add turtle to myDrawables
+     * Add turtle to myTurtles
+     * @param t is turtle t
      */
-    public void addTurtle () {
-        myTurtle = new Turtle(ourDefaultTurtleLocation, ourDefaultTurtleSize);
-        addSprite(myTurtle);
+    public void addTurtle (Turtle t) {
+        setTurtlesID(t);
+        myTurtles.add(t);
     }
     
     /**
      * Add turtle to myDrawables
      */
     public Turtle getTurtle() {
-        return myTurtle;
+        return myTurtles.get(0);
     }
     
+    /**
+     * Returns true if there is a turtle
+     */
     public boolean hasTurtle() {
-        return myTurtle == null;
+        return myTurtles.size() == 0;
     }
 
     /**
      * get a drawable given it's ID
      * @param i is ID of drawable
      */
-    public Drawable getDrawableByID (int i) {
-        for (Drawable d : myDrawables) {
+    public Turtle getTurtleByID (int i) {
+        for (Turtle d : myTurtles) {
             if (d.getID() == i) {
                 return d;
             }
@@ -145,17 +246,64 @@ public class DisplayView extends JComponent {
     /**
      * return myDrawables
      */
-    public List<Drawable> getDrawables () {
-        return myDrawables;
+    public List<Turtle> getTurtles () {
+        return myTurtles;
     }
 
     /**
-     * cleaer myDrawables
+     * clear myTurtles
      */
     public void clear () {
-        myDrawables = new ArrayList<Drawable>();
+        myTurtles = new ArrayList<Turtle>();
         myAssignID = 0;
     }
 
+    /**
+     * add JFrame
+     * @param frame is frame to be added
+     */
+    public void addFrame (JFrame frame) {
+        myJFrame = frame;
+        
+    }
+    
+    /**
+     * add get JFrame
+     */
+    public JFrame getFrame () {
+        return myJFrame;
+    }
+    
+    /**
+     * gets myStamps
+     */
+    public List<Turtle> getMyStamps () {
+        return myStamps;
+    }
+
+    /**
+     * Adds stamp to myStamps
+     * @param myStamp is stamp to be added
+     */
+    public void addStamp (Turtle myStamp) {
+        myStamps.add(myStamp);
+    }
+
+    public void setTurtleCommandable (int id) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public int getIDsAssigned () {
+        return myAssignID;
+    }
+
+    public void setGrid (int enable) {
+        gridEnabled = (enable == 1);
+    }
+
+
+
+    
 
 }

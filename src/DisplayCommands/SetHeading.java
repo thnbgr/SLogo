@@ -6,10 +6,10 @@ import view.DisplayView;
 
 public class SetHeading extends Command {
     
-    public SetHeading (DisplayView m) {
-        myDisplayView = m;
+    public SetHeading () {
         myCommands = new ArrayList<String>();
         myCommands.add("seth");
+        myCommands.add("setheading");
     }
 
     @Override

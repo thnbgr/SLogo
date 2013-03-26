@@ -4,26 +4,26 @@ import command.Command;
 import java.util.ArrayList;
 
 /**
- * returns x coordinate of turtle
+ * creates a stamp of current turtle
  * @author Natalia Carvalho
  * @author Eric Wu
  */
-public class XCor extends Command {
+public class Stamp extends Command {
 
     /**
-     * x coordinate constructor
+     * stamp constructor
      */
-    public XCor () {
+    public Stamp () {
         myCommands = new ArrayList<String>();
-        myCommands.add("xcor");
+        myCommands.add("stamp");
     }
     
     /**
      * execute command
      */
     public int executeCommand () {
-        return (int) myDisplayView.getTurtle().getLocation().getX();
+        myDisplayView.createStamp(myDisplayView.getTurtle());
+        return 0;
     }
 
 }
-

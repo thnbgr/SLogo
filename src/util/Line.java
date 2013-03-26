@@ -20,16 +20,19 @@ public class Line extends JComponent {
     
     /**
      * Constructor for line
-     * @param startLocation for line
-     * @param endLocation for line
-     * @param color of line
+     * @param start start location for line
+     * @param end end location for line
+     * @param lineColor of line
      */
-    public Line (Location startLocation, Location endLocation, Color color) {
-        myStartLocation = startLocation;
-        myEndLocation = endLocation;
-        myColor = color;
+    public Line (Location start, Location end, Color lineColor) {
+        myStartLocation = start;
+        myEndLocation = end;
+        myColor = lineColor;
     }
     
+
+    
+
     /**
      * Paints the line
      * @param g is what paints the line

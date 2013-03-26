@@ -4,26 +4,26 @@ import command.Command;
 import java.util.ArrayList;
 
 /**
- * returns x coordinate of turtle
+ * Clear all stamps 
  * @author Natalia Carvalho
  * @author Eric Wu
  */
-public class XCor extends Command {
+public class ClearStamps extends Command {
 
     /**
-     * x coordinate constructor
+     * Constructor to clear stamps
      */
-    public XCor () {
+    public ClearStamps () {
         myCommands = new ArrayList<String>();
-        myCommands.add("xcor");
+        myCommands.add("clearstamps");
     }
-    
+
     /**
-     * execute command
+     * Method that clears all stamps
      */
     public int executeCommand () {
-        return (int) myDisplayView.getTurtle().getLocation().getX();
+        myDisplayView.clearStamps();
+        return 0;
     }
 
 }
-

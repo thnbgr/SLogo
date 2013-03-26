@@ -33,6 +33,7 @@ public class SyntaxCheck {
 	 * a valid regex list.
 	 */
 	public SyntaxCheck() {
+
 		readFile(COMMAND_REGEXS_FILE_NAME);
 	}
 

@@ -1,23 +1,1 @@
-string		,	symbol		,	args	,	class
-sum			,	+			,	2		,	parser.node.math.SumNode
-difference	,	-			,	2		,	parser.node.math.DifferenceNode
-product		,	*			,	2		,	parser.node.math.ProductNode
-quotient	,	/			,	2		,	parser.node.math.QuotientNode
-remainder	,	%			,	2		,	parser.node.math.RemainderNode
-minus		,	~			,	1		,	parser.node.math.MinusNode
-random		,				,	1		,	parser.node.math.RandomNode
-less?		,	lessp		,	2		,	parser.node.logic.LessNode
-greater?	,	greaterp	,	2		,	parser.node.logic.GreaterNode
-equal?		,	equalp		,	2		,	parser.node.logic.EqualNode
-notequal?	,	notequalp	,	2		,	parser.node.logic.NotEqualNode
-and			,				,	2		,	parser.node.logic.AndNode
-or			,				,	2		,	parser.node.logic.OrNode
-not			,				,	1		,	parser.node.logic.NotNode
-make		,				,	2		,	parser.node.control.MakeNode
-forward		,	fd			,	1		,	parser.node.turtleCommand.TurtleCommandNode
-backward	,	bk			,	1		,	parser.node.turtleCommand.TurtleCommandNode
-left		,	lt			,	1		,	parser.node.turtleCommand.TurtleCommandNode
-right		,	rt			,	1		,	parser.node.turtleCommand.TurtleCommandNode
-setheading	,	seth		,	1		,	parser.node.turtleCommand.TurtleCommandNode
-towards		,				,	2		,	parser.node.turtleCommand.TurtleCommandNode
-setxy		,				,	2		,	parser.node.turtleCommand.TurtleCommandNode
+"string		","	symbol		","	args	","	class""sum			","	+			","	2		","	parser.node.math.SumNode""difference	","	-			","	2		","	parser.node.math.DifferenceNode""product		","	*			","	2		","	parser.node.math.ProductNode""quotient	","	/			","	2		","	parser.node.math.QuotientNode""remainder	","	%			","	2		","	parser.node.math.RemainderNode""minus		","	~			","	1		","	parser.node.math.MinusNode""random		","				","	1		","	parser.node.math.RandomNode""less?		","	lessp		","	2		","	parser.node.logic.LessNode""greater?	","	greaterp	","	2		","	parser.node.logic.GreaterNode""equal?		","	equalp		","	2		","	parser.node.logic.EqualNode""notequal?	","	notequalp	","	2		","	parser.node.logic.NotEqualNode""and			","				","	2		","	parser.node.logic.AndNode""or			","				","	2		","	parser.node.logic.OrNode""not			","				","	1		","	parser.node.logic.NotNode""make		","				","	2		","	parser.node.control.MakeNode""forward		","	fd			","	1		","	parser.node.turtleCommand.TurtleCommandNode""back	"," bk			","	1		","	parser.node.turtleCommand.TurtleCommandNode""left		","	lt			","	1		","	parser.node.turtleCommand.TurtleCommandNode""right		","	rt			","	1		","	parser.node.turtleCommand.TurtleCommandNode""setheading	","	seth		","	1		","	parser.node.turtleCommand.TurtleCommandNode""towards		","				","	2		","	parser.node.turtleCommand.TurtleCommandNode""setxy		","				","	2		","	parser.node.turtleCommand.TurtleCommandNode"

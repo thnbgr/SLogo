@@ -30,10 +30,8 @@ import javax.swing.JTextField;
 
 
 /**
- * 
  * @author Eric Wu
  * @author Natalia Carvalho
- * 
  */
 public class InputView extends JFrame {
 
@@ -52,6 +50,10 @@ public class InputView extends JFrame {
     // get strings from resource file
     private ResourceBundle myResources;
     private CommandPreParser myCommandPreParser;
+    
+    private DisplayView myDisplayView;
+    private static final Dimension DISPLAY_VIEW_SIZE = new Dimension(500, 500);
+
 
     /**
      * InputView Constructor
@@ -74,13 +76,16 @@ public class InputView extends JFrame {
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         // create listeners that will respond to events
         makeListeners();
+        makeDisplayView();
         getContentPane().add(makeInput(), BorderLayout.NORTH);
+        getContentPane().add(myDisplayView, BorderLayout.CENTER);
 
         // create app menus
         setJMenuBar(makeMenus());
         // size and display the GUI
         pack();
         setVisible(true);
+        myDisplayView.start();
     }
 
     /**
@@ -187,6 +192,11 @@ public class InputView extends JFrame {
         myTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
         return new JScrollPane(myTextArea);
     }
+    
+    protected JComponent makeDisplayView() {
+        myDisplayView = new DisplayView(DISPLAY_VIEW_SIZE);
+        return myDisplayView;
+    }
 
     /**
      * Create a menu to appear at the top of the frame, 
@@ -264,7 +274,7 @@ public class InputView extends JFrame {
      * Gets the return message from model
      * @param r is the return message
      */
-    public void receiveReturnMessage (int r) {
+    public void receiveReturnMessage (String r) {
         showMessage("return: " + r);
         
     }

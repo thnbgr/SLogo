@@ -1,6 +1,6 @@
 package util;
 
-import java.awt.Color;
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,18 +9,21 @@ import java.util.List;
 
 
 /**
- * Create Turtle
- * 
+ * Create Turtle 
  * @author Natalia Carvalho
  * @author Eric Wu
  */
 public class Turtle extends Sprite {
     /**
      */
-    public static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
+    public static Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
     /**
      */
-    public static final Location DEFAULT_LOCATION = new Location(100, 100);
+    public static int DEFAULT_PEN_SIZE = 1;
+
+    /**
+     */
+    public static final Location DEFAULT_LOCATION = new Location(250, 250);
     /**
      */
     public static final Dimension DEFAULT_SIZE = new Dimension(50, 50);
@@ -32,20 +35,31 @@ public class Turtle extends Sprite {
     private Location myOriginalCenter;
     private Vector myOriginalVelocity;
     private Dimension myOriginalSize;
+<<<<<<< HEAD
     
+=======
+    private Colors myColors;
+    private BasicStroke myPen;
+
+>>>>>>> master
     /**
      */
     public Turtle () {
-        this(DEFAULT_LOCATION, DEFAULT_SIZE);
+        this(DEFAULT_LOCATION, DEFAULT_SIZE, new Vector(), new Colors());
     }
     
     /**
      * Constructor with center and size
      * @param center of turtle
      * @param size of turtle
+     * @param c is colors object
      */
+    public Turtle (Location center, Dimension size, Colors c) {
+        this(center, size, new Vector(), c);
+    }
+    
     public Turtle (Location center, Dimension size) {
-        this(center, size, new Vector());
+        this(center, size, new Vector(), new Colors());
     }
 
     /**
@@ -53,18 +67,48 @@ public class Turtle extends Sprite {
      * @param center of turtle
      * @param size of turtle
      * @param velocity of vector
+     * @param c is color object
      */
-    public Turtle (Location center, Dimension size, Vector velocity) {
+    public Turtle (Location center, Dimension size, Vector velocity, Colors c) {
         // make copies just to be sure no one else has access
         myLines = new ArrayList<Line>();
         myOriginalCenter = new Location(center);
         myOriginalSize = new Dimension(size);
         myOriginalVelocity = new Vector(velocity);
+        myColors = c;
+        myPen = new BasicStroke(DEFAULT_PEN_SIZE);
         setVisible(true);
-        setPenUp();
+        setPenDown();
         reset();
     }
+    
+    
+    public Turtle stamp() {
+        return new Turtle(getMyCenter(), mySize);
+    }
+    
+    /**
+     * Change default turtle image to another pixmap image
+     * @param image is the new image
+     */
+    public void changeTurtleImage (Pixmap image) {
+        DEFAULT_IMAGE = image;
+    }
 
+    /**
+     * Set myColors
+     * @param c is new color
+     */
+    public void setColors (Colors c) {
+        myColors = c;
+    }
+    
+    /**
+     * clear the lines
+     */
+    public void clearLines () {
+        myLines.clear();
+    }
     /**
      * Sets pen to be down
      */
@@ -97,9 +141,9 @@ public class Turtle extends Sprite {
      * Reset shape back to its original values.
      */
     public void reset () {
-        myCenter = new Location(myOriginalCenter);
+        setMyCenter(new Location(myOriginalCenter));
         mySize = new Dimension(myOriginalSize);
-        myVelocity = new Vector(myOriginalVelocity);
+        setMyVelocity(new Vector(myOriginalVelocity));
     }
 
     /**
@@ -107,13 +151,12 @@ public class Turtle extends Sprite {
      * @param pen draws shape
      */
     public void paint (Graphics2D pen) {
+        pen.setStroke(myPen);
         if (isVisible()) {
-            DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
+            DEFAULT_IMAGE.paint(pen, getMyCenter(), mySize, getMyVelocity().getDirection());
         }
-        if (isPenUp()) {
-            for (Line l : myLines) {
-                l.paint((Graphics) pen);
-            }
+        for (Line l : myLines) {
+            l.paint((Graphics) pen);
         }
     }
     
@@ -123,11 +166,13 @@ public class Turtle extends Sprite {
      * @param distance is amount for turtle to move
      */
     public void move (int distance) {
-        myVelocity.setMagnitude(distance);
-        Location newCenter = myCenter;
-        newCenter.translate(myVelocity);
-        addLine(myCenter, new Location(myCenter.x, myCenter.y));
-        myCenter.translate(myVelocity);
+        getMyVelocity().setMagnitude(distance);
+        Location newCenter = getMyCenter();
+        newCenter.translate(getMyVelocity());
+        if (isPenDown()) {
+            addLine(getMyCenter(), new Location(getMyCenter().x, getMyCenter().y));
+        }
+        getMyCenter().translate(getMyVelocity());
     }
     
     /**
@@ -135,7 +180,7 @@ public class Turtle extends Sprite {
      * @param angle for turtle to move
      */
     public void turn (int angle) {
-        myVelocity.setDirection(myVelocity.getDirection() + angle);
+        getMyVelocity().setDirection(getMyVelocity().getDirection() + angle);
     }
     
     /**
@@ -144,12 +189,30 @@ public class Turtle extends Sprite {
      * @param end location of line
      */
     public void addLine(Location start, Location end) {
-        myLines.add(new Line(start, end, Color.black));
+        myLines.add(new Line(start, end, myColors.getLineColor()));
     }
 
+    /**
+     * Moves turtle back to original position
+     */
     public void moveToCenter () {
-        // TODO Auto-generated method stub
-        
+        setMyCenter(myOriginalCenter);
+    }
+
+    /**
+     * Sets pen size to given position
+     * @param penSize is width of pen
+     */
+    public void setPenSize (int penSize) {
+        myPen = new BasicStroke(penSize);
+    }
+
+    /**
+     * Gets default image
+     */
+    public Pixmap getImage () {
+        return DEFAULT_IMAGE;
     }
 
 }
+

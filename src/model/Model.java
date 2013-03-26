@@ -48,5 +48,6 @@ public class Model {
 			result = Integer.toString(head.getValue());
 			return result;
 		}
+
 	}
 }

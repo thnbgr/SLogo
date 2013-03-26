@@ -86,6 +86,7 @@ public class ModelController extends Observable {
 			EncodeTree et = myTreeMakingParser.encode(s);
 			String commandResult = myModel.decode(et.getHead());
 			System.out.println(commandResult); //for testing purpose.
+
 		}
 		return;
     }
