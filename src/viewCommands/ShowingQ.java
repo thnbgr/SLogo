@@ -1,12 +1,20 @@
 package viewCommands;
 
-import java.util.ArrayList;
 import command.Command;
+import java.util.ArrayList;
 import view.DisplayView;
 
-
+/**
+ * returns whether turtle is visible or not
+ * @author Natalia Carvalho
+ * @author Eric Wu
+ */
 public class ShowingQ extends Command {
 
+    /**
+     * showing turtle? constructor 
+     * @param m is displayview
+     */
     public ShowingQ (DisplayView m) {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
@@ -14,8 +22,11 @@ public class ShowingQ extends Command {
         myCommands.add("showingp");
     }
 
+    /**
+     * execute command
+     */
     public int executeCommand () {
-        return (myDisplayView.getTurtle().isVisible())?1:0;
+        return (myDisplayView.getTurtle().isVisible()) ? 1 : 0;
     }
 
 }
