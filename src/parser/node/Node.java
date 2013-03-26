@@ -29,10 +29,11 @@ public class Node {
 		myNumArgs = numArgs;
 	}
 	public void setValue(int value){
-		setMyValue(value);
+		myValue = value;
 	}
+	public void setReturnValue(){}
 	public int getValue(){
-		return getMyValue();
+		return myValue;
 	}
 	public Node getHead(){ return myHead; }
 	public ArrayList<Node> getChildren(){
@@ -42,9 +43,8 @@ public class Node {
 		for(Node child : getChildren()){
 			child.evaluate();
 		}
-		setValue();
+		setReturnValue();
 	}
-	public void setValue(){};
 	public void makeTree(Queue<Node> tokens){
 		for(int i = 0; i < myNumArgs; i++){
 			Node child = tokens.remove();
@@ -53,9 +53,6 @@ public class Node {
 		}
 	}
 
-    public int getMyValue () {
-        return myValue;
-    }
 
     public void setMyValue (int myValue) {
         this.myValue = myValue;

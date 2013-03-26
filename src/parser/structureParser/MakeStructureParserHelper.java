@@ -2,6 +2,7 @@ package parser.structureParser;
 
 import parser.EncodeTree;
 import parser.CommandTreeParser;
+import parser.StructureInfoPackage;
 import parser.node.Node;
 import parser.node.VariableNode;
 
@@ -28,6 +29,19 @@ public class MakeStructureParserHelper extends StructureParserHelper{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@Override
+	public Node parseChildren(Node valueNode,
+			StructureInfoPackage controlStructPackage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

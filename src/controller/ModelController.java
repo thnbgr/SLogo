@@ -88,7 +88,7 @@ public class ModelController extends Observable {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands){
 			EncodeTree et = myTreeMakingParser.encode(s);
-			String commandResult = myModel.decode(et);
+			String commandResult = myModel.decode(et.getHead());
 			System.out.println(commandResult);
 			//UPDATE VIEW HERE!!!!!!!
 		}

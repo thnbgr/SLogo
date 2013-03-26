@@ -15,12 +15,16 @@ public class IfStructureParserHelper extends StructureParserHelper{
 	public IfStructureParserHelper(CommandTreeParser treeMakingParser) {
 		super(treeMakingParser);
 	}
+	@Override
+	public String getType() {
+		return "if";
+	}
 	
 	@Override
 	public Node parseChildren(Node valueNode, StructureInfoPackage controlStructPackage) {
 		IfNode ifNode = new IfNode();
 		Node ifCommands = new Node();
-		System.out.println("hi");
+		
 		ifNode.addChild(valueNode);
 		try{
 			addChildCommands(ifCommands, controlStructPackage.getCommands().get(0));
@@ -32,5 +36,6 @@ public class IfStructureParserHelper extends StructureParserHelper{
 		}
 		return new Node();
 	}
+
 
 }

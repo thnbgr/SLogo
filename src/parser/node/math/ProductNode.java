@@ -13,7 +13,7 @@ public class ProductNode extends Node{
 	}
 
 	@Override
-	public void setValue(){
+	public void setReturnValue(){
 		super.setValue(getChildren().get(0).getValue() * getChildren().get(1).getValue());
 	}
 

@@ -57,4 +57,17 @@ public class ToStructureParserHelper extends StructureParserHelper {
 		myParser.getSyntaxCheck().updateValidSyntax(commandName, customCommandRegex.toString());
 	}
 
+	@Override
+	public Node parseChildren(Node valueNode,
+			StructureInfoPackage controlStructPackage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
