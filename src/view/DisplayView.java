@@ -8,11 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import util.Colors;
 import util.Location;
+import util.Pixmap;
 import util.Turtle;
 
 /**
@@ -30,6 +32,7 @@ public class DisplayView extends JComponent {
     public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;   
     /** */
     public static final int TURTLE_SIZE = 50;
+    
     private static final long serialVersionUID = 1L;
     private static Dimension ourDefaultTurtleSize = new Dimension(TURTLE_SIZE, TURTLE_SIZE);
     private static Location ourDefaultTurtleLocation;
@@ -37,6 +40,9 @@ public class DisplayView extends JComponent {
     private Turtle myTurtle;
     private int myAssignID;
     private Colors myColors;
+    private int myShapeIndex;
+    private List<Pixmap> myShapes;
+    public List<Turtle> myStamps;
     // drives the animation
     private Timer myTimer;
     private JFrame myJFrame;
@@ -52,7 +58,12 @@ public class DisplayView extends JComponent {
         myAssignID = 0;
         myTurtles = new ArrayList<Turtle>();
         myColors = new Colors();
+        myShapes = new ArrayList<Pixmap>();
+        myStamps = new ArrayList<Turtle>();
+        myShapeIndex = 0;
+        setShapeIndex(Turtle.DEFAULT_IMAGE);
         setVisible(true);
+        
     }
 
     private void setTurtlesID (Turtle d) {
@@ -60,6 +71,30 @@ public class DisplayView extends JComponent {
         myAssignID++;
     }
 
+    public int setShapeIndex (Pixmap p) {
+        p.setIndex(myShapeIndex);
+        myShapes.add(myShapeIndex, p);
+        myShapeIndex++;
+        return myShapeIndex-1;
+    }
+    
+    public int getIndexByPixmap (Pixmap p) {
+        return p.getIndex();
+    }
+    
+    public Pixmap getPixmapByIndex (int shapeIndex) {
+        return myShapes.get(shapeIndex);
+    }
+    
+    public void createStamp (Turtle t) {
+        Turtle stamp = (Turtle) t.stamp();
+        myStamps.add(stamp);
+    }
+    
+    public void clearStamps () {
+        myStamps.clear();
+    }
+    
     /**
      * Returns myColors
      */
@@ -87,6 +122,9 @@ public class DisplayView extends JComponent {
         pen.setColor(Color.WHITE);
         for (Turtle d : myTurtles) {
             d.paint((Graphics2D) pen);
+        }
+        for (Turtle t : myStamps) {
+            t.paint((Graphics2D) pen);
         }
         
     }
@@ -196,6 +234,8 @@ public class DisplayView extends JComponent {
     public JFrame getFrame () {
         return myJFrame;
     }
+
+
 
     
 

@@ -17,7 +17,6 @@ public class Line extends JComponent {
     private Location myStartLocation;
     private Location myEndLocation;
     private final Color myColor;
-    private boolean isVisible;
     
     /**
      * Constructor for line
@@ -26,20 +25,12 @@ public class Line extends JComponent {
      * @param lineColor of line
      */
     public Line (Location start, Location end, Color lineColor) {
-        setLocations(start, end);
+        myStartLocation = start;
+        myEndLocation = end;
         myColor = lineColor;
     }
     
-    /**
-     * Set line locations
-     * @param startLocation start location for line
-     * @param endLocation end location for line
-     */
-    public void setLocations (Location startLocation, Location endLocation) {
-        myStartLocation = startLocation;
-        myEndLocation = endLocation;
-    }
-    
+
     
 
     /**

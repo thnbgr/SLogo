@@ -59,6 +59,7 @@ public class MainController implements Observer {
     private JFileChooser myChooser;
     private ResourceBundle myResources;
 
+    
     /**
      * Constructor for controller
      * @param modelcontroller is the model that we communicate with
@@ -82,6 +83,7 @@ public class MainController implements Observer {
 
         myCommandPerformer = new CommandPerformer(myCommandBuilder);
 
+        
         createOutputJFrame();
 
     }
@@ -257,8 +259,8 @@ public class MainController implements Observer {
                         File file = myChooser.getSelectedFile();
                         BufferedImage myBufferedImage = ImageIO.read(file);
                         Pixmap myImage = new Pixmap(myBufferedImage);
+                        receiveReturnMessage(myDisplayView.setShapeIndex(myImage)+"");
                         myDisplayView.getTurtle().changeTurtleImage(myImage);
-
                     }
                 }
                 catch (IOException io) {

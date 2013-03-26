@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 public class Pixmap {
     // OS-independent relative resource locations (like URLs)
     private static final String RESOURCE_LOCATION = "/images/";
+    private int myShapeIndex;
     // underlying implementation
     private java.awt.Image myImage;
     private String myFileName;
@@ -47,7 +48,14 @@ public class Pixmap {
         this(other.myFileName);
     }
 
-    /**
+    public void setIndex (int i) {
+        myShapeIndex = i;
+    }
+    
+    public int getIndex () {
+        return myShapeIndex;
+    }
+     /**
      * Set this image to the image referred to by the given filename.
      * @param fileName image
      */

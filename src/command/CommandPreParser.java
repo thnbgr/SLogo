@@ -52,6 +52,7 @@ public class CommandPreParser extends Observable {
                 if (input.contains(s)) {
                     v.addCommandString(input);
                     r = v.executeCommand();
+                    System.out.println(v.getClass());
                     input = input.replace(s, r + "");
                 }
             }

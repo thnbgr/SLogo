@@ -1,5 +1,6 @@
 package util;
 import java.awt.Color;
+import java.util.HashMap;
 
 
 /**
@@ -15,6 +16,8 @@ public class Colors {
      */
     
     private Color myLineColor;
+    private HashMap <Integer, Color> map;
+    private int myLineColorIndex;
     
     /**
      * Colors constructor
@@ -22,7 +25,8 @@ public class Colors {
      */
     public Colors () {
         myLineColor = Color.black;
-        
+        myLineColorIndex = -1; // no custom value
+        map = new HashMap<Integer, Color>();
     }
     
     /**
@@ -38,5 +42,23 @@ public class Colors {
      */
     public void setLineColor(Color c) {
         myLineColor = c;
+    }
+    
+    public void addColor(int i, Color c) {
+        map.put(i, c);
+    }
+    
+    public Color getColorByIndex(int i) {
+        if (map.get(i) == null) return null;
+        return map.get(i);
+    }
+    
+    public int getLineColorIndex() {
+        return myLineColorIndex;
+    }
+
+    public void setLineColorByIndex (int colorIndex) {
+        myLineColor = map.get(colorIndex);
+        myLineColorIndex = colorIndex;
     }
 }

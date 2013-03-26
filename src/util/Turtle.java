@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,6 +18,8 @@ public class Turtle extends Sprite {
     /**
      */
     public static Pixmap DEFAULT_IMAGE = new Pixmap("turtle.png");
+    public static int DEFAULT_PEN_SIZE = 1;
+
     /**
      */
     public static final Location DEFAULT_LOCATION = new Location(100, 100);
@@ -32,6 +35,7 @@ public class Turtle extends Sprite {
     private Vector myOriginalVelocity;
     private Dimension myOriginalSize;
     private Colors myColors;
+    private BasicStroke myPen;
 
     /**
      */
@@ -63,6 +67,7 @@ public class Turtle extends Sprite {
         myOriginalSize = new Dimension(size);
         myOriginalVelocity = new Vector(velocity);
         myColors = c;
+        myPen = new BasicStroke(DEFAULT_PEN_SIZE);
         setVisible(true);
         setPenDown();
         reset();
@@ -132,6 +137,7 @@ public class Turtle extends Sprite {
      * @param pen draws shape
      */
     public void paint (Graphics2D pen) {
+        pen.setStroke(myPen);
         if (isVisible()) {
             DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
         }
@@ -149,7 +155,9 @@ public class Turtle extends Sprite {
         myVelocity.setMagnitude(distance);
         Location newCenter = myCenter;
         newCenter.translate(myVelocity);
+        System.out.println("is pen down? "+isPenDown());
         if (isPenDown()) addLine(myCenter, new Location(myCenter.x, myCenter.y));
+        System.out.println(myLines.size());
         myCenter.translate(myVelocity);
     }
     
@@ -167,10 +175,19 @@ public class Turtle extends Sprite {
      * @param end location of line
      */
     public void addLine(Location start, Location end) {
+        System.out.println("adding line");
         myLines.add(new Line(start, end, myColors.getLineColor()));
     }
 
     public void moveToCenter () {
+    }
+
+    public void setPenSize (int penSize) {
+        myPen = new BasicStroke(penSize);
+    }
+
+    public Pixmap getImage () {
+        return DEFAULT_IMAGE;
     }
 
 }

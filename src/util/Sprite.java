@@ -23,6 +23,16 @@ public class Sprite extends Drawable {
     public Sprite () {
 
     }
+    
+    
+    public Sprite stamp() {
+        try {
+            return (Sprite) this.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
 
     @Override
     public void paint (Graphics2D pen) {

@@ -28,9 +28,15 @@ public class CommandBuilder {
         myViewCommandsList.add(new HideTurtle(myDisplayView));
         myViewCommandsList.add(new XCor(myDisplayView));
         myViewCommandsList.add(new YCor(myDisplayView));
-        myViewCommandsList.add(new BGColor(myDisplayView));
-        myViewCommandsList.add(new PenColor(myDisplayView));
+        myViewCommandsList.add(new SetBackground(myDisplayView));
+        myViewCommandsList.add(new SetPenColor(myDisplayView));
         myViewCommandsList.add(new Home(myDisplayView));
+        myViewCommandsList.add(new SetPenSize(myDisplayView));
+        myViewCommandsList.add(new SetShape(myDisplayView));
+        myViewCommandsList.add(new Shape(myDisplayView));
+        myViewCommandsList.add(new Stamp(myDisplayView));
+        myViewCommandsList.add(new ClearStamps(myDisplayView));
+
 
         return myViewCommandsList;
     }
