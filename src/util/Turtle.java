@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,8 +9,7 @@ import java.util.List;
 
 
 /**
- * Create Turtle
- * 
+ * Create Turtle 
  * @author Natalia Carvalho
  * @author Eric Wu
  */
@@ -135,9 +135,9 @@ public class Turtle extends Sprite {
         if (isVisible()) {
             DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
         }
-            for (Line l : myLines) {
-                l.paint((Graphics) pen);
-            }
+        for (Line l : myLines) {
+            l.paint((Graphics) pen);
+        }
     }
     
     /**
@@ -149,7 +149,9 @@ public class Turtle extends Sprite {
         myVelocity.setMagnitude(distance);
         Location newCenter = myCenter;
         newCenter.translate(myVelocity);
-        if (isPenDown()) addLine(myCenter, new Location(myCenter.x, myCenter.y));
+        if (isPenDown()) {
+            addLine(myCenter, new Location(myCenter.x, myCenter.y));
+        }
         myCenter.translate(myVelocity);
     }
     
