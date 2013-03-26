@@ -30,7 +30,7 @@ import java.util.Arrays;
  */
 public class CommandTreeParser {
 	public static final String COMMAND_PROPERTIES_FILE_NAME 
-										= "commandProperties.csv";
+										= "src/commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
@@ -42,12 +42,12 @@ public class CommandTreeParser {
 			new MakeStructureParserHelper(this),
 			new ToStructureParserHelper(this),
 			new RepeatStructureParserHelper(this) };
-	private Map<String, StructureParserHelper> myStructureParserMap = 
+	private Map<String, StructureParserHelper> myStructureParserMap =
 							new HashMap<String, StructureParserHelper>();
 	// if view gets around to making workspaces...add these to a map k=workspace
 	// id, v=arraylist
 	private SyntaxCheck mySyntaxCheck;
-	private SyntaxSpliter mySyntaxSpliter = new SyntaxSpliter();
+	private SyntaxSpliter mySyntaxSpliter;
 
 	// have it get passed in
 	/**
@@ -71,6 +71,10 @@ public class CommandTreeParser {
 	 */
 	public void setSyntaxCheck(SyntaxCheck s) {
 		mySyntaxCheck = s;
+	}
+	
+	public void setSyntaxSpliter(SyntaxSpliter s){
+		mySyntaxSpliter = s;
 	}
 
 	/**

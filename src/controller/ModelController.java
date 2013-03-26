@@ -38,6 +38,7 @@ public class ModelController extends Observable {
         myModel = model;
         mySyntaxCheck = new SyntaxCheck();
         mySyntaxSpliter = new SyntaxSpliter();
+        myTreeMakingParser.setSyntaxSpliter(mySyntaxSpliter);
         mySyntaxSpliter.setSyntaxCheck(mySyntaxCheck);
         myTreeMakingParser.setSyntaxCheck(mySyntaxCheck);
         myModel.setController(this);
