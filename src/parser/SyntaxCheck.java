@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class SyntaxCheck {
 
 	public static final String COMMAND_REGEXS_FILE_NAME
-						= "commandRegexs.csv";
+						= "src/commandRegexs.csv";
 
 	private Map<String, String> myValidCommandRegex
 					= new HashMap<String, String>();
@@ -93,7 +93,7 @@ public class SyntaxCheck {
 	 * @param command entire user input string
 	 */
 	private void syntaxCheckHelper (String command) {
-		String commandPattern = "(\\w+|\\:)";
+		String commandPattern = "(\\w+|\\:|\\+|\\-|\\*|\\/|\\%|\\~)";
 
 		Pattern r = Pattern.compile(commandPattern);
 
@@ -146,12 +146,13 @@ public class SyntaxCheck {
 	 * Testing purpose.
 	 * @param args[]
 	 */
-	private static void main(String args[]) {
+	public static void main(String args[]) {
 		int commandCount = 1;
 		SyntaxCheck sc = new SyntaxCheck();
 		try {
 			while (commandCount > 0) {
 				String s = readUserInput("enter command: ");
+				sc.syntaxCheck(s);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

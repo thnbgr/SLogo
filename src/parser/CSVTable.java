@@ -1,12 +1,15 @@
 package parser;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 /**
- * 
+ *
  * @author Junho Oh
  * @author Wenshun Liu
- *
+ * 
+ * 			The CSVTable class assists the reading of .csv files and
+ * 			stores the values into its inner structure CSVRow.
  */
 class CSVRow {
 	private String myCommand;
@@ -14,12 +17,12 @@ class CSVRow {
 	private String myCommandNumArgs;
 	private String myCommandFilePath;
 	private int myNumElements = 4;
-	
+
 	public CSVRow(String row) {
 		String[] dataArray = row.split(",");
 		init(dataArray);
 	}
-	
+
 	/**
 	 * Analyzes and creates a CSVRow based on the given String Array.
 	 * @param dataArray The String array of a CSVRow's components.
@@ -33,7 +36,7 @@ class CSVRow {
 		myCommandNumArgs = dataArray[2].trim();
 		myCommandFilePath = dataArray[3].trim();
 	}
-	
+
 	/**
 	 * Checks if the input String is a valid command.
 	 * @param command The input String to be tested
@@ -42,7 +45,7 @@ class CSVRow {
 	public boolean isValidCommand(String command) {
 		return myCommand.equals(command) || mySymbol.equals(command);
 	}
-	
+
 	/**
 	 * Gets the number of arguments of a command.
 	 * @return the number of arguments.
@@ -50,7 +53,7 @@ class CSVRow {
 	public int getCommandNumArgs() {
 		return Integer.parseInt(myCommandNumArgs);
 	}
-	
+
 	/**
 	 * Gets the command's path to its class.
 	 * @return The string of the command's path.
@@ -59,6 +62,7 @@ class CSVRow {
 		return myCommandFilePath;
 	}
 }
+
 public class CSVTable {
 	private ArrayList<CSVRow> myRows;
 
@@ -66,7 +70,7 @@ public class CSVTable {
 		myRows =  new ArrayList<CSVRow>();
 		readFile(fileName);
 	}
-	
+
 	/**
 	 * Checks for the CSVRow of the given command and returns the result.
 	 * @param command
@@ -80,22 +84,22 @@ public class CSVTable {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Reads the .csv file.
 	 * @param fileName The file to read.
 	 */
 	private void readFile(String fileName) {
-		try { 
-			BufferedReader CSVFile 
+		try {
+			BufferedReader csvFile
 				= new BufferedReader(new FileReader(fileName));
-			String dataRow = CSVFile.readLine();
+			String dataRow = csvFile.readLine();
 			while (dataRow != null) {
 				CSVRow temp = new CSVRow(dataRow);
 				myRows.add(temp);
-				dataRow = CSVFile.readLine();
+				dataRow = csvFile.readLine();
 			}
-			CSVFile.close();
+			csvFile.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

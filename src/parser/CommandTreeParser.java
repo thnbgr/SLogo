@@ -29,10 +29,10 @@ import java.util.Arrays;
  *         it into a tree structure for the model to be able to evaluate.
  */
 public class CommandTreeParser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME 
-										= "commandProperties.csv";
-	private CSVTable myCSVTable;
-	private ArrayList<VariableNode> myVariables;
+	public static final String COMMAND_PROPERTIES_FILE_NAME
+	 					= "commandProperties.csv";
+    private CSVTable myCSVTable;
+    private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
 	private String[] myControlTypes = { "if", "ifelse", "make", "to",
 			"repeat" };
@@ -43,8 +43,9 @@ public class CommandTreeParser {
 			new ToStructureParserHelper(this),
 			new RepeatStructureParserHelper(this) };
 	private Map<String, StructureParserHelper> myStructureParserMap =
-							new HashMap<String, StructureParserHelper>();
-	// if view gets around to making workspaces...add these to a map k=workspace
+			new HashMap<String, StructureParserHelper>();
+	// TODO: if view gets around to making workspaces...
+	// add these to a map k=workspace
 	// id, v=arraylist
 	private SyntaxCheck mySyntaxCheck;
 	private SyntaxSpliter mySyntaxSpliter;
@@ -90,10 +91,10 @@ public class CommandTreeParser {
 	 * @throws IOException
 	 */
 	public EncodeTree encode(String command) throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
-			IllegalArgumentException, SecurityException,
-			InvocationTargetException, IOException {
-		Queue<String> myCommandParts = new LinkedList<String>();
+		InstantiationException, IllegalAccessException,
+		IllegalArgumentException, SecurityException,
+		InvocationTargetException, IOException {
+	    Queue<String> myCommandParts = new LinkedList<String>();
 		myCommandParts.addAll(Arrays.asList(command.split(" ")));
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		Node curNode = new Node();
@@ -102,7 +103,7 @@ public class CommandTreeParser {
 			String curValue = myCommandParts.remove();
 			if (myStructureParserMap.containsKey(curValue)) {
 				String makeCommand = curValue;
-				while (!mySyntaxCheck.syntaxCheck(makeCommand)) {
+				while (!mySyntaxCheck.syntaxCheck(makeCommand)) { 
 					makeCommand += " " + myCommandParts.remove();
 				}
 				Node temp = myStructureParserMap.
@@ -117,9 +118,9 @@ public class CommandTreeParser {
 				if (myCSVTable.returnCSVRow(curValue) == null) {
 					temp = new ValueNode(Integer.parseInt(curValue));
 				} else {
-					Class<?> headClass = 
+					Class<?> headClass =
 							Class.forName(myCSVTable.returnCSVRow(
-							curValue).getCommandFilePath());
+								curValue).getCommandFilePath());
 					temp = (Node) headClass.getConstructors()[0].newInstance();
 					if (temp instanceof TurtleCommandNode) {
 						((TurtleCommandNode) temp).setName(curValue);

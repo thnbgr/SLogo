@@ -1,19 +1,16 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import controller.ModelController;
-import parser.CommandTreeParser;
 import parser.node.Node;
 import parser.node.turtleCommand.*;
-import parser.node.control.IfElseNode;
 
 /**
  *
  * @author Junho Oh
  * @author Wenshun Liu
  *
+ *			This class decodes the parsed command and returns a String
+ *			result.
  */
 public class Model {
 	private ModelController myController;
@@ -52,5 +49,4 @@ public class Model {
 			return result;
 		}
 	}
-
 }
