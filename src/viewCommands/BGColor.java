@@ -11,13 +11,13 @@ public class BGColor extends Command {
     public BGColor (DisplayView m) {
         myDisplayView = m;
         myCommands = new ArrayList<String>();
-        myCommands.add("bgcolor");
+        myCommands.add("setbackground");
+        myCommands.add("setbg");
     }
 
     @Override
     public int executeCommand () {
         String[] args = myCommandString.split(" ");
-        System.out.println(myCommandString+"end");
         String colorName = args[1];
         Color color;
         int success;

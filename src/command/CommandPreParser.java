@@ -23,6 +23,7 @@ public class CommandPreParser extends Observable {
 
     private List<Command> myViewCommands;
     private CommandBuilder myCommandBuilder;
+    private boolean validCommand;
 
     public CommandPreParser (CommandBuilder c) {
         myViewCommands = new ArrayList<Command>();
@@ -36,10 +37,16 @@ public class CommandPreParser extends Observable {
 
     // add the rest of the view commands (commands that don't concern model)
 
+    public boolean isValidCommand() {
+        return validCommand;
+    }
+    
     public int sendAction (String input) {
-
+        
         input = input.toLowerCase();
+        String originalInput = input;
         int r = 0;
+
         for (Command v : myViewCommands) {
             for (String s : v.getCommands()) {
                 if (input.contains(s)) {
@@ -49,6 +56,7 @@ public class CommandPreParser extends Observable {
                 }
             }
         }
+        validCommand = !originalInput.equals(input);
         setChanged();
         notifyObservers(input);
         return r;
