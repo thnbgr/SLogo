@@ -35,13 +35,10 @@ public class Turtle extends Sprite {
     private Location myOriginalCenter;
     private Vector myOriginalVelocity;
     private Dimension myOriginalSize;
-<<<<<<< HEAD
-    
-=======
+
     private Colors myColors;
     private BasicStroke myPen;
 
->>>>>>> master
     /**
      */
     public Turtle () {
