@@ -1,6 +1,5 @@
 package parser;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -8,8 +7,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-import parser.commandProperties.CSVTable;
-import parser.commandProperties.PropertiesTable;
 import parser.node.*;
 import parser.node.control.*;
 import parser.node.turtleCommand.*;
@@ -23,7 +20,6 @@ import parser.structureParser.ToStructureParserHelper;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 /**
  *
  * @author Junho Oh
@@ -33,10 +29,10 @@ import java.util.Arrays;
  *         it into a tree structure for the model to be able to evaluate.
  */
 public class CommandTreeParser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME 
-										= "commandProperties.csv";
-	private CSVTable myCSVTable;
-	private ArrayList<VariableNode> myVariables;
+	public static final String COMMAND_PROPERTIES_FILE_NAME
+	 					= "commandProperties.csv";
+    private CSVTable myCSVTable;
+    private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
 	private String[] myControlTypes = { "if", "ifelse", "make", "to",
 			"repeat" };
@@ -47,7 +43,10 @@ public class CommandTreeParser {
 			new ToStructureParserHelper(this),
 			new RepeatStructureParserHelper(this) };
 	private Map<String, StructureParserHelper> myStructureParserMap =
-							new HashMap<String, StructureParserHelper>();
+			new HashMap<String, StructureParserHelper>();
+	// TODO: if view gets around to making workspaces...
+	// add these to a map k=workspace
+	// id, v=arraylist
 	private SyntaxCheck mySyntaxCheck;
 	private SyntaxSpliter mySyntaxSpliter;
 
@@ -56,10 +55,8 @@ public class CommandTreeParser {
 	 * Parses the user input command into a EncodeTree. For later decoding
 	 * use.
 	 * @param fileName The information file of each Node in the tree.
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
 	 */
-	public CommandTreeParser(String fileName) throws FileNotFoundException, IOException {
+	public CommandTreeParser(String fileName) {
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
 		myVariables = new ArrayList<VariableNode>();
 		myCustomCommands = new ArrayList<CustomCommandNode>();
@@ -85,19 +82,10 @@ public class CommandTreeParser {
 	 * Encodes the user input String into an EncodeTree
 	 * @param command The user inputString
 	 * @return an EncodeTree parsed from the command
-	 * @throws ClassNotFoundException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws SecurityException
-	 * @throws InvocationTargetException
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public EncodeTree encode(String command) throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
-			IllegalArgumentException, SecurityException,
-			InvocationTargetException, IOException {
-		Queue<String> myCommandParts = new LinkedList<String>();
+	public EncodeTree encode(String command) throws Exception {
+	    Queue<String> myCommandParts = new LinkedList<String>();
 		myCommandParts.addAll(Arrays.asList(command.split(" ")));
 		Queue<Node> myCurNodes = new LinkedList<Node>();
 		Node curNode = new Node();
@@ -106,7 +94,7 @@ public class CommandTreeParser {
 			String curValue = myCommandParts.remove();
 			if (myStructureParserMap.containsKey(curValue)) {
 				String makeCommand = curValue;
-				while (!mySyntaxCheck.syntaxCheck(makeCommand)) {
+				while (!mySyntaxCheck.syntaxCheck(makeCommand)) { 
 					makeCommand += " " + myCommandParts.remove();
 				}
 				Node temp = myStructureParserMap.
@@ -118,17 +106,17 @@ public class CommandTreeParser {
 
 			else {
 				Node temp = null;
-				if (myCSVTable.returnPropertyRow(curValue) == null) {
+				if (myCSVTable.returnCSVRow(curValue) == null) {
 					temp = new ValueNode(Integer.parseInt(curValue));
 				} else {
-					Class<?> headClass = 
-							Class.forName(myCSVTable.returnPropertyRow(
-							curValue).getCommandFilePath());
+					Class<?> headClass =
+							Class.forName(myCSVTable.returnCSVRow(
+								curValue).getCommandFilePath());
 					temp = (Node) headClass.getConstructors()[0].newInstance();
 					if (temp instanceof TurtleCommandNode) {
 						((TurtleCommandNode) temp).setName(curValue);
 					}
-					temp.setNumArgs(myCSVTable.returnPropertyRow(curValue)
+					temp.setNumArgs(myCSVTable.returnCSVRow(curValue)
 							.getCommandNumArgs());
 				}
 				myCurNodes.add(temp);

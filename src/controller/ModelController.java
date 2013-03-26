@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
@@ -9,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import parser.CustomCommandParser;
+import parser.EncodeTree;
 import parser.AbstractParser;
 import parser.CommandTreeParser;
 import parser.SyntaxCheck;
 import parser.SyntaxSpliter;
 import parser.VariableParser;
-import parser.node.EncodeTree;
 import parser.node.control.CustomCommandNode;
 import model.Model;
 
@@ -22,46 +21,41 @@ import model.Model;
 *
 * @author Junho Oh
 * @author Wenshun Liu
-* 
+*
+* 		This class manages the entire process after an input string is
+* 		entered. It returns an ArrayList of String of parsed commands to
+* 		the view. The return type can also be easily changed into
+* 		workspaces.
 */
 public class ModelController extends Observable {
 
     private Model myModel;
     private SyntaxCheck mySyntaxCheck;
     private SyntaxSpliter mySyntaxSpliter;
-    private static CommandTreeParser myCommandTreeParser;
-    private ArrayList<AbstractParser> myParsers;
-    
-    public ModelController (Model model) throws FileNotFoundException, IOException {
+    private static CommandTreeParser myTreeMakingParser
+    				= new CommandTreeParser("");
+    private AbstractParser[] myParsers=
+    		{ new VariableParser(myTreeMakingParser),
+    		new CustomCommandParser(myTreeMakingParser) };
+
+    public ModelController (Model model) {
         myModel = model;
-        myCommandTreeParser = new CommandTreeParser("");
         mySyntaxCheck = new SyntaxCheck();
         mySyntaxSpliter = new SyntaxSpliter();
-        myCommandTreeParser.setSyntaxSpliter(mySyntaxSpliter);
+        myTreeMakingParser.setSyntaxSpliter(mySyntaxSpliter);
         mySyntaxSpliter.setSyntaxCheck(mySyntaxCheck);
-        myCommandTreeParser.setSyntaxCheck(mySyntaxCheck);
+        myTreeMakingParser.setSyntaxCheck(mySyntaxCheck);
         myModel.setController(this);
-        myParsers = new ArrayList<AbstractParser>();
-        myParsers.add(new VariableParser(myCommandTreeParser));
-        myParsers.add(new CustomCommandParser(myCommandTreeParser));
-      
     }
 
     /**
      * Takes the user input string and checks its validity.
      * If valid calls processInputString to start processing.
      * @param inputCommand the user input string
-     * @throws IllegalArgumentException
-     * @throws SecurityException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
+     * @throws Exception 
      */
-    public void checkInputValidAndProcess (String inputCommand) 
-    		throws IOException, IllegalArgumentException, SecurityException, 
-    		ClassNotFoundException, InstantiationException, 
-    		IllegalAccessException, InvocationTargetException {
+    public void checkInputValidAndProcess (String inputCommand)
+    		throws Exception {
     	String[] individualInputCommands = inputCommand.split(" ; ");
         for (String s: individualInputCommands) {
         	if (mySyntaxCheck.syntaxCheck(s)) {
@@ -83,22 +77,13 @@ public class ModelController extends Observable {
      * with their return values. Then processes the updated string that
      * consists only of operation calls.
      * @param inputCommand
-     * @throws IllegalArgumentException
-     * @throws SecurityException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws IOException 
+	 * @throws Exception 
      */
-    public void processInputString(String inputCommand) throws 
-    			IllegalArgumentException, SecurityException, 
-    			ClassNotFoundException, InstantiationException, 
-    			IllegalAccessException, InvocationTargetException, 
-    			IOException {
+    public void processInputString(String inputCommand) throws
+    			Exception {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands) {
-			EncodeTree et = myCommandTreeParser.encode(s);
+			EncodeTree et = myTreeMakingParser.encode(s);
 			String commandResult = myModel.decode(et.getHead());
 			System.out.println(commandResult); //for testing purpose.
 		}
@@ -106,19 +91,14 @@ public class ModelController extends Observable {
     }
 
     /**
-     * Calls Parser to encode the given String.
+     * Calls CommandTreeParser to encode the given String.
      * @param command
      * @return
-     * @throws IllegalArgumentException
-     * @throws SecurityException
-     * @throws ClassNotFoundException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws IOException 
+     * @throws Exception 
      */
-    public EncodeTree encode(String command) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException{
-    	EncodeTree et = myCommandTreeParser.encode(command);
+    public EncodeTree encode(String command) throws 
+    			Exception {
+    	EncodeTree et = myTreeMakingParser.encode(command);
     	return et;
     }
 
@@ -126,8 +106,8 @@ public class ModelController extends Observable {
      * Testing purpose for TO commands.
      */
     private static void getCustomCommand() {
-    	ArrayList<CustomCommandNode> temp 
-    					= myCommandTreeParser.getCustomCommands();
+    	ArrayList<CustomCommandNode> temp
+    			= myTreeMakingParser.getCustomCommands();
     	for (CustomCommandNode ccn: temp) {
     		System.out.println(ccn.getName());
     		System.out.println(ccn.getVarNames());
@@ -138,11 +118,11 @@ public class ModelController extends Observable {
     /**
 	 * Testing purpose.
 	 */
-	private static String readUserInput(String printMessage) 
+	private static String readUserInput(String printMessage)
 											throws IOException {
         System.out.print(printMessage);
-        InputStreamReader isr = new InputStreamReader ( System.in );
-        BufferedReader br = new BufferedReader (isr);
+        InputStreamReader isr = new InputStreamReader( System.in );
+        BufferedReader br = new BufferedReader(isr);
         String returnString;
         try {
         	returnString = br.readLine();
@@ -154,10 +134,8 @@ public class ModelController extends Observable {
 
     /**
 	 * Testing purpose.
-     * @throws IOException 
-     * @throws FileNotFoundException 
 	 */
-	public static void main(String args[]) throws FileNotFoundException, IOException {
+	public static void main(String args[]) {
 		int commandCount = 1;
 		Model model = new Model();
 		ModelController controller = new ModelController(model);
