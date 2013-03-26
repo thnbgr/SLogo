@@ -11,10 +11,10 @@ import parser.node.control.CustomCommandNode;
 
 public class VariableParser extends AbstractParser{
 	
-	private CommandTreeParser myParser;
+	private CommandTreeParser myCommandTreeParser;
 	
 	public VariableParser(CommandTreeParser treeMakingParser) {
-		myParser = treeMakingParser;
+		myCommandTreeParser = treeMakingParser;
 	}
 	
 	@Override
@@ -28,18 +28,14 @@ public class VariableParser extends AbstractParser{
     		current = commandComponents[i];
     		if (current.equals("to")){ //UGLY!!!!!!!!!!!!
     			String makeCommand = current;
-				while (!myParser.getSyntaxCheck().syntaxCheck(makeCommand)){
+				while (!myCommandTreeParser.getSyntaxCheck().syntaxCheck(makeCommand)){
 					i += 1;
 					makeCommand += " " + commandComponents[i];
 				}
-				StructureInfoPackage toPackage = myParser.getSyntaxCheck().splitControlStructure("to", makeCommand);
+				StructureInfoPackage toPackage = myCommandTreeParser.getSyntaxSpliter().splitControlStructure("to", makeCommand);
 				//System.out.println(toPackage.getType());
 				preParsedCommand += structureParse(toPackage) + " ";
 				i += 1;
-    		}else if (current.equals("dotimes")){
-    			//TODO: these three methods should be able to combine
-    		}else if (current.equals("for")){
-    			//TODO
     		}else if (current.startsWith(":") && !previous.equals("make")){
     			String preParsedVariable = preParseVariable(current);
     			preParsedCommand += preParsedVariable;
@@ -85,7 +81,7 @@ public class VariableParser extends AbstractParser{
      * @return the value of the custom variable.
      */
     private String preParseVariable(String inputVariable) {
-    	ArrayList<VariableNode> variableList = myParser.getVariables();
+    	ArrayList<VariableNode> variableList = myCommandTreeParser.getVariables();
     	String preParsedVariable = "0";
     	for (int j = 0; j<variableList.size(); ++j){
 			String variableName = variableList.get(j).getName();

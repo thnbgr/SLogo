@@ -19,7 +19,7 @@ public abstract class StructureParserHelper {
 	
 	public Node parse(String command){
 		try{
-			StructureInfoPackage controlStructPackage = myParser.getSyntaxCheck().splitControlStructure(getType(), command);
+			StructureInfoPackage controlStructPackage = myParser.getSyntaxSpliter().splitControlStructure(getType(), command);
 			Node controlValueNode = myParser.encode(controlStructPackage.getValue()).getHead();
 			return parseChildren(controlValueNode, controlStructPackage);
 		}

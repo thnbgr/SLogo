@@ -21,15 +21,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * 
+ *
  * @author Junho Oh
- * @auther Wenshun Liu
- * 
+ * @author Wenshun Liu
+ *
  *         This class is responsible for taking in a command string and parsing
  *         it into a tree structure for the model to be able to evaluate.
  */
 public class CommandTreeParser {
-	public static final String COMMAND_PROPERTIES_FILE_NAME = "commandProperties.csv";
+	public static final String COMMAND_PROPERTIES_FILE_NAME 
+										= "commandProperties.csv";
 	private CSVTable myCSVTable;
 	private ArrayList<VariableNode> myVariables;
 	private ArrayList<CustomCommandNode> myCustomCommands;
@@ -41,15 +42,21 @@ public class CommandTreeParser {
 			new MakeStructureParserHelper(this),
 			new ToStructureParserHelper(this),
 			new RepeatStructureParserHelper(this) };
-	private Map<String, StructureParserHelper> myStructureParserMap = new HashMap<String, StructureParserHelper>();
+	private Map<String, StructureParserHelper> myStructureParserMap = 
+							new HashMap<String, StructureParserHelper>();
 	// if view gets around to making workspaces...add these to a map k=workspace
 	// id, v=arraylist
 	private SyntaxCheck mySyntaxCheck;
+	private SyntaxSpliter mySyntaxSpliter = new SyntaxSpliter();
 
 	// have it get passed in
+	/**
+	 * Parses the user input command into a EncodeTree. For later decoding
+	 * use.
+	 * @param fileName The information file of each Node in the tree.
+	 */
 	public CommandTreeParser(String fileName) {
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
-		// For later use: myCSVTable = new CSVTable(fileName);
 		myVariables = new ArrayList<VariableNode>();
 		myCustomCommands = new ArrayList<CustomCommandNode>();
 		for (int i = 0; i < myControlTypes.length; ++i) {
@@ -58,10 +65,26 @@ public class CommandTreeParser {
 		}
 	}
 
+	/**
+	 * Bonds the CommandTreeParser with the given SyntaxCheck.
+	 * @param s The given SyntaxCheck
+	 */
 	public void setSyntaxCheck(SyntaxCheck s) {
 		mySyntaxCheck = s;
 	}
 
+	/**
+	 * Encodes the user input String into an EncodeTree
+	 * @param command The user inputString
+	 * @return an EncodeTree parsed from the command
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws SecurityException
+	 * @throws InvocationTargetException
+	 * @throws IOException
+	 */
 	public EncodeTree encode(String command) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException,
 			IllegalArgumentException, SecurityException,
@@ -78,7 +101,8 @@ public class CommandTreeParser {
 				while (!mySyntaxCheck.syntaxCheck(makeCommand)) {
 					makeCommand += " " + myCommandParts.remove();
 				}
-				Node temp = myStructureParserMap.get(curValue).parse(makeCommand); // return Node and add to myCurNodes??
+				Node temp = myStructureParserMap.
+					get(curValue).parse(makeCommand);
 				if (!curValue.equals("to")) {
 					myCurNodes.add(temp);
 				}
@@ -89,7 +113,8 @@ public class CommandTreeParser {
 				if (myCSVTable.returnCSVRow(curValue) == null) {
 					temp = new ValueNode(Integer.parseInt(curValue));
 				} else {
-					Class<?> headClass = Class.forName(myCSVTable.returnCSVRow(
+					Class<?> headClass = 
+							Class.forName(myCSVTable.returnCSVRow(
 							curValue).getCommandFilePath());
 					temp = (Node) headClass.getConstructors()[0].newInstance();
 					if (temp instanceof TurtleCommandNode) {
@@ -111,23 +136,51 @@ public class CommandTreeParser {
 		return returnTree;
 	}
 
+	/**
+	 * Adds a Variable Node to the list of variables stored.
+	 * @param aVariable the Variable Node to be added.
+	 */
 	public void addVariable(VariableNode aVariable) {
 		myVariables.add(aVariable);
 	}
 
+	/**
+	 * Get the list of Variable Nodes.
+	 * @return The list of Variable Nodes
+	 */
 	public ArrayList<VariableNode> getVariables() {
 		return myVariables;
 	}
 
+	/**
+	 * Get the list of CustomCommandNodes.
+	 * @return The list of CustomCommandNodes
+	 */
 	public ArrayList<CustomCommandNode> getCustomCommands() {
 		return myCustomCommands;
 	}
 
+	/**
+	 * Adds a CustomCommandNode to the list stored.
+	 * @param n The CustomCommandNode to be added
+	 */
 	public void addCustomCommands(CustomCommandNode n) {
 		myCustomCommands.add(n);
 	}
 
+	/**
+	 * Get the SyntaxCheck.
+	 * @return the SyntaxCheck
+	 */
 	public SyntaxCheck getSyntaxCheck() {
 		return mySyntaxCheck;
+	}
+
+	/**
+	 * Get the SyntaxSpliter.
+	 * @return The SyntaxSpliter
+	 */
+	public SyntaxSpliter getSyntaxSpliter() {
+		return mySyntaxSpliter;
 	}
 }

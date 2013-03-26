@@ -2,24 +2,30 @@ package parser;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 /**
  * 
  * @author Junho Oh
  * @author Wenshun Liu
  *
  */
-class CSVRow{
+class CSVRow {
 	private String myCommand;
 	private String mySymbol;
 	private String myCommandNumArgs;
 	private String myCommandFilePath;
-	public CSVRow(String row){
+	private int myNumElements = 4;
+	
+	public CSVRow(String row) {
 		String[] dataArray = row.split(",");
 		init(dataArray);
 	}
-	private void init(String[] dataArray){
-		if(dataArray.length != 4){
+	
+	/**
+	 * Analyzes and creates a CSVRow based on the given String Array.
+	 * @param dataArray The String array of a CSVRow's components.
+	 */
+	private void init(String[] dataArray) {
+		if (dataArray.length != myNumElements){
 			return;
 		}
 		myCommand = dataArray[0].trim();
@@ -27,47 +33,73 @@ class CSVRow{
 		myCommandNumArgs = dataArray[2].trim();
 		myCommandFilePath = dataArray[3].trim();
 	}
-	public boolean isValidCommand(String command){
+	
+	/**
+	 * Checks if the input String is a valid command.
+	 * @param command The input String to be tested
+	 * @return whether the String is a valid.
+	 */
+	public boolean isValidCommand(String command) {
 		return myCommand.equals(command) || mySymbol.equals(command);
 	}
-	public int getCommandNumArgs(){
+	
+	/**
+	 * Gets the number of arguments of a command.
+	 * @return the number of arguments.
+	 */
+	public int getCommandNumArgs() {
 		return Integer.parseInt(myCommandNumArgs);
 	}
-	public String getCommandFilePath(){
+	
+	/**
+	 * Gets the command's path to its class.
+	 * @return The string of the command's path.
+	 */
+	public String getCommandFilePath() {
 		return myCommandFilePath;
 	}
 }
-public class CSVTable{
+public class CSVTable {
 	private ArrayList<CSVRow> myRows;
 
-	public CSVTable(String fileName){
+	public CSVTable(String fileName) {
 		myRows =  new ArrayList<CSVRow>();
 		readFile(fileName);
 	}
-	public CSVRow returnCSVRow(String command){
-		for(int i = 0; i < myRows.size();i++){
-			if(myRows.get(i).isValidCommand(command)){
+	
+	/**
+	 * Checks for the CSVRow of the given command and returns the result.
+	 * @param command
+	 * @return
+	 */
+	public CSVRow returnCSVRow(String command) {
+		for (int i = 0; i < myRows.size(); i++) {
+			if (myRows.get(i).isValidCommand(command)) {
 				return myRows.get(i);
 			}
 		}
 		return null;
 	}
-	private void readFile(String fileName){
-		try{
-			BufferedReader CSVFile = new BufferedReader(new FileReader(fileName));
+	
+	/**
+	 * Reads the .csv file.
+	 * @param fileName The file to read.
+	 */
+	private void readFile(String fileName) {
+		try { 
+			BufferedReader CSVFile 
+				= new BufferedReader(new FileReader(fileName));
 			String dataRow = CSVFile.readLine();
-			while (dataRow != null){
+			while (dataRow != null) {
 				CSVRow temp = new CSVRow(dataRow);
 				myRows.add(temp);
 				dataRow = CSVFile.readLine();
 			}
 			CSVFile.close();
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
-	} 
-	
-	
-} 
+	}
+}

@@ -1,6 +1,7 @@
 package parser;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -11,6 +12,13 @@ import java.util.Map;
 import parser.node.VariableNode;
 import parser.node.control.CustomCommandNode;
 
+/**
+*
+* @author Junho Oh
+* @author Wenshun Liu
+*
+*/
+
 public class CustomCommandParser extends AbstractParser {
 
 	private CommandTreeParser myTreeMakingParser;
@@ -20,45 +28,31 @@ public class CustomCommandParser extends AbstractParser {
 		myTreeMakingParser = treeMakingParser;
 		myCustomCommandList = new ArrayList<String>();
 	}
-	
+
+	/**
+	 * Parses the command by replacing custom commands with their actual
+	 * commands to execute.
+	 */
 	@Override
-	public String parse(String command) throws IOException{
+	public String parse(String command) throws IOException {
 		String[] commandComponents = command.split(" ");
-		
-		//START: TESTING
-		/**ArrayList<CustomCommandNode> temp = new ArrayList<CustomCommandNode>();
-		CustomCommandNode ccn = new CustomCommandNode();
-		ccn.setName("ssuumm");
-		ccn.addVarName(":var1");
-		ccn.addVarName(":var2");
-		ccn.setCustomCommand("sum :var1 :var2 fd 5");
-		temp.add(ccn); 
-		
-		CustomCommandNode ccn2 = new CustomCommandNode();
-		ccn2.setName("house");
-		ccn2.addVarName(":var1");
-		ccn2.addVarName(":var2");
-		ccn2.setCustomCommand("fd :var1 ssuumm :var2 4");
-		temp.add(ccn2);*///END: TESTING
-    	
-    	//for (CustomCommandNode c: temp){ //ADD FOR TESTING
+
 		myCustomCommandList = new ArrayList<String>();
-		for (CustomCommandNode c: myTreeMakingParser.getCustomCommands()){ //DELETE FOR TESTING
+		for (CustomCommandNode c: myTreeMakingParser.getCustomCommands()) {
         		myCustomCommandList.add(c.getName());
         }
-		
-		if (!hasCustomCommand(commandComponents)){
+
+		if (!hasCustomCommand(commandComponents)) {
 			return command;
 		}
-		
+
     	String preParsedCommand = "";
     	String current = "";
     	int i = 0;
-    	while (i<commandComponents.length){
+    	while ( i < commandComponents.length) {
     		current = commandComponents[i];
-    		if (myCustomCommandList.contains(current)){
-    			//CustomCommandNode matchedCommand = temp.get(myCustomCommandList.indexOf(current)); //TESTING
-    			CustomCommandNode matchedCommand = myTreeMakingParser.getCustomCommands().get(myCustomCommandList.indexOf(current)); //DELETE FOR TESTING
+    		if (myCustomCommandList.contains(current)) {
+    			CustomCommandNode matchedCommand = myTreeMakingParser.getCustomCommands().get(myCustomCommandList.indexOf(current));
     			List<String> inputParameters = new ArrayList<String>();
     			int prmStartIndex = i + 1;
     			for (int prmNumber = 0; prmNumber<matchedCommand.getVarNames().size(); ++prmNumber){
@@ -66,7 +60,7 @@ public class CustomCommandParser extends AbstractParser {
     				if (isInteger(commandComponents[prmStartIndex])){
     					validParameter = commandComponents[prmStartIndex];
     				}else{
-    					validParameter = myTreeMakingParser.getSyntaxCheck().findFirstValidCommand(commandComponents, prmStartIndex);
+    					validParameter = myTreeMakingParser.getSyntaxSpliter().findFirstValidCommand(commandComponents, prmStartIndex);
     				}
     				inputParameters.add(validParameter);
     				prmStartIndex += validParameter.split(" ").length;
