@@ -1,5 +1,6 @@
 package parser;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -7,6 +8,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+import parser.commandProperties.CSVTable;
+import parser.commandProperties.PropertiesTable;
 import parser.node.*;
 import parser.node.control.*;
 import parser.node.turtleCommand.*;
@@ -19,6 +22,7 @@ import parser.structureParser.ToStructureParserHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 /**
  *
@@ -44,8 +48,6 @@ public class CommandTreeParser {
 			new RepeatStructureParserHelper(this) };
 	private Map<String, StructureParserHelper> myStructureParserMap =
 							new HashMap<String, StructureParserHelper>();
-	// if view gets around to making workspaces...add these to a map k=workspace
-	// id, v=arraylist
 	private SyntaxCheck mySyntaxCheck;
 	private SyntaxSpliter mySyntaxSpliter;
 
@@ -54,8 +56,10 @@ public class CommandTreeParser {
 	 * Parses the user input command into a EncodeTree. For later decoding
 	 * use.
 	 * @param fileName The information file of each Node in the tree.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public CommandTreeParser(String fileName) {
+	public CommandTreeParser(String fileName) throws FileNotFoundException, IOException {
 		myCSVTable = new CSVTable(COMMAND_PROPERTIES_FILE_NAME);
 		myVariables = new ArrayList<VariableNode>();
 		myCustomCommands = new ArrayList<CustomCommandNode>();
@@ -114,17 +118,17 @@ public class CommandTreeParser {
 
 			else {
 				Node temp = null;
-				if (myCSVTable.returnCSVRow(curValue) == null) {
+				if (myCSVTable.returnPropertyRow(curValue) == null) {
 					temp = new ValueNode(Integer.parseInt(curValue));
 				} else {
 					Class<?> headClass = 
-							Class.forName(myCSVTable.returnCSVRow(
+							Class.forName(myCSVTable.returnPropertyRow(
 							curValue).getCommandFilePath());
 					temp = (Node) headClass.getConstructors()[0].newInstance();
 					if (temp instanceof TurtleCommandNode) {
 						((TurtleCommandNode) temp).setName(curValue);
 					}
-					temp.setNumArgs(myCSVTable.returnCSVRow(curValue)
+					temp.setNumArgs(myCSVTable.returnPropertyRow(curValue)
 							.getCommandNumArgs());
 				}
 				myCurNodes.add(temp);

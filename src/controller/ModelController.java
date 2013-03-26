@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
@@ -8,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import parser.CustomCommandParser;
-import parser.EncodeTree;
 import parser.AbstractParser;
 import parser.CommandTreeParser;
 import parser.SyntaxCheck;
 import parser.SyntaxSpliter;
 import parser.VariableParser;
+import parser.node.EncodeTree;
 import parser.node.control.CustomCommandNode;
 import model.Model;
 
@@ -28,20 +29,22 @@ public class ModelController extends Observable {
     private Model myModel;
     private SyntaxCheck mySyntaxCheck;
     private SyntaxSpliter mySyntaxSpliter;
-    private static CommandTreeParser myTreeMakingParser 
-    								= new CommandTreeParser("");
-    private AbstractParser[] myParsers= 
-    		{ new VariableParser(myTreeMakingParser), 
-    		new CustomCommandParser(myTreeMakingParser) };
+    private static CommandTreeParser myCommandTreeParser;
+    private ArrayList<AbstractParser> myParsers;
     
-    public ModelController (Model model) {
+    public ModelController (Model model) throws FileNotFoundException, IOException {
         myModel = model;
+        myCommandTreeParser = new CommandTreeParser("");
         mySyntaxCheck = new SyntaxCheck();
         mySyntaxSpliter = new SyntaxSpliter();
-        myTreeMakingParser.setSyntaxSpliter(mySyntaxSpliter);
+        myCommandTreeParser.setSyntaxSpliter(mySyntaxSpliter);
         mySyntaxSpliter.setSyntaxCheck(mySyntaxCheck);
-        myTreeMakingParser.setSyntaxCheck(mySyntaxCheck);
+        myCommandTreeParser.setSyntaxCheck(mySyntaxCheck);
         myModel.setController(this);
+        myParsers = new ArrayList<AbstractParser>();
+        myParsers.add(new VariableParser(myCommandTreeParser));
+        myParsers.add(new CustomCommandParser(myCommandTreeParser));
+      
     }
 
     /**
@@ -95,7 +98,7 @@ public class ModelController extends Observable {
     			IOException {
     	String[] splitedCommands = inputCommand.split(" ; ");
 		for (String s: splitedCommands) {
-			EncodeTree et = myTreeMakingParser.encode(s);
+			EncodeTree et = myCommandTreeParser.encode(s);
 			String commandResult = myModel.decode(et.getHead());
 			System.out.println(commandResult); //for testing purpose.
 		}
@@ -115,7 +118,7 @@ public class ModelController extends Observable {
      * @throws IOException 
      */
     public EncodeTree encode(String command) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException{
-    	EncodeTree et = myTreeMakingParser.encode(command);
+    	EncodeTree et = myCommandTreeParser.encode(command);
     	return et;
     }
 
@@ -124,7 +127,7 @@ public class ModelController extends Observable {
      */
     private static void getCustomCommand() {
     	ArrayList<CustomCommandNode> temp 
-    					= myTreeMakingParser.getCustomCommands();
+    					= myCommandTreeParser.getCustomCommands();
     	for (CustomCommandNode ccn: temp) {
     		System.out.println(ccn.getName());
     		System.out.println(ccn.getVarNames());
@@ -151,8 +154,10 @@ public class ModelController extends Observable {
 
     /**
 	 * Testing purpose.
+     * @throws IOException 
+     * @throws FileNotFoundException 
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FileNotFoundException, IOException {
 		int commandCount = 1;
 		Model model = new Model();
 		ModelController controller = new ModelController(model);

@@ -1,8 +1,8 @@
 package parser.structureParser;
 
-import parser.EncodeTree;
 import parser.CommandTreeParser;
 import parser.StructureInfoPackage;
+import parser.node.EncodeTree;
 import parser.node.Node;
 import parser.node.VariableNode;
 

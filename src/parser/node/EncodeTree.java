@@ -1,4 +1,4 @@
-package parser;
+package parser.node;
 
 import parser.node.*;
 /**

@@ -2,6 +2,7 @@ package parser;
 
 import java.io.BufferedReader;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -176,8 +177,10 @@ public class CustomCommandParser extends AbstractParser {
 	
     /**
 	 * Testing purpose.
+     * @throws IOException 
+     * @throws FileNotFoundException 
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FileNotFoundException, IOException {
 		CommandTreeParser parser = new CommandTreeParser("");
 		CustomCommandParser ccp = new CustomCommandParser(parser);
 		
