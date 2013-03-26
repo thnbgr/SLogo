@@ -20,6 +20,8 @@ public class PenColor extends Command {
         String colorName = args[1];
         Color color;
         int success;
+        System.out.println("execute command called");
+
         try {
             Field field = Class.forName("java.awt.Color").getField(colorName);
             color = (Color)field.get(null);
@@ -29,6 +31,7 @@ public class PenColor extends Command {
             success = 0;
         }
         myDisplayView.getColors().setLineColor(color);
+        System.out.println(myDisplayView.getColors().getLineColor());
         myDisplayView.updateTurtleColors();
         return success;
     }

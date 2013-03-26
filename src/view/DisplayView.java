@@ -137,11 +137,11 @@ public class DisplayView extends JComponent {
      * Add turtle to myDrawables
      */
     public Turtle getTurtle() {
-        return myTurtle;
+        return myTurtles.get(0);
     }
     
     public boolean hasTurtle() {
-        return myTurtle == null;
+        return myTurtles.size() == 0;
     }
 
     /**

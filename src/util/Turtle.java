@@ -63,7 +63,7 @@ public class Turtle extends Sprite {
         myOriginalVelocity = new Vector(velocity);
         myColors = c;
         setVisible(true);
-        setPenUp();
+        setPenDown();
         reset();
     }
     
@@ -127,11 +127,9 @@ public class Turtle extends Sprite {
         if (isVisible()) {
             DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
         }
-        if (isPenUp()) {
             for (Line l : myLines) {
                 l.paint((Graphics) pen);
             }
-        }
     }
     
     /**
@@ -143,7 +141,7 @@ public class Turtle extends Sprite {
         myVelocity.setMagnitude(distance);
         Location newCenter = myCenter;
         newCenter.translate(myVelocity);
-        addLine(myCenter, new Location(myCenter.x, myCenter.y));
+        if (isPenDown()) addLine(myCenter, new Location(myCenter.x, myCenter.y));
         myCenter.translate(myVelocity);
     }
     

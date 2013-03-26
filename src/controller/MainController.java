@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -134,9 +135,11 @@ public class MainController implements Observer {
         myActionListener = new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                //echo("action", e);
-                myCommandPreParser.sendAction(e.getActionCommand());
                 showMessage(e.getActionCommand());
+                int r = myCommandPreParser.sendAction(e.getActionCommand());
+                if (myCommandPreParser.isValidCommand()) {
+                    receiveReturnMessage(r+"");
+                }
             }
         };
         // listener for low-level focus events, i.e., the mouse
@@ -279,21 +282,37 @@ public class MainController implements Observer {
      * @param a is the string that is passed from observed
      */
     public void update (Observable o, Object a) {
-        
         String myCommand = (String) a;
 
+        // If the command has already been processed by Model and needs to be performed
         if (o.getClass().getName().equals("controller.ModelController")) {
             receiveReturnMessage(myCommandPerformer.sendAction(myCommand) + "");
         }
         else {
+                CommandPreParser preParser = (CommandPreParser) o;
+            
 
             // call the method under model to parse the command
-            try {
-                myModelController.checkInputValidAndProcess(myCommand);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    // Called after the preprocessing and before the model processing
+                    myModelController.checkInputValidAndProcess(myCommand);
+                }
+                
+                catch (IOException e) {
+                    if (!preParser.isValidCommand())
+                    receiveReturnMessage("Invalid Command");
+
+                }
+                
+                catch (ClassCastException e) {}
+                
+                catch (IndexOutOfBoundsException e) {}
+                
+                catch (Exception e) {
+                    receiveReturnMessage("Model returned error");
+                    e.printStackTrace();
+
+                }
 
         }
     }

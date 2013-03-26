@@ -17,7 +17,6 @@ public class BGColor extends Command {
     @Override
     public int executeCommand () {
         String[] args = myCommandString.split(" ");
-        System.out.println(myCommandString+"end");
         String colorName = args[1];
         Color color;
         int success;

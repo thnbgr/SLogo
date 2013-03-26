@@ -20,12 +20,18 @@ public class CommandBuilder {
 
     public List<Command> populateViewCommandsList () {
         myViewCommandsList.add(new ClearScreen(myDisplayView));
+        myViewCommandsList.add(new PenDown(myDisplayView));
+        myViewCommandsList.add(new PenUp(myDisplayView));
         myViewCommandsList.add(new PenDownQ(myDisplayView));
         myViewCommandsList.add(new ShowTurtle(myDisplayView));
+        myViewCommandsList.add(new ShowingQ(myDisplayView));
         myViewCommandsList.add(new HideTurtle(myDisplayView));
         myViewCommandsList.add(new XCor(myDisplayView));
         myViewCommandsList.add(new YCor(myDisplayView));
         myViewCommandsList.add(new BGColor(myDisplayView));
+        myViewCommandsList.add(new PenColor(myDisplayView));
+        myViewCommandsList.add(new Home(myDisplayView));
+
         return myViewCommandsList;
     }
 

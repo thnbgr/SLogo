@@ -17,6 +17,7 @@ public class Line extends JComponent {
     private Location myStartLocation;
     private Location myEndLocation;
     private final Color myColor;
+    private boolean isVisible;
     
     /**
      * Constructor for line
