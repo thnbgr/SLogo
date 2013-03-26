@@ -10,13 +10,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
+import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import util.Pixmap;
 import view.DisplayView;
 
 
@@ -31,6 +44,9 @@ public class MainController implements Observer {
     /**
      */
     public static final String TITLE = "Output Display";
+    private static final String USER_DIR = "user.dir";
+    private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
+    private static final String language = "English";
     private static final int FIELD_SIZE = 30;
     private static final Dimension DISPLAY_VIEW_SIZE = new Dimension(500, 500);
     private DisplayView myDisplayView;
@@ -41,15 +57,20 @@ public class MainController implements Observer {
     private CommandBuilder myCommandBuilder;
     private FocusListener myFocusListener;
     private ActionListener myActionListener;
-
+    private JFileChooser myChooser;
+    private ResourceBundle myResources;
 
     /**
      * Constructor for controller
      * 
-     * @param model is the model that we communicate with
+     * @param modelcontroller is the model that we communicate with
      */
     public MainController (ModelController modelcontroller) {
 
+        // create a single file chooser for the entire example
+        myChooser = new JFileChooser(System.getProperties().getProperty(USER_DIR));
+        // create and arrange sub-parts of the GUI
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myDisplayView = new DisplayView(DISPLAY_VIEW_SIZE);
 
         
@@ -75,6 +96,8 @@ public class MainController implements Observer {
         frame.getContentPane().add(myDisplayView, BorderLayout.EAST);
         frame.getContentPane().add(makeTextField(), BorderLayout.NORTH);
         frame.getContentPane().add(makeDisplay(), BorderLayout.WEST);
+        
+        frame.setJMenuBar(makeMenus());
         // display them
         frame.pack();
         frame.setVisible(true);
@@ -141,7 +164,6 @@ public class MainController implements Observer {
 
     /**
      * Display any string message in the main text area.
-     * 
      * @param message message to display
      */
     public void showMessage (String message) {
@@ -149,6 +171,10 @@ public class MainController implements Observer {
         myTextArea.setCaretPosition(myTextArea.getText().length());
     }
     
+    /**
+     * Receives a return message
+     * @param i message to return
+     */
     public void receiveReturnMessage (String i) {
         showMessage("return: " + i);
         
@@ -164,6 +190,86 @@ public class MainController implements Observer {
         return new JScrollPane(myTextArea);
     }
     
+    /**
+     * Create a menu to appear at the top of the frame, 
+     *   usually File, Edit, App Specific Actions, Help
+     */
+    protected JMenuBar makeMenus () {
+        JMenuBar result = new JMenuBar();
+        result.add(makeFileMenu());
+        return result;
+    }
+    
+    /**
+     * Create a menu that will pop up when the menu button is pressed in the
+     * frame. File menu usually contains Open, Save, and Exit
+     * 
+     * Note, since these classes will not ever be used by any other class, make
+     * them inline (i.e., as anonymous inner classes) --- saves making a
+     * separate file for one line of actual code.
+     */
+    protected JMenu makeFileMenu () {
+        JMenu result = new JMenu(myResources.getString("FileMenu"));
+        result.add(new AbstractAction(myResources.getString("OpenCommand")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                try {
+                    
+                    int response = myChooser.showOpenDialog(null);
+                    if (response == JFileChooser.APPROVE_OPTION) {
+                        FileReader reader = new FileReader(myChooser.getSelectedFile());
+                        BufferedReader br = new BufferedReader(reader);
+                        String s;
+                        while ((s = br.readLine()) != null) {
+                            myCommandPreParser.sendAction(s);
+                        }
+                        reader.close();
+                    }
+                }
+                catch (IOException io) {
+                    // let user know an error occurred, but keep going; bug needs to be fixed
+                   // showError(io.toString());
+                }
+            }
+        });
+        result.add(new JSeparator());
+        result.add(new AbstractAction(myResources.getString("QuitCommand")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                // clean up any open resources, then
+                // end program
+                System.exit(0);
+            }
+        });
+        result.add(new AbstractAction(myResources.getString("TurtleImageCommand")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                try {
+                    
+                    int response = myChooser.showOpenDialog(null);
+                    if (response == JFileChooser.APPROVE_OPTION) {
+                        File file = myChooser.getSelectedFile();
+                        BufferedImage myBufferedImage = ImageIO.read(file);
+                        Pixmap myImage = new Pixmap(myBufferedImage);
+                        myDisplayView.getTurtle().changeTurtleImage(myImage);
+
+                    }
+                }
+                catch (IOException io) {
+                    // let user know an error occurred, but keep going; bug needs to be fixed
+                   // showError(io.toString());
+                }
+            }
+        });
+        return result;
+    }
+    
     
 
     /**
@@ -177,7 +283,7 @@ public class MainController implements Observer {
         String myCommand = (String) a;
 
         if (o.getClass().getName().equals("controller.ModelController")) {
-            receiveReturnMessage(myCommandPerformer.sendAction(myCommand)+"");
+            receiveReturnMessage(myCommandPerformer.sendAction(myCommand) + "");
         }
         else {
 
@@ -186,12 +292,12 @@ public class MainController implements Observer {
                 myModelController.checkInputValidAndProcess(myCommand);
             }
             catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
         }
-
     }
+    
+    
 
 }
