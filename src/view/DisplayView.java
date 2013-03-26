@@ -9,9 +9,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.Timer;
 import model.Model;
+import util.Colors;
 import util.Drawable;
+import util.Line;
 import util.Location;
 import util.Sprite;
 import util.Turtle;
@@ -34,11 +37,13 @@ public class DisplayView extends JComponent {
     private static final long serialVersionUID = 1L;
     private static Dimension ourDefaultTurtleSize = new Dimension(TURTLE_SIZE, TURTLE_SIZE);
     private static Location ourDefaultTurtleLocation;
-    private List<Drawable> myDrawables;
+    private List<Turtle> myTurtles;
     private Turtle myTurtle;
     private int myAssignID;
+    private Colors myColors;
     // drives the animation
     private Timer myTimer;
+    private JFrame myJFrame;
 
     /**
      * Sets the size of the display view
@@ -49,15 +54,27 @@ public class DisplayView extends JComponent {
         setPreferredSize(size);
         setSize(size);
         myAssignID = 0;
-        myDrawables = new ArrayList<Drawable>();
+        myTurtles = new ArrayList<Turtle>();
+        myColors = new Colors();
         setVisible(true);
     }
 
-    private void setDrawableID (Drawable d) {
+    private void setTurtlesID (Turtle d) {
         d.setID(myAssignID);
         myAssignID++;
     }
 
+    public Colors getColors() {
+        return myColors;
+    }
+    
+    public void updateTurtleColors() {
+        for (Turtle d : myTurtles) {
+            d.setColors(myColors);
+        }
+        
+    }
+    
     
     /**
      * Sets the size of the display view
@@ -66,7 +83,7 @@ public class DisplayView extends JComponent {
     @Override
     public void paint (Graphics pen) {
         pen.setColor(Color.WHITE);
-        for (Drawable d : myDrawables) {
+        for (Turtle d : myTurtles) {
             d.paint((Graphics2D) pen);
         }
         
@@ -101,21 +118,19 @@ public class DisplayView extends JComponent {
         myTimer.stop();
     }
     
-    /**
-     * Add sprite to myDrawables
-     * @param s sprite to be added to myDrawables
-     */
-    public void addSprite (Sprite s) {
-        setDrawableID(s);
-        myDrawables.add(s);
-    }
-    
+
     /**
      * Add turtle to myDrawables
      */
     public void addTurtle () {
-        myTurtle = new Turtle(ourDefaultTurtleLocation, ourDefaultTurtleSize);
-        addSprite(myTurtle);
+        myTurtle = new Turtle(ourDefaultTurtleLocation, ourDefaultTurtleSize, myColors);
+        setTurtlesID(myTurtle);
+        myTurtles.add(myTurtle);
+    }
+    
+    public void addTurtle (Turtle t) {
+        setTurtlesID(t);
+        myTurtles.add(t);
     }
     
     /**
@@ -133,8 +148,8 @@ public class DisplayView extends JComponent {
      * get a drawable given it's ID
      * @param i is ID of drawable
      */
-    public Drawable getDrawableByID (int i) {
-        for (Drawable d : myDrawables) {
+    public Drawable getTurtleByID (int i) {
+        for (Turtle d : myTurtles) {
             if (d.getID() == i) {
                 return d;
             }
@@ -145,16 +160,25 @@ public class DisplayView extends JComponent {
     /**
      * return myDrawables
      */
-    public List<Drawable> getDrawables () {
-        return myDrawables;
+    public List<Turtle> getTurtles () {
+        return myTurtles;
     }
 
     /**
      * cleaer myDrawables
      */
     public void clear () {
-        myDrawables = new ArrayList<Drawable>();
+        myTurtles = new ArrayList<Turtle>();
         myAssignID = 0;
+    }
+
+    public void addFrame (JFrame frame) {
+        myJFrame = frame;
+        
+    }
+    
+    public JFrame getFrame () {
+        return myJFrame;
     }
 
     

@@ -43,6 +43,7 @@ public class CommandPreParser extends Observable {
         for (Command v : myViewCommands) {
             for (String s : v.getCommands()) {
                 if (input.contains(s)) {
+                    v.addCommandString(input);
                     r = v.executeCommand();
                     input = input.replace(s, r + "");
                 }

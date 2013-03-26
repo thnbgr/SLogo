@@ -78,6 +78,7 @@ public class MainController implements Observer {
         // display them
         frame.pack();
         frame.setVisible(true);
+        myDisplayView.addFrame(frame);
         myDisplayView.addTurtle();
         myDisplayView.start();
     }
