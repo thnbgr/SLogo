@@ -1,7 +1,14 @@
 package command;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import view.DisplayView;
 import viewCommands.*;
 import DisplayCommands.*;
@@ -19,23 +26,19 @@ public class CommandBuilder {
     }
 
     public List<Command> populateViewCommandsList () {
-        myViewCommandsList.add(new ClearScreen(myDisplayView));
-        myViewCommandsList.add(new PenDown(myDisplayView));
-        myViewCommandsList.add(new PenUp(myDisplayView));
-        myViewCommandsList.add(new PenDownQ(myDisplayView));
-        myViewCommandsList.add(new ShowTurtle(myDisplayView));
-        myViewCommandsList.add(new ShowingQ(myDisplayView));
-        myViewCommandsList.add(new HideTurtle(myDisplayView));
-        myViewCommandsList.add(new XCor(myDisplayView));
-        myViewCommandsList.add(new YCor(myDisplayView));
-        myViewCommandsList.add(new SetBackground(myDisplayView));
-        myViewCommandsList.add(new SetPenColor(myDisplayView));
-        myViewCommandsList.add(new Home(myDisplayView));
-        myViewCommandsList.add(new SetPenSize(myDisplayView));
-        myViewCommandsList.add(new SetShape(myDisplayView));
-        myViewCommandsList.add(new Shape(myDisplayView));
-        myViewCommandsList.add(new Stamp(myDisplayView));
-        myViewCommandsList.add(new ClearStamps(myDisplayView));
+        ResourceBundle rb = ResourceBundle.getBundle("resources.English");
+        for (String key : rb.keySet()) {
+            if (key.startsWith("CMD")) {
+                try {
+                    Class<?> cmdClass = Class.forName(rb.getString(key));
+                    Command cmd = (Command) cmdClass.getConstructor(DisplayView.class).newInstance(myDisplayView);
+                    myViewCommandsList.add(cmd);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
 
         return myViewCommandsList;

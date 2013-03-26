@@ -181,7 +181,7 @@ public class Turtle extends Sprite {
     }
 
     /**
-     * Moves turtle back to original poistion
+     * Moves turtle back to original position
      */
     public void moveToCenter () {
         setMyCenter(myOriginalCenter);
