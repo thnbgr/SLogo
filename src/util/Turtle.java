@@ -1,8 +1,10 @@
 package util;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,6 +137,8 @@ public class Turtle extends Sprite {
         if (isVisible()) {
             DEFAULT_IMAGE.paint(pen, myCenter, mySize, myVelocity.getDirection());
         }
+ //       Stroke drawingStroke = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+ //       pen.setStroke(drawingStroke);
         if (isPenUp()) {
             for (Line l : myLines) {
                 l.paint((Graphics) pen);
