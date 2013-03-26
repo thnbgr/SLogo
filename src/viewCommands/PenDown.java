@@ -1,8 +1,7 @@
 package viewCommands;
 
-import java.util.ArrayList;
 import command.Command;
-import util.Turtle;
+import java.util.ArrayList;
 import view.DisplayView;
 
 /**

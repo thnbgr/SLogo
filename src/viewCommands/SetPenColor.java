@@ -1,13 +1,20 @@
 package viewCommands;
 
-import java.awt.Color;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import command.Command;
+import java.util.ArrayList;
 import view.DisplayView;
 
+/**
+ * Set pen color command
+ * @author Natalia Carvalho
+ * @author Eric Wu
+ */
 public class SetPenColor extends Command {
     
+    /**
+     * set pen color constructor
+     * @param m is displayview
+     */
     public SetPenColor (DisplayView m) {
         myDisplayView = m;
         myCommands = new ArrayList<String>();

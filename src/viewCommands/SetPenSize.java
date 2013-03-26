@@ -1,13 +1,20 @@
 package viewCommands;
 
-import java.awt.Color;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import command.Command;
+import java.util.ArrayList;
 import view.DisplayView;
 
+/**
+ * Create clear screen 
+ * @author Natalia Carvalho
+ * @author Eric Wu
+ */
 public class SetPenSize extends Command {
     
+    /**
+     * sets pen size
+     * @param m is displayview
+     */
     public SetPenSize (DisplayView m) {
         myDisplayView = m;
         myCommands = new ArrayList<String>();

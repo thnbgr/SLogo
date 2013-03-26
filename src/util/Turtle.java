@@ -21,7 +21,7 @@ public class Turtle extends Sprite {
 
     /**
      */
-    public static final Location DEFAULT_LOCATION = new Location(100, 100);
+    public static final Location DEFAULT_LOCATION = new Location(250, 250);
     /**
      */
     public static final Dimension DEFAULT_SIZE = new Dimension(50, 50);
@@ -179,6 +179,7 @@ public class Turtle extends Sprite {
     }
 
     public void moveToCenter () {
+        myCenter = myOriginalCenter;
     }
 
     public void setPenSize (int penSize) {
