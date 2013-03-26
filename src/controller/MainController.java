@@ -35,10 +35,8 @@ import view.DisplayView;
 
 /**
  * Controller handles the communication between model and view
- * 
  * @author Eric Wu
  * @author Natalia Carvalho
- * 
  */
 public class MainController implements Observer {
     /**
@@ -62,7 +60,6 @@ public class MainController implements Observer {
 
     /**
      * Constructor for controller
-     * 
      * @param modelcontroller is the model that we communicate with
      */
     public MainController (ModelController modelcontroller) {

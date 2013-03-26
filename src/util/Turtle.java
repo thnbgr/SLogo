@@ -1,6 +1,5 @@
 package util;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -44,6 +43,7 @@ public class Turtle extends Sprite {
      * Constructor with center and size
      * @param center of turtle
      * @param size of turtle
+     * @param c is colors object
      */
     public Turtle (Location center, Dimension size, Colors c) {
         this(center, size, new Vector(), c);
@@ -54,6 +54,7 @@ public class Turtle extends Sprite {
      * @param center of turtle
      * @param size of turtle
      * @param velocity of vector
+     * @param c is color object
      */
     public Turtle (Location center, Dimension size, Vector velocity, Colors c) {
         // make copies just to be sure no one else has access
@@ -75,10 +76,17 @@ public class Turtle extends Sprite {
         DEFAULT_IMAGE = image;
     }
 
+    /**
+     * Set myColors
+     * @param c is new color
+     */
     public void setColors (Colors c) {
         myColors = c;
     }
     
+    /**
+     * clear the lines
+     */
     public void clearLines () {
         myLines.clear();
     }
@@ -165,8 +173,6 @@ public class Turtle extends Sprite {
     }
 
     public void moveToCenter () {
-        // TODO Auto-generated method stub
-        
     }
 
 }
