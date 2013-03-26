@@ -24,10 +24,7 @@ public class ToStructureParserHelper extends StructureParserHelper {
 			StructureInfoPackage toStructPackage = getParser().getSyntaxSpliter().splitControlStructure("to", command);
 
 			String commandName = toStructPackage.getValue();
-			System.out.println(toStructPackage.getValue());
-			System.out.println(toStructPackage.getCommands());
 			ArrayList<String> varNames = toStructPackage.getCommands().get(0);
-			System.out.println("varNames: " + varNames);
 			ArrayList<String> customCommands = toStructPackage.getCommands().get(1); 
 			CustomCommandNode temp = new CustomCommandNode(commandName, varNames, customCommands);
 			getParser().addCustomCommands(temp);
@@ -36,13 +33,12 @@ public class ToStructureParserHelper extends StructureParserHelper {
 		catch(Exception e){
 			
 		}
-		return null;
+		return new Node();
 	}
 	
 	private void updateSyntax(int prmSize, String commandName) throws IOException{
 		StringBuilder customCommandRegex = new StringBuilder(); //start updating syntax
 		if (prmSize == 1){
-			System.out.println("aaaa");
 			customCommandRegex.append("(^$)");
 		}else{
 			customCommandRegex.append("(^");

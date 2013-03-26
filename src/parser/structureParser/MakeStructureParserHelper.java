@@ -14,7 +14,6 @@ public class MakeStructureParserHelper extends StructureParserHelper{
 	
 	@Override
 	public Node parse(String command) {
-		System.out.println("ai");
 		try {
 			String[] commandParts = command.split(" ");
 			String varName = commandParts[1];
@@ -22,7 +21,6 @@ public class MakeStructureParserHelper extends StructureParserHelper{
 			for(int i = 2; i < commandParts.length; i++){
 				varValue += commandParts[i] + " ";
 			}
-			//System.out.println(varValue);
 			EncodeTree variableTree = getParser().encode(varValue);
 			variableTree.getHead().evaluate();
 			VariableNode aVariable = new VariableNode(variableTree.getHead().getValue(), varName);
@@ -31,7 +29,7 @@ public class MakeStructureParserHelper extends StructureParserHelper{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new Node();
 	}
 
 	@Deprecated
