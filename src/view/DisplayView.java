@@ -148,7 +148,7 @@ public class DisplayView extends JComponent {
      * get a drawable given it's ID
      * @param i is ID of drawable
      */
-    public Drawable getTurtleByID (int i) {
+    public Turtle getTurtleByID (int i) {
         for (Turtle d : myTurtles) {
             if (d.getID() == i) {
                 return d;
