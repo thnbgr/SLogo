@@ -5,7 +5,7 @@ import java.util.Map;
 
 import controller.ModelController;
 import parser.EncodeTree;
-import parser.TreeMakingParser;
+import parser.CommandTreeParser;
 import parser.node.Node;
 import parser.node.turtleCommand.*;
 import parser.node.control.IfElseNode;
@@ -19,7 +19,7 @@ import view.Workspace;
  *
  */
 public class Model {
-	private TreeMakingParser myParser;
+	private CommandTreeParser myParser;
 	private ModelController myController;
 	private Map<String, Double> myMakeVariables = new HashMap<String, Double>();
 	
@@ -27,7 +27,7 @@ public class Model {
 		myController = controller;
 	}
 	
-	public void setParser(TreeMakingParser t){
+	public void setParser(CommandTreeParser t){
 		myParser = t;
 	}
 	
@@ -67,6 +67,7 @@ public class Model {
 	 * @return
 	 */
 	public String ifDecode(Node ifNode){
+		//System.out.println("hi");
 		((IfNode)ifNode).getChildren().get(0).evaluate();
 		if(ifNode.getChildren().get(0).getValue() != 0){
 			for(Node ifCommand : ifNode.getChildren().get(1).getChildren()){

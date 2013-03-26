@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  */
 public class SyntaxCheck {
 	
-	public static final String COMMAND_REGEXS_FILE_NAME = "src/commandRegexs.csv";
+	public static final String COMMAND_REGEXS_FILE_NAME = "commandRegexs.csv";
 	
 	private Map<String, String> validCommandRegex = new HashMap<String, String>();
 	private String lastCommandCall = "";

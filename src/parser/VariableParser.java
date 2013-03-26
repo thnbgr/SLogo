@@ -11,9 +11,9 @@ import parser.node.control.CustomCommandNode;
 
 public class VariableParser extends AbstractParser{
 	
-	private TreeMakingParser myParser;
+	private CommandTreeParser myParser;
 	
-	public VariableParser(TreeMakingParser treeMakingParser) {
+	public VariableParser(CommandTreeParser treeMakingParser) {
 		myParser = treeMakingParser;
 	}
 	
@@ -116,7 +116,7 @@ public class VariableParser extends AbstractParser{
 	 * Testing purpose.
 	 */
 	public static void main(String args[]) {
-		TreeMakingParser parser = new TreeMakingParser("");
+		CommandTreeParser parser = new CommandTreeParser("");
 		VariableParser vp = new VariableParser(parser);
 		
 		int commandCount = 10;
