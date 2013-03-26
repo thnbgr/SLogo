@@ -20,6 +20,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;

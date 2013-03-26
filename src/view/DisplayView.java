@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.Timer;
-import model.Model;
 import util.Drawable;
 import util.Location;
 import util.Sprite;
@@ -65,7 +66,9 @@ public class DisplayView extends JComponent {
      */
     @Override
     public void paint (Graphics pen) {
-        pen.setColor(Color.WHITE);
+        pen.setColor(Color.BLACK);
+        Image img = Toolkit.getDefaultToolkit().createImage("grid.png");
+        pen.drawImage(img, 0, 0, null);
         for (Drawable d : myDrawables) {
             d.paint((Graphics2D) pen);
         }
@@ -125,6 +128,10 @@ public class DisplayView extends JComponent {
         return myTurtle;
     }
     
+    
+    /**
+     * Return true if displayView has a turtle
+     */
     public boolean hasTurtle() {
         return myTurtle == null;
     }
