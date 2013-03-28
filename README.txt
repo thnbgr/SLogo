@@ -1,3 +1,7 @@
+UPDATE:
+Group Warp Up (API Design Revision & Project Artifact Document)
+https://docs.google.com/document/d/1plSLhJLMtOrP8D0WVM9qF_EJWXgCO-Si52Q8JbQLUK8/edit
+
 Master contains the most updated code.
 NOTE: Under the CommandTreeParser.java and SyntaxCheck.java classes, there are two strings:
 COMMAND_PROPERTIES_FILE_NAME and COMMAND_REGEXS_FILE_NAME, respectively.
